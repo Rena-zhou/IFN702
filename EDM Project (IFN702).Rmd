@@ -1,0 +1,193 @@
+---
+title: 'IFN702: Educational Data Mining project'
+output:
+  html_document: default
+  html_notebook: default
+  pdf_document: default
+  word_document: default
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+###### version 1.0 --- Zhiying Zhou: 9835580
+
+# Introduction 
+
+This study will process, exploration, analyze and predict Student's academic performance based on a XAPI Educational Mining Datasets. 
+
+The XAPI Educational Mining Datasets is download from the Kaggle website. It was collected from an e-Learning system called Kalboard 360 using Experience API Web service (XAPI).
+
+The datasets consist of 480 student records and 16 features. The features are classified into three major categories: 
+1.	Demographic features such as gender, grade levels, topic and nationality. 
+2.	Academic background features such as educational stage, grade Level and section. 
+3.	Behavioral features such as raised hand on class, opening resources, answering survey by parents, and school satisfaction.
+
+The students are classified into three numerical intervals based on their total grade/mark:
+
+Low-Level: interval includes values from 0 to 69,
+Middle-Level: interval includes values from 70 to 89,
+High-Level: interval includes values from 90-100.
+
+We will use R Studio to analyze this datasets in R programming language, and aim to achieve the following targets:
+
+1.	Preprocess of the datasets. Clean the dataset, remove the useless columns or rows; and
+2.	Explore the datasets. Explore the distribution of the datasets in different features: gender, nationality, grade, topic, parental satisfaction etc. (like girls raises more hand, more discussions in high school etc.); and
+3.	Find underlying relationships. Like parent who are not satisfied and not answer survey, connection with study activity and performance (raising hand, discussion, absence, parental satisfaction, answering survey etc.); and
+4.	Build prediction model, like decision tree or regression model to predict the student's academic performance.
+5.	Evaluate the predictive results of models and improve the models by comparing the accuracy. 
+
+
+#Task 1.0 
+
+
+```{r}
+# install libraries
+library(ggplot2)
+library(reshape2)
+```
+
+```{r}
+# Import Uber pickups data sets
+U1 <- read.csv("data/xAPI-Edu-Data.csv")
+U1
+```
+
+```{r}
+# Extract the useful columns of the data set:date and location, then combine the 6 files into 1 file
+df1 = data.frame(date=U1$Date.Time,Lon=U1$Lon,Lat=U1$Lat)
+df2 = data.frame(date=U2$Date.Time,Lon=U2$Lon,Lat=U2$Lat)
+df3 = data.frame(date=U3$Date.Time,Lon=U3$Lon,Lat=U3$Lat)
+df4 = data.frame(date=U4$Date.Time,Lon=U4$Lon,Lat=U4$Lat)
+df5 = data.frame(date=U5$Date.Time,Lon=U5$Lon,Lat=U5$Lat)
+df6 = data.frame(date=U6$Date.Time,Lon=U6$Lon,Lat=U6$Lat)
+
+# Uberpickups is the one file that contained the whole date sets
+Uberpickups <- rbind(df1,df2,df3,df4,df5,df6)
+```
+
+```{r}
+# Transfer the format of date into day, month and time, then merge the new columns into the final file
+
+# Format the Date.time into weekdays
+day <- weekdays(as.Date(Uberpickups$date,format="%m/%d/%Y"))
+
+# Format the Date.time into weekdays
+month <- months(as.Date(Uberpickups$date,format="%m/%d/%Y"))
+
+# Format the Date.time into weekdays
+time <- format(strptime(Uberpickups$date, "%m/%d/%Y %H:%M"), "%H")
+
+# Uberpickups1 contains the all columns that will be used in task2 later
+Uberpickups1 <- cbind(Uberpickups, day, month, time)
+
+```
+
+
+```{r}
+# Extract the data of formated weekdays from the file and use it to analyse the number of Uber pick ups
+day1 <- as.data.frame(table(day))
+day1
+```
+
+```{r}
+# Plot the data of Uber pick ups by weekday
+
+ggplot(day1, aes(x = day, y = Freq)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle=90, hjust=1)) + xlab("Weekdays") + ylab("Counts") + scale_x_discrete(limits=c("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"))
+
+#the "scale_x_discrete" above is to order the plotbar in a sequence of weekday
+```
+
+```{r}
+# Extract the data of formated month from the file and use it to analyse the number of Uber pick ups
+month1 <- as.data.frame(table(month))
+month1
+```
+
+```{r}
+# Plot the data of Uber pick ups by month
+
+ggplot(month1, aes(x = month, y = Freq)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle=90, hjust=1)) + xlab("Months") + ylab("Counts") + scale_x_discrete(limits=c("April","May","June","July","August","September"))
+
+#the "scale_x_discrete" is to order the plotbar in a sequence of month
+```
+
+
+```{r}
+# Extract the data of formated time from the file and use it to analyse the number of Uber pick ups
+time1 <- as.data.frame(table(time))
+time1
+```
+
+```{r}
+# Plot the data of Uber pick ups by hour
+ggplot(time1, aes(x = time, y = Freq)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle=90, hjust=1)) + xlab("Time") + ylab("Counts")
+```
+
+
+#Task 2.0
+```{r}
+# Install libraries
+library(evaluate)
+library(ggmap)
+library(mapproj)
+```
+
+```{r}
+# Sort the file in a sequence of weekday
+Uberpickups1$day <- factor(Uberpickups1$day, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+Uberpickups2 <- Uberpickups1[order(Uberpickups1$day),]
+```
+
+```{r}
+# Plot the data on a spatial map of task2.1
+newyork <- get_map(location = 'New York City', zoom = 13, maptype="roadmap")
+Uber.in.us <- ggmap(newyork)
+Uber.in.us + geom_point(data=Uberpickups2, aes(x=Lon, y=Lat, color=day), alpha=0.1)
+```
+
+
+```{r}
+# Plot the data via density plots of task2.1
+newyork <- get_map(location = 'New York City', zoom = 12, maptype="roadmap")
+Uber.in.us <- ggmap(newyork)
+Uber.in.us + stat_density2d(aes(x=Lon, y=Lat, fill = ..level.., alpha=0.5), size = 4, bins = 4, data = Uberpickups2, geom = "polygon") + facet_wrap(~ day)
+```
+
+
+```{r}
+# Sort the file in a sequence of month
+Uberpickups1$month <- factor(Uberpickups1$month, levels = c("April","May","June","July","August","September"))
+Uberpickups3 <- Uberpickups1[order(Uberpickups1$month),]
+```
+
+```{r}
+# Plot the data on a spatial map of task2.2
+newyork <- get_map(location = 'New York City', zoom = 13, maptype="roadmap")
+Uber.in.us <- ggmap(newyork)
+Uber.in.us + geom_point(data=Uberpickups3, aes(x=Lon, y=Lat, color=month), alpha=0.5)
+```
+
+```{r}
+# Plot the data via density plots of task2.2
+newyork <- get_map(location = 'New York City', zoom = 12, maptype="roadmap")
+Uber.in.us <- ggmap(newyork)
+Uber.in.us + stat_density2d(aes(x=Lon, y=Lat, fill = ..level.., alpha=0.5), size = 2, bins = 4, data = Uberpickups3, geom = "polygon") + facet_wrap(~ month)
+```
+
+
+```{r}
+# Plot the data on a spatial map of task2.3
+newyork <- get_map(location = 'New York City', zoom = 13, maptype="roadmap")
+Uber.in.us <- ggmap(newyork)
+Uber.in.us + geom_point(data=Uberpickups1, aes(x=Lon, y=Lat, color=time), alpha=0.5)
+```
+
+```{r}
+# Plot the data via density plots of task2.3
+newyork <- get_map(location = 'New York City', zoom = 12, maptype="roadmap")
+Uber.in.us <- ggmap(newyork)
+Uber.in.us + stat_density2d(aes(x=Lon, y=Lat, fill = ..level.., alpha=0.5), size = 2, bins = 4, data = Uberpickups1, geom = "polygon") + facet_wrap(~ time)
+```
+
+
+
