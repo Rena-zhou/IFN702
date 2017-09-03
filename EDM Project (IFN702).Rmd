@@ -48,42 +48,32 @@ library(reshape2)
 
 ```{r}
 # Import Uber pickups data sets
-U1 <- read.csv("data/xAPI-Edu-Data.csv")
-U1
+E <- read.csv("data/xAPI-Edu-Data.csv")
+E
 ```
 
 ```{r}
-# Extract the useful columns of the data set:date and location, then combine the 6 files into 1 file
-df1 = data.frame(date=U1$Date.Time,Lon=U1$Lon,Lat=U1$Lat)
-df2 = data.frame(date=U2$Date.Time,Lon=U2$Lon,Lat=U2$Lat)
-df3 = data.frame(date=U3$Date.Time,Lon=U3$Lon,Lat=U3$Lat)
-df4 = data.frame(date=U4$Date.Time,Lon=U4$Lon,Lat=U4$Lat)
-df5 = data.frame(date=U5$Date.Time,Lon=U5$Lon,Lat=U5$Lat)
-df6 = data.frame(date=U6$Date.Time,Lon=U6$Lon,Lat=U6$Lat)
-
-# Uberpickups is the one file that contained the whole date sets
-Uberpickups <- rbind(df1,df2,df3,df4,df5,df6)
+str(E)
+summary(E)
 ```
 
 ```{r}
-# Transfer the format of date into day, month and time, then merge the new columns into the final file
+ED <- data.frame(Gender=E$gender, Nationality=E$NationalITy, PlaceofBirth=E$PlaceofBirth, StageID=E$StageID, GradeID=E$GradeID, SectionID=E$SectionID, Topic=E$Topic, Semester=E$Semester, Relation=E$Relation, Raisehands=E$raisedhands, VisitedResources=E$VisITedResources, AnnouncementsView=E$AnnouncementsView, Discussion=E$Discussion, ParentAnsweringSurvey=E$ParentAnsweringSurvey, ParentschoolSatisfaction=E$ParentschoolSatisfaction, StudentAbsenceDays=E$StudentAbsenceDays, Class=E$Class)
 
-# Format the Date.time into weekdays
-day <- weekdays(as.Date(Uberpickups$date,format="%m/%d/%Y"))
+Gender <- as.data.frame(table(ED$Gender))
 
-# Format the Date.time into weekdays
-month <- months(as.Date(Uberpickups$date,format="%m/%d/%Y"))
 
-# Format the Date.time into weekdays
-time <- format(strptime(Uberpickups$date, "%m/%d/%Y %H:%M"), "%H")
 
-# Uberpickups1 contains the all columns that will be used in task2 later
-Uberpickups1 <- cbind(Uberpickups, day, month, time)
-
+ggplot(Gender, aes(x = Var1, y = Freq)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle=90, hjust=1)) + xlab("Gender") + ylab("Counts") 
 ```
 
 
 ```{r}
+
+ggplot(E, aes(x = raisedhands)) + geom_histogram(color = "black") +
+    scale_x_continuous(breaks = seq(0,100,5)) + 
+    labs(x = "Raised Hands", y = "Student Count")
+
 # Extract the data of formated weekdays from the file and use it to analyse the number of Uber pick ups
 day1 <- as.data.frame(table(day))
 day1
