@@ -60,11 +60,18 @@ summary(E)
 ```{r}
 ED <- data.frame(Gender=E$gender, Nationality=E$NationalITy, PlaceofBirth=E$PlaceofBirth, StageID=E$StageID, GradeID=E$GradeID, SectionID=E$SectionID, Topic=E$Topic, Semester=E$Semester, Relation=E$Relation, Raisehands=E$raisedhands, VisitedResources=E$VisITedResources, AnnouncementsView=E$AnnouncementsView, Discussion=E$Discussion, ParentAnsweringSurvey=E$ParentAnsweringSurvey, ParentschoolSatisfaction=E$ParentschoolSatisfaction, StudentAbsenceDays=E$StudentAbsenceDays, Class=E$Class)
 
-Gender <- as.data.frame(table(ED$Gender))
+Gender_frequence <- as.data.frame(table(ED$Gender))
+names(Gender_frequence)<- c("Gender","Counts")
+
+ggplot(data=Gender_frequence, aes(x = Gender, y = Counts, fill=Gender))+geom_bar(stat = "identity")+ggtitle(label = "Gender Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+xlab("Gender")+ylab("Counts")+ geom_text(aes(label = Counts, vjust = 0), show_guide = FALSE)
+
+Nationality_frequence <- as.data.frame(table(ED$Nationality))
+names(Nationality_frequence)<- c("Nationality","Counts")
+Nationality_frequence
+
+ggplot(data=Nationality_frequence, aes(x = Nationality, y = Counts, fill=Nationality))+geom_bar(stat = "identity")+ggtitle(label = "Nationality Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+xlab("Nationality")+ylab("Counts")+theme(axis.text.x = element_text(angle=90, hjust=1)) + geom_text(aes(label = Counts, vjust = 0), show_guide = FALSE)
 
 
-
-ggplot(Gender, aes(x = Var1, y = Freq)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle=90, hjust=1)) + xlab("Gender") + ylab("Counts") 
 ```
 
 
