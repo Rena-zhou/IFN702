@@ -79,6 +79,15 @@ ggplot(data=Nationality_frequence, aes(x = Nationality, y = Counts, fill=Nationa
 
 ```
 ```{r}
+PlaceofBirth_frequence <- as.data.frame(table(ED$PlaceofBirth))
+names(PlaceofBirth_frequence)<- c("PlaceofBirth","Counts")
+PlaceofBirth_frequence
+
+ggplot(data=PlaceofBirth_frequence, aes(x = PlaceofBirth, y = Counts, fill=PlaceofBirth))+geom_bar(stat = "identity")+ggtitle(label = "PlaceofBirth Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+xlab("PlaceofBirth")+ylab("Counts")+theme(axis.text.x = element_text(angle=90, hjust=1)) + geom_text(aes(label = Counts, vjust = 0), show_guide = FALSE)
+
+```
+
+```{r}
 
 ```
 
