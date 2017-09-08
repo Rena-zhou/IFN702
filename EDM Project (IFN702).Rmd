@@ -55,7 +55,9 @@ We will use R Studio to analyze this datasets in R programming language, and aim
 5.	Evaluate the predictive results of models and improve the models by comparing the accuracy. 
 
 
-#Task 1.0 
+#Task 1. Exporation of the students' academic performance datasets
+
+#Task 1.1. Barplots of classification values distribution:
 
 
 ```{r}
@@ -189,6 +191,11 @@ StudentAbsenceDays_frequence
 ggplot(data=StudentAbsenceDays_frequence, aes(x = StudentAbsenceDays, y = Counts, fill=StudentAbsenceDays))+geom_bar(stat = "identity")+ggtitle(label = "StudentAbsenceDays Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+xlab("StudentAbsenceDays")+ylab("Counts")+theme(axis.text.x = element_text(angle=90, hjust=1)) + geom_text(aes(label = Counts, vjust = 0), show.legend = FALSE)
 
 ```
+# Summary of Task 1.1:
+
+
+# Task 1.2. Histogram of numerical values distribution:
+
 
 VisitedResources=E$VisITedResources, AnnouncementsView=E$AnnouncementsView, Discussion=E$Discussion,  
 
@@ -203,6 +210,48 @@ ggplot(E, aes(x = raisedhands)) +
 
 
 ```
+
+```{r}
+ggplot(E, aes(x = VisITedResources)) +
+        geom_histogram(aes(fill = ..count..), binwidth = 5, colour = "black") +
+        scale_x_continuous(name = "VisITedResources",
+                           breaks = seq(0, 100, 5),
+                           limits=c(0, 100)) + 
+        scale_y_continuous(name = "Count") +
+        ggtitle("Frequency histogram of VisITedResources") 
+
+
+```
+
+```{r}
+ggplot(E, aes(x = AnnouncementsView)) +
+        geom_histogram(aes(fill = ..count..), binwidth = 5, colour = "black") +
+        scale_x_continuous(name = "AnnouncementsView",
+                           breaks = seq(0, 100, 5),
+                           limits=c(0, 100)) + 
+        scale_y_continuous(name = "Count") +
+        ggtitle("Frequency histogram of AnnouncementsView") 
+
+
+```
+```{r}
+ggplot(E, aes(x = Discussion)) +
+        geom_histogram(aes(fill = ..count..), binwidth = 5, colour = "black") +
+        scale_x_continuous(name = "Discussion",
+                           breaks = seq(0, 100, 5),
+                           limits=c(0, 100)) + 
+        scale_y_continuous(name = "Count") +
+        ggtitle("Frequency histogram of Discussion") 
+
+
+```
+# Summary of Task 1.2:
+
+
+
+#Task 2. Exporation of the relationships between different features of the students' academic performance datasets
+
+
 
 
 ```{r}
