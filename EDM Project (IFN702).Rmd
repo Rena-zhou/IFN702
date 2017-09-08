@@ -181,6 +181,29 @@ ggplot(data=ParentschoolSatisfaction_frequence, aes(x = ParentschoolSatisfaction
 
 ```
 
+```{r}
+StudentAbsenceDays_frequence <- as.data.frame(table(ED$StudentAbsenceDays))
+names(StudentAbsenceDays_frequence)<- c("StudentAbsenceDays","Counts")
+StudentAbsenceDays_frequence
+
+ggplot(data=StudentAbsenceDays_frequence, aes(x = StudentAbsenceDays, y = Counts, fill=StudentAbsenceDays))+geom_bar(stat = "identity")+ggtitle(label = "StudentAbsenceDays Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+xlab("StudentAbsenceDays")+ylab("Counts")+theme(axis.text.x = element_text(angle=90, hjust=1)) + geom_text(aes(label = Counts, vjust = 0), show.legend = FALSE)
+
+```
+
+VisitedResources=E$VisITedResources, AnnouncementsView=E$AnnouncementsView, Discussion=E$Discussion,  
+
+```{r}
+ggplot(E, aes(x = raisedhands)) +
+        geom_histogram(aes(fill = ..count..), binwidth = 5, colour = "black") +
+        scale_x_continuous(name = "Raised Hands",
+                           breaks = seq(0, 100, 5),
+                           limits=c(0, 100)) + 
+        scale_y_continuous(name = "Count") +
+        ggtitle("Frequency histogram of Raised Hands") 
+
+
+```
+
 
 ```{r}
 
