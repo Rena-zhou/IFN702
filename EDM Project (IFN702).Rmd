@@ -91,6 +91,14 @@ ggplot(data=Gender_frequence, aes(x = Gender, y = Counts, fill=Gender))+geom_bar
 ```
 
 ```{r}
+ggplot(data = E, aes(x = gender, fill = Relation)) + geom_bar() +
+    labs(x = "Gender", y = "Student Count")
+```
+
+
+
+
+```{r}
 Nationality_frequence <- as.data.frame(table(ED$Nationality))
 names(Nationality_frequence)<- c("Nationality","Counts")
 Nationality_frequence
@@ -99,6 +107,10 @@ ggplot(data=Nationality_frequence, aes(x = Nationality, y = Counts, fill=Nationa
 
 ```
 
+```{r}
+ggplot(data = E, aes(x = NationalITy, fill = Class)) + geom_bar() +
+    labs(x = "Nationality", y = "Student Count")
+```
 
 ```{r}
 PlaceofBirth_frequence <- as.data.frame(table(ED$PlaceofBirth))
@@ -108,6 +120,13 @@ PlaceofBirth_frequence
 ggplot(data=PlaceofBirth_frequence, aes(x = PlaceofBirth, y = Counts, fill=PlaceofBirth))+geom_bar(stat = "identity")+ggtitle(label = "PlaceofBirth Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+xlab("PlaceofBirth")+ylab("Counts")+theme(axis.text.x = element_text(angle=90, hjust=1)) + geom_text(aes(label = Counts, vjust = 0), show_guide = FALSE)
 
 ```
+
+```{r}
+ggplot(data = E, aes(x = PlaceofBirth, fill = Class)) + geom_bar() +
+    labs(x = "PlaceofBirth", y = "Student Count")
+```
+
+
 
 ```{r}
 StageID_frequence <- as.data.frame(table(ED$StageID))
@@ -145,6 +164,13 @@ Topic_frequence
 ggplot(data=Topic_frequence, aes(x = Topic, y = Counts, fill=Topic))+geom_bar(stat = "identity")+ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+xlab("Topic")+ylab("Counts")+theme(axis.text.x = element_text(angle=90, hjust=1)) + geom_text(aes(label = Counts, vjust = 0), show_guide = FALSE)
 
 ```
+
+```{r}
+ggplot(data = E, aes(x = Topic, fill = Class)) + geom_bar() +
+    labs(x = "Topic", y = "Student Count") + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+xlab("Topic")+ylab("Counts")+theme(axis.text.x = element_text(angle=90, hjust=1)) 
+
+```
+
 
 ```{r}
 Semester_frequence <- as.data.frame(table(ED$Semester))
@@ -191,6 +217,19 @@ StudentAbsenceDays_frequence
 ggplot(data=StudentAbsenceDays_frequence, aes(x = StudentAbsenceDays, y = Counts, fill=StudentAbsenceDays))+geom_bar(stat = "identity")+ggtitle(label = "StudentAbsenceDays Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+xlab("StudentAbsenceDays")+ylab("Counts")+theme(axis.text.x = element_text(angle=90, hjust=1)) + geom_text(aes(label = Counts, vjust = 0), show.legend = FALSE)
 
 ```
+```{r}
+Class_frequence <- as.data.frame(table(ED$Class, ED$Gender))
+names(Class_frequence)<- c("Class", "Gender", "Counts")
+Class_frequence
+
+ggplot(data=Class_frequence, aes(x = Class, y = Counts, fill=Gender))+geom_bar(stat = "identity")+ggtitle(label = "Class Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+xlab("Class")+ylab("Counts") + geom_text(aes(label = Counts, vjust = 0), show.legend = FALSE)
+
+```
+
+
+
+
+
 # Summary of Task 1.1:
 
 
@@ -245,12 +284,18 @@ ggplot(E, aes(x = Discussion)) +
 
 
 ```
+
 # Summary of Task 1.2:
 
 
 
 #Task 2. Exporation of the relationships between different features of the students' academic performance datasets
 
+#Task 2.1. Boxplot
+
+```{r}
+ggplot(data = E, aes(x = gender, y = raisedhands)) + geom_boxplot()
+```
 
 
 
