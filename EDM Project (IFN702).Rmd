@@ -304,51 +304,5 @@ ggplot(data = E, aes(x = gender, y = raisedhands)) + geom_boxplot()
 ```
 
 
-```{r}
-ggplot(E, aes(x = raisedhands)) + geom_histogram(color = "black")
-+ scale_x_continuous(breaks = seq(0,100,5)) + labs(x = "Raised Hands", y = "Student Count") + ggtitle("Frequency histogram of Raisehands")
 
-
-```
-
-```{r}
-# Plot the data of Uber pick ups by weekday
-
-ggplot(day1, aes(x = day, y = Freq)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle=90, hjust=1)) + xlab("Weekdays") + ylab("Counts") + scale_x_discrete(limits=c("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"))
-
-#the "scale_x_discrete" above is to order the plotbar in a sequence of weekday
-```
-
-```{r}
-# Extract the data of formated month from the file and use it to analyse the number of Uber pick ups
-month1 <- as.data.frame(table(month))
-month1
-```
-
-```{r}
-# Plot the data of Uber pick ups by month
-
-ggplot(month1, aes(x = month, y = Freq)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle=90, hjust=1)) + xlab("Months") + ylab("Counts") + scale_x_discrete(limits=c("April","May","June","July","August","September"))
-
-#the "scale_x_discrete" is to order the plotbar in a sequence of month
-```
-
-
-```{r}
-# Extract the data of formated time from the file and use it to analyse the number of Uber pick ups
-time1 <- as.data.frame(table(time))
-time1
-```
-
-```{r}
-# Plot the data of Uber pick ups by hour
-ggplot(time1, aes(x = time, y = Freq)) + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle=90, hjust=1)) + xlab("Time") + ylab("Counts")
-```
-
-
-#Task 2.0
-```{r}
-# Install libraries
-library(evaluate)
-```
 
