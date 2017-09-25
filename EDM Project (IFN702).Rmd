@@ -109,7 +109,7 @@ ggplot(data=Nationality_frequence, aes(x = Nationality, y = Counts, fill=Nationa
 
 ```{r}
 ggplot(data = E, aes(x = NationalITy, fill = Class)) + geom_bar() +
-    labs(x = "Nationality", y = "Student Count")
+    labs(x = "Nationality", y = "Student Count")+theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
 ```{r}
@@ -133,7 +133,7 @@ StageID_frequence <- as.data.frame(table(ED$StageID))
 names(StageID_frequence)<- c("StageID","Counts")
 StageID_frequence
 
-ggplot(data=StageID_frequence, aes(x = StageID, y = Counts, fill=StageID))+geom_bar(stat = "identity")+ggtitle(label = "StageID Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+xlab("StageID")+ylab("Counts")+theme(axis.text.x = element_text(angle=90, hjust=1)) + geom_text(aes(label = Counts, vjust = 0), show.legend = FALSE)
+ggplot(data=StageID_frequence, aes(x = StageID, y = Counts, fill=class))+geom_bar(stat = "identity")+ggtitle(label = "StageID Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+xlab("StageID")+ylab("Counts")+theme(axis.text.x = element_text(angle=90, hjust=1)) + geom_text(aes(label = Counts, vjust = 0), show.legend = FALSE)
 
 ```
 
