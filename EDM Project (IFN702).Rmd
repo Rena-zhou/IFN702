@@ -94,8 +94,29 @@ ggplot(data=Gender_frequence, aes(x = Gender, y = Counts, fill=Gender))+geom_bar
 ggplot(data = E, aes(x = gender, fill = Relation)) + geom_bar() +
     labs(x = "Gender", y = "Student Count")
 ```
+#
 
 
+```{r}
+ggplot(data = E, aes(x = gender, fill = ParentAnsweringSurvey)) + geom_bar() +
+    labs(x = "Gender", y = "Student Count")
+```
+
+```{r}
+ggplot(data = E, aes(x = gender, fill = ParentschoolSatisfaction)) + geom_bar() +
+    labs(x = "Gender", y = "Student Count")
+```
+
+```{r}
+ggplot(data = E, aes(x = gender, fill = StudentAbsenceDays)) + geom_bar() +
+    labs(x = "Gender", y = "Student Count")
+```
+#Girls has higher 
+
+```{r}
+ggplot(data = E, aes(x = gender, fill = Class)) + geom_bar() +
+    labs(x = "Gender", y = "Student Count")
+```
 
 
 ```{r}
@@ -122,10 +143,32 @@ ggplot(data=PlaceofBirth_frequence, aes(x = PlaceofBirth, y = Counts, fill=Place
 ```
 
 ```{r}
+
 ggplot(data = E, aes(x = PlaceofBirth, fill = Class)) + geom_bar() +
-    labs(x = "PlaceofBirth", y = "Student Count")
+    labs(x = "PlaceofBirth", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
+```{r}
+
+ggplot(data = E, aes(x = PlaceofBirth, fill = NationalITy)) + geom_bar() +
+    labs(x = "PlaceofBirth", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+
+```{r}
+
+ggplot(data = E, aes(x = PlaceofBirth, fill = gender)) + geom_bar() +
+    labs(x = "PlaceofBirth", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+```{r}
+
+ggplot(data = E, aes(x = PlaceofBirth, fill = Relation)) + geom_bar() +
+    labs(x = "PlaceofBirth", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+```{r}
+
+ggplot(data = E, aes(x = NationalITy, fill = Relation)) + geom_bar() +
+    labs(x = "PlaceofBirth", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
+```
 
 
 ```{r}
