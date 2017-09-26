@@ -99,7 +99,7 @@ ggplot(data = E, aes(x = gender, fill = Relation)) + geom_bar() +
 
 ```{r}
 ggplot(data = E, aes(x = gender, fill = ParentAnsweringSurvey)) + geom_bar() +
-    labs(x = "Gender", y = "Student Count")
+    labs(x = "Gender", y = "Student Count") 
 ```
 
 ```{r}
@@ -114,8 +114,9 @@ ggplot(data = E, aes(x = gender, fill = StudentAbsenceDays)) + geom_bar() +
 #Girls has higher 
 
 ```{r}
+
 ggplot(data = E, aes(x = gender, fill = Class)) + geom_bar() +
-    labs(x = "Gender", y = "Student Count")
+    labs(x = "Gender", y = "Student Count") + scale_fill_discrete(breaks=c("H","M","L"))
 ```
 
 
@@ -165,11 +166,17 @@ ggplot(data = E, aes(x = PlaceofBirth, fill = Relation)) + geom_bar() +
     labs(x = "PlaceofBirth", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 ```{r}
-
 ggplot(data = E, aes(x = NationalITy, fill = Relation)) + geom_bar() +
     labs(x = "PlaceofBirth", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
-
+```{r}
+ggplot(data = E, aes(x = NationalITy, fill = ParentAnsweringSurvey)) + geom_bar() +
+    labs(x = "PlaceofBirth", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+```{r}
+ggplot(data = E, aes(x = NationalITy, fill = ParentschoolSatisfaction)) + geom_bar() +
+    labs(x = "PlaceofBirth", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
+```
 
 ```{r}
 StageID_frequence <- as.data.frame(table(ED$StageID))
@@ -179,6 +186,14 @@ StageID_frequence
 ggplot(data=StageID_frequence, aes(x = StageID, y = Counts))+geom_bar(stat = "identity")+ggtitle(label = "StageID Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+xlab("StageID")+ylab("Counts")+theme(axis.text.x = element_text(angle=90, hjust=1)) + geom_text(aes(label = Counts, vjust = 0), show.legend = FALSE)
 
 ```
+
+```{r}
+ggplot(data = E, aes(x = StageID, fill = ParentschoolSatisfaction)) + geom_bar() +
+    labs(x = "PlaceofBirth", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+
+
+
 
 ```{r}
 GradeID_frequence <- as.data.frame(table(ED$GradeID))
