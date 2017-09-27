@@ -116,7 +116,7 @@ ggplot(data = E, aes(x = gender, fill = StudentAbsenceDays)) + geom_bar() +
 ```{r}
 
 ggplot(data = E, aes(x = gender, fill = Class)) + geom_bar() +
-    labs(x = "Gender", y = "Student Count") + scale_fill_discrete(breaks=c("H","M","L"))
+    labs(x = "Gender", y = "Student Count") + scale_fill_discrete(limits=c("H","M","L"))
 ```
 
 
@@ -131,7 +131,7 @@ ggplot(data=Nationality_frequence, aes(x = Nationality, y = Counts, fill=Nationa
 
 ```{r}
 ggplot(data = E, aes(x = NationalITy, fill = Class)) + geom_bar() +
-    labs(x = "Nationality", y = "Student Count")+theme(axis.text.x = element_text(angle=90, hjust=1))
+    labs(x = "Nationality", y = "Student Count")+theme(axis.text.x = element_text(angle=90, hjust=1))+ scale_fill_discrete(limits=c("H","M","L"))
 ```
 
 ```{r}
@@ -146,7 +146,7 @@ ggplot(data=PlaceofBirth_frequence, aes(x = PlaceofBirth, y = Counts, fill=Place
 ```{r}
 
 ggplot(data = E, aes(x = PlaceofBirth, fill = Class)) + geom_bar() +
-    labs(x = "PlaceofBirth", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
+    labs(x = "PlaceofBirth", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))+ scale_fill_discrete(limits=c("H","M","L"))
 ```
 
 ```{r}
@@ -171,11 +171,11 @@ ggplot(data = E, aes(x = NationalITy, fill = Relation)) + geom_bar() +
 ```
 ```{r}
 ggplot(data = E, aes(x = NationalITy, fill = ParentAnsweringSurvey)) + geom_bar() +
-    labs(x = "PlaceofBirth", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
+    labs(x = "NationalITy", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 ```{r}
 ggplot(data = E, aes(x = NationalITy, fill = ParentschoolSatisfaction)) + geom_bar() +
-    labs(x = "PlaceofBirth", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
+    labs(x = "NationalITy", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
 ```{r}
@@ -187,12 +187,60 @@ ggplot(data=StageID_frequence, aes(x = StageID, y = Counts))+geom_bar(stat = "id
 
 ```
 
+
 ```{r}
-ggplot(data = E, aes(x = StageID, fill = ParentschoolSatisfaction)) + geom_bar() +
-    labs(x = "PlaceofBirth", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
+ggplot(data = E, aes(x = StageID, fill = gender)) + geom_bar() +
+    labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
 
+
+```{r}
+ggplot(data = E, aes(x = StageID, fill = Topic)) + geom_bar() +
+    labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+
+```{r}
+ggplot(data = E, aes(x = StageID, fill = Semester)) + geom_bar() +
+    labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+
+```{r}
+ggplot(data = E, aes(x = StageID, fill = Relation)) + geom_bar() +
+    labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+
+```{r}
+ggplot(data = E, aes(x = StageID, fill = ParentAnsweringSurvey)) + geom_bar() +
+    labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+
+
+```{r}
+ggplot(data = E, aes(x = StageID, fill = ParentschoolSatisfaction)) + geom_bar() +
+    labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+
+```{r}
+ggplot(data = E, aes(x = StageID, fill = StudentAbsenceDays)) + geom_bar() +
+    labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+
+```{r}
+ggplot(data = E, aes(x = StageID, fill = Class)) + geom_bar() +
+    labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))+ scale_fill_discrete(limits=c("H","M","L"))
+```
+
+```{r}
+ggplot(data = E, aes(x = GradeID, fill = StageID)) + geom_bar() +
+    labs(x = "GradeID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))+ scale_fill_discrete(limits=c("HighSchool","MiddleSchool","lowerlevel"))
+```
+
+
+```{r}
+ggplot(data = E, aes(x = SectionID, fill = StageID)) + geom_bar() +
+    labs(x = "SectionID", y = "Student Count") +theme(axis.text.x = element_text(angle=0, hjust=1))+ scale_fill_discrete(limits=c("HighSchool","MiddleSchool","lowerlevel"))
+```
 
 
 ```{r}
