@@ -189,6 +189,7 @@ ggplot(data=StageID_frequence, aes(x = StageID, y = Counts))+geom_bar(stat = "id
 
 
 ```{r}
+levels(E$StageID) = c('loerlevel','MiddleSchool','HighSchool')
 ggplot(data = E, aes(x = StageID, fill = gender)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
@@ -196,37 +197,44 @@ ggplot(data = E, aes(x = StageID, fill = gender)) + geom_bar() +
 
 
 ```{r}
+levels(E$StageID) = c('loerlevel','MiddleSchool','HighSchool')
 ggplot(data = E, aes(x = StageID, fill = Topic)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
 ```{r}
+levels(E$StageID) = c('loerlevel','MiddleSchool','HighSchool')
 ggplot(data = E, aes(x = StageID, fill = Semester)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
 ```{r}
+levels(E$StageID) = c('loerlevel','MiddleSchool','HighSchool')
 ggplot(data = E, aes(x = StageID, fill = Relation)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
 ```{r}
+levels(E$StageID) = c('loerlevel','MiddleSchool','HighSchool')
 ggplot(data = E, aes(x = StageID, fill = ParentAnsweringSurvey)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
 
 ```{r}
+levels(E$StageID) = c('loerlevel','MiddleSchool','HighSchool')
 ggplot(data = E, aes(x = StageID, fill = ParentschoolSatisfaction)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
 ```{r}
+levels(E$StageID) = c('loerlevel','MiddleSchool','HighSchool')
 ggplot(data = E, aes(x = StageID, fill = StudentAbsenceDays)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
 ```{r}
+levels(E$StageID) = c('loerlevel','MiddleSchool','HighSchool')
 ggplot(data = E, aes(x = StageID, fill = Class)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))+ scale_fill_discrete(limits=c("H","M","L"))
 ```
@@ -236,6 +244,11 @@ ggplot(data = E, aes(x = GradeID, fill = StageID)) + geom_bar() +
     labs(x = "GradeID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))+ scale_fill_discrete(limits=c("HighSchool","MiddleSchool","lowerlevel"))
 ```
 
+
+```{r}
+ggplot(data = E, aes(x = SectionID, fill = StageID)) + geom_bar() +
+    labs(x = "SectionID", y = "Student Count") +theme(axis.text.x = element_text(angle=0, hjust=1))+ scale_fill_discrete(limits=c("HighSchool","MiddleSchool","lowerlevel"))
+```
 
 ```{r}
 ggplot(data = E, aes(x = SectionID, fill = StageID)) + geom_bar() +
