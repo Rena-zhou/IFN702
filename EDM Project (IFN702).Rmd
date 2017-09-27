@@ -75,6 +75,9 @@ E
 ```{r}
 str(E)
 summary(E)
+levels(E$Class) = c('H','M','L')
+E
+
 ```
 
 ```{r}
@@ -150,13 +153,11 @@ ggplot(data = E, aes(x = PlaceofBirth, fill = Class)) + geom_bar() +
 ```
 
 ```{r}
-
 ggplot(data = E, aes(x = PlaceofBirth, fill = NationalITy)) + geom_bar() +
     labs(x = "PlaceofBirth", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
 ```{r}
-
 ggplot(data = E, aes(x = PlaceofBirth, fill = gender)) + geom_bar() +
     labs(x = "PlaceofBirth", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
@@ -189,7 +190,6 @@ ggplot(data=StageID_frequence, aes(x = StageID, y = Counts))+geom_bar(stat = "id
 
 
 ```{r}
-levels(E$StageID) = c('loerlevel','MiddleSchool','HighSchool')
 ggplot(data = E, aes(x = StageID, fill = gender)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
@@ -197,44 +197,37 @@ ggplot(data = E, aes(x = StageID, fill = gender)) + geom_bar() +
 
 
 ```{r}
-levels(E$StageID) = c('loerlevel','MiddleSchool','HighSchool')
 ggplot(data = E, aes(x = StageID, fill = Topic)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
 ```{r}
-levels(E$StageID) = c('loerlevel','MiddleSchool','HighSchool')
 ggplot(data = E, aes(x = StageID, fill = Semester)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
 ```{r}
-levels(E$StageID) = c('loerlevel','MiddleSchool','HighSchool')
 ggplot(data = E, aes(x = StageID, fill = Relation)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
 ```{r}
-levels(E$StageID) = c('loerlevel','MiddleSchool','HighSchool')
 ggplot(data = E, aes(x = StageID, fill = ParentAnsweringSurvey)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
 
 ```{r}
-levels(E$StageID) = c('loerlevel','MiddleSchool','HighSchool')
 ggplot(data = E, aes(x = StageID, fill = ParentschoolSatisfaction)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
 ```{r}
-levels(E$StageID) = c('loerlevel','MiddleSchool','HighSchool')
 ggplot(data = E, aes(x = StageID, fill = StudentAbsenceDays)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
 ```{r}
-levels(E$StageID) = c('loerlevel','MiddleSchool','HighSchool')
 ggplot(data = E, aes(x = StageID, fill = Class)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))+ scale_fill_discrete(limits=c("H","M","L"))
 ```
@@ -251,8 +244,16 @@ ggplot(data = E, aes(x = SectionID, fill = StageID)) + geom_bar() +
 ```
 
 ```{r}
-ggplot(data = E, aes(x = SectionID, fill = StageID)) + geom_bar() +
-    labs(x = "SectionID", y = "Student Count") +theme(axis.text.x = element_text(angle=0, hjust=1))+ scale_fill_discrete(limits=c("HighSchool","MiddleSchool","lowerlevel"))
+ggplot(data = E, aes(x = Topic, fill = gender)) + geom_bar() +
+    labs(x = "Topic", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1)) 
+```
+
+
+```{r}
+levels(E$Class) = c('H','M','L')
+ggplot(data = E, aes(x = Topic, fill = Class)) + geom_bar() +
+    labs(x = "Topic", y = "Student Count") + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+xlab("Topic")+ylab("Counts")+theme(axis.text.x = element_text(angle=90, hjust=1))+ scale_fill_discrete(limits=c("H","M","L"))
+
 ```
 
 
@@ -284,11 +285,6 @@ ggplot(data=Topic_frequence, aes(x = Topic, y = Counts, fill=Topic))+geom_bar(st
 
 ```
 
-```{r}
-ggplot(data = E, aes(x = Topic, fill = Class)) + geom_bar() +
-    labs(x = "Topic", y = "Student Count") + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+xlab("Topic")+ylab("Counts")+theme(axis.text.x = element_text(angle=90, hjust=1)) 
-
-```
 
 
 ```{r}
@@ -336,6 +332,7 @@ StudentAbsenceDays_frequence
 ggplot(data=StudentAbsenceDays_frequence, aes(x = StudentAbsenceDays, y = Counts, fill=StudentAbsenceDays))+geom_bar(stat = "identity")+ggtitle(label = "StudentAbsenceDays Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+xlab("StudentAbsenceDays")+ylab("Counts")+theme(axis.text.x = element_text(angle=90, hjust=1)) + geom_text(aes(label = Counts, vjust = 0), show.legend = FALSE)
 
 ```
+
 ```{r}
 Class_frequence <- as.data.frame(table(ED$Class, ED$Gender))
 names(Class_frequence)<- c("Class", "Gender", "Counts")
@@ -346,8 +343,11 @@ ggplot(data=Class_frequence, aes(x = Class, y = Counts, fill=Gender))+geom_bar(s
 ```
 
 
+```{r}
+ggplot(data = E, aes(x = Topic, fill = Class)) + geom_bar() +
+    labs(x = "Topic", y = "Student Count") + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+xlab("Topic")+ylab("Counts")+theme(axis.text.x = element_text(angle=90, hjust=1))+ scale_fill_discrete(limits=c("H","M","L"))
 
-
+```
 
 # Summary of Task 1.1:
 
@@ -358,48 +358,49 @@ ggplot(data=Class_frequence, aes(x = Class, y = Counts, fill=Gender))+geom_bar(s
 VisitedResources=E$VisITedResources, AnnouncementsView=E$AnnouncementsView, Discussion=E$Discussion,  
 
 ```{r}
-ggplot(E, aes(x = raisedhands)) +
-        geom_histogram(aes(fill = ..count..), binwidth = 5, colour = "black") +
+ggplot(E, aes(x = raisedhands, fill = Class)) +
+        geom_histogram(binwidth = 5, colour = "black") +
         scale_x_continuous(name = "Raised Hands",
                            breaks = seq(0, 100, 5),
                            limits=c(0, 100)) + 
         scale_y_continuous(name = "Count") +
-        ggtitle("Frequency histogram of Raised Hands") 
+        ggtitle("Frequency histogram of Raised Hands") + scale_fill_discrete(limits=c("H","M","L"))
 
 
 ```
 
 ```{r}
-ggplot(E, aes(x = VisITedResources)) +
-        geom_histogram(aes(fill = ..count..), binwidth = 5, colour = "black") +
+ggplot(E, aes(x = VisITedResources, fill = Class)) +
+        geom_histogram( binwidth = 5, colour = "black") +
         scale_x_continuous(name = "VisITedResources",
                            breaks = seq(0, 100, 5),
                            limits=c(0, 100)) + 
         scale_y_continuous(name = "Count") +
-        ggtitle("Frequency histogram of VisITedResources") 
+        ggtitle("Frequency histogram of VisITedResources")+ scale_fill_discrete(limits=c("H","M","L"))
 
 
 ```
 
 ```{r}
-ggplot(E, aes(x = AnnouncementsView)) +
-        geom_histogram(aes(fill = ..count..), binwidth = 5, colour = "black") +
+ggplot(E, aes(x = AnnouncementsView, fill = Class)) +
+        geom_histogram( binwidth = 5, colour = "black") +
         scale_x_continuous(name = "AnnouncementsView",
                            breaks = seq(0, 100, 5),
                            limits=c(0, 100)) + 
         scale_y_continuous(name = "Count") +
-        ggtitle("Frequency histogram of AnnouncementsView") 
+        ggtitle("Frequency histogram of AnnouncementsView") + scale_fill_discrete(limits=c("H","M","L"))
 
 
 ```
+
 ```{r}
-ggplot(E, aes(x = Discussion)) +
-        geom_histogram(aes(fill = ..count..), binwidth = 5, colour = "black") +
+ggplot(E, aes(x = Discussion, fill = Class)) +
+        geom_histogram(binwidth = 5, colour = "black") +
         scale_x_continuous(name = "Discussion",
                            breaks = seq(0, 100, 5),
                            limits=c(0, 100)) + 
         scale_y_continuous(name = "Count") +
-        ggtitle("Frequency histogram of Discussion") 
+        ggtitle("Frequency histogram of Discussion") + scale_fill_discrete(limits=c("H","M","L"))
 
 
 ```
