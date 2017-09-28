@@ -418,8 +418,8 @@ ggplot(data = E, aes(x = gender, y = raisedhands)) + geom_boxplot()
 ```
 
 
-
 ```{r}
+ggplot(data = E, aes(x = gender, y = VisITedResources)) + geom_boxplot()
 
 ```
 
