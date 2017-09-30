@@ -93,6 +93,8 @@ ggplot(data=Gender_frequence, aes(x = Gender, y = Counts, fill=Gender))+geom_bar
 
 ```
 
+
+
 ```{r}
 ggplot(data = E, aes(x = gender, fill = Relation)) + geom_bar() +
     labs(x = "Gender", y = "Student Count")
@@ -422,7 +424,46 @@ ggplot(data = E, aes(x = gender, y = raisedhands)) + geom_boxplot()
 ggplot(data = E, aes(x = gender, y = VisITedResources)) + geom_boxplot()
 
 ```
+```{r}
+ggplot(data = E, aes(x = gender, y = AnnouncementsView)) + geom_boxplot()
+```
+
+```{r}
+ggplot(data = E, aes(x = gender, y = Discussion)) + geom_boxplot()
+```
+
+```{r}
+ggplot(data = E, aes(x = NationalITy, y = raisedhands)) + geom_boxplot()
+```
 
 
+```{r}
+ggplot(data = E, aes(x = NationalITy, y = VisITedResources)) + geom_boxplot()
+
+```
+```{r}
+ggplot(data = E, aes(x = NationalITy, y = AnnouncementsView)) + geom_boxplot()
+```
+
+```{r}
+ggplot(data = E, aes(x = NationalITy, y = Discussion)) + geom_boxplot()
+```
+
+```{r}
+ggplot(data = E, aes(x = StageID, y = raisedhands)) + geom_boxplot()
+```
+
+
+```{r}
+ggplot(data = E, aes(x = StageID, y = VisITedResources)) + geom_boxplot()
+
+```
+```{r}
+ggplot(data = E, aes(x = StageID, y = AnnouncementsView)) + geom_boxplot()
+```
+
+```{r}
+ggplot(data = E, aes(x = StageID, y = Discussion)) + geom_boxplot()
+```
 
 
