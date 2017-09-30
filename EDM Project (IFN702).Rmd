@@ -466,4 +466,138 @@ ggplot(data = E, aes(x = StageID, y = AnnouncementsView)) + geom_boxplot()
 ggplot(data = E, aes(x = StageID, y = Discussion)) + geom_boxplot()
 ```
 
+```{r}
+ggplot(data = E, aes(x = Topic, y = raisedhands)) + geom_boxplot()
+```
 
+
+```{r}
+ggplot(data = E, aes(x = Topic, y = VisITedResources)) + geom_boxplot()
+
+```
+```{r}
+ggplot(data = E, aes(x = Topic, y = AnnouncementsView)) + geom_boxplot()
+```
+
+```{r}
+ggplot(data = E, aes(x = Topic, y = Discussion)) + geom_boxplot()
+```
+
+```{r}
+ggplot(data = E, aes(x = SectionID, y = raisedhands)) + geom_boxplot()
+```
+
+
+```{r}
+ggplot(data = E, aes(x = SectionID, y = VisITedResources)) + geom_boxplot()
+
+```
+```{r}
+ggplot(data = E, aes(x = SectionID, y = AnnouncementsView)) + geom_boxplot()
+```
+
+```{r}
+ggplot(data = E, aes(x = SectionID, y = Discussion)) + geom_boxplot()
+```
+
+```{r}
+ggplot(data = E, aes(x = Semester, y = raisedhands)) + geom_boxplot()
+```
+
+
+```{r}
+ggplot(data = E, aes(x = Semester, y = VisITedResources)) + geom_boxplot()
+
+```
+```{r}
+ggplot(data = E, aes(x = Semester, y = AnnouncementsView)) + geom_boxplot()
+```
+
+```{r}
+ggplot(data = E, aes(x = Semester, y = Discussion)) + geom_boxplot()
+```
+
+```{r}
+ggplot(data = E, aes(x = Relation, y = raisedhands)) + geom_boxplot()
+```
+
+
+```{r}
+ggplot(data = E, aes(x = Relation, y = VisITedResources)) + geom_boxplot()
+
+```
+```{r}
+ggplot(data = E, aes(x = Relation, y = AnnouncementsView)) + geom_boxplot()
+```
+
+```{r}
+ggplot(data = E, aes(x = Relation, y = Discussion)) + geom_boxplot()
+```
+
+```{r}
+ggplot(data = E, aes(x = ParentAnsweringSurvey, y = raisedhands)) + geom_boxplot()
+```
+
+
+```{r}
+ggplot(data = E, aes(x = ParentAnsweringSurvey, y = VisITedResources)) + geom_boxplot()
+
+```
+```{r}
+ggplot(data = E, aes(x = ParentAnsweringSurvey, y = AnnouncementsView)) + geom_boxplot()
+```
+
+```{r}
+ggplot(data = E, aes(x = ParentAnsweringSurvey, y = Discussion)) + geom_boxplot()
+```
+
+```{r}
+ggplot(data = E, aes(x = ParentschoolSatisfaction, y = raisedhands)) + geom_boxplot()
+```
+
+
+```{r}
+ggplot(data = E, aes(x = ParentschoolSatisfaction, y = VisITedResources)) + geom_boxplot()
+
+```
+```{r}
+ggplot(data = E, aes(x = ParentschoolSatisfaction, y = AnnouncementsView)) + geom_boxplot()
+```
+
+```{r}
+ggplot(data = E, aes(x = ParentschoolSatisfaction, y = Discussion)) + geom_boxplot()
+```
+
+```{r}
+ggplot(data = E, aes(x = StudentAbsenceDays, y = raisedhands)) + geom_boxplot()
+```
+
+
+```{r}
+ggplot(data = E, aes(x = StudentAbsenceDays, y = VisITedResources)) + geom_boxplot()
+
+```
+```{r}
+ggplot(data = E, aes(x = StudentAbsenceDays, y = AnnouncementsView)) + geom_boxplot()
+```
+
+```{r}
+ggplot(data = E, aes(x = StudentAbsenceDays, y = Discussion)) + geom_boxplot()
+```
+
+```{r}
+ggplot(data = E, aes(x = Class, y = raisedhands)) + geom_boxplot()
+```
+
+
+```{r}
+ggplot(data = E, aes(x = Class, y = VisITedResources)) + geom_boxplot()
+
+```
+```{r}
+ggplot(data = E, aes(x = Class, y = AnnouncementsView)) + geom_boxplot()
+```
+
+```{r}
+ggplot(data = E, aes(x = Class, y = Discussion)) + geom_boxplot()
+```
