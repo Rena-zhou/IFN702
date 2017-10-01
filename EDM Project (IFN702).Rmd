@@ -601,3 +601,9 @@ ggplot(data = E, aes(x = Class, y = AnnouncementsView)) + geom_boxplot()
 ```{r}
 ggplot(data = E, aes(x = Class, y = Discussion)) + geom_boxplot()
 ```
+
+
+#Task 3. Prediction of the students' academic performance. Build prediction model and evaluate the results of the model
+
+
+
