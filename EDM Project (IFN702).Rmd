@@ -616,7 +616,7 @@ train_data <- E[ind==1,]
 test_data <- E[ind==2,]
 ```
 
-# Task 1.2 
+
 Use the training data to train a model.
 Since the "sequece" column is just the accession number for the SWISS-PORT data base, it will not be included in the formula of the tree.
 
@@ -632,12 +632,82 @@ E_tree <- rpart(formula, data = train_data, method = "class", minbucket = 1)
 plot(E_ctree)
 ```
 
-# Task 1.3 
-Use your model to predict previously unseen data using the test data.
 
 ```{r view predictions 1}
 confusionMatrix(predict(E_ctree, newdata = test_data), test_data$Class)
 ```
+
+
+#model 2
+
+```{r}
+library(caret)
+rpart.control = trainControl(method = "repeatedcv", number = 10, repeats = 3)
+rpart.grid = expand.grid(.cp = seq(0.01, 0.5, 0.02))
+rpart.model.caret <-train(formula, data = train_data, method = "rpart", preProcess = "scale",
+                          trControl = rpart.control, tuneGrid = rpart.grid)
+
+rpart.predict.caret <- predict.train(rpart.model.caret, test_data)
+
+confusionMatrix(rpart.predict.caret, test_data$Class)
+
+```
+
+
+#model 3
+```{r}
+library(randomForest)
+set.seed(10)
+
+rf.model <- randomForest(Class ~ .- SectionID , data = train_data, importance = TRUE,
+                         ntree = 2000, nodesize = 20)
+
+rf.predict <- predict(rf.model, test_data)
+confusionMatrix(test_data$Class, rf.predict)
+```
+
+```{r}
+varImpPlot(rf.model)
+```
+
+
+#model 4
+```{r}
+cforest.model = cforest(Class ~ .-SectionID , data = train_data,
+                        controls=cforest_unbiased(ntree=2000, mtry = 3))
+
+cforest.prediction = predict(cforest.model, test_data, OOB = TRUE, type = "response")
+confusionMatrix(test_data$Class, cforest.prediction)
+```
+
+
+#model 5 Suppost Vector Machines
+```{r}
+library(e1071)
+svm.model <- svm(Class ~ ., data = train_data, kernel = "radial", cost = 10, gamma = 0.15)
+svm.predict <- predict(svm.model, test_data)
+confusionMatrix(test_data$Class, svm.predict)
+```
+
+
+#Ensemble
+```{r}
+library(class)
+library(caret)
+library(caTools)
+library(party)
+results <- data.frame(tree = E_ctree, rpart = rpart.predict.caret, rf = rf.predict,
+                        cforest = cforest.prediction, svm = svm.predict,
+                        actual.class = test_data$Class, final.prediction = rep("-",nrow(test_data)))
+
+results
+```
+
+
+
+
+
+
 
 
 
