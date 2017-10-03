@@ -626,16 +626,27 @@ formula <- Class ~ gender + NationalITy + PlaceofBirth + StageID + GradeID + Sec
 E_ctree <- ctree(formula, data = train_data)
 ```
 
-E_tree <- rpart(formula, data = train_data, method = "class", minbucket = 1)
-
 ```{r, fig.width=20, fig.height=8}
 plot(E_ctree)
 ```
 
 
 ```{r view predictions 1}
-confusionMatrix(predict(E_ctree, newdata = test_data), test_data$Class)
+tree.predict <- predict(E_ctree, newdata = test_data)
+confusionMatrix(tree.predict, test_data$Class)
 ```
+
+# Heatmap
+```{r}
+E_table <- table(tree.predict, test_data$Class)
+E_melt <- melt(E_table)
+names(E_melt) <- c("Prediction", "Reference", "Value")
+E_melt$Value <- (E_melt$Value - min(E_melt$Value))/(max(E_melt$Value) - min(E_melt$Value))
+E_melt
+
+ggplot(E_melt, aes(x=Reference, y=Prediction, fill=Value)) + geom_tile() + scale_fill_gradient(low = "white",high = "red") + scale_x_discrete(position = "top") + scale_y_discrete(limits = rev(levels(E_melt$Prediction)))
+```
+
 
 
 #model 2
@@ -690,17 +701,27 @@ confusionMatrix(test_data$Class, svm.predict)
 ```
 
 
-#Ensemble
+#model 6 Ensemble
 ```{r}
 library(class)
 library(caret)
 library(caTools)
 library(party)
-results <- data.frame(tree = E_ctree, rpart = rpart.predict.caret, rf = rf.predict,
+results <- data.frame(tree = tree.predict, rpart = rpart.predict.caret, rf = rf.predict,
                         cforest = cforest.prediction, svm = svm.predict,
                         actual.class = test_data$Class, final.prediction = rep("-",nrow(test_data)))
 
 results
+```
+
+```{r}
+getmode <- function(x) {
+    unique.x <- unique(x)
+    unique.x[which.max(tabulate(match(x, unique.x)))]
+}
+
+results$final.prediction <- apply(results, 1, getmode)
+confusionMatrix(results$actual.class, results$final.prediction)
 ```
 
 
