@@ -649,23 +649,8 @@ ggplot(E_melt, aes(x=Reference, y=Prediction, fill=Value)) + geom_tile() + scale
 
 
 
-#model 2
+#model 2  randomforest
 
-```{r}
-library(caret)
-rpart.control = trainControl(method = "repeatedcv", number = 10, repeats = 3)
-rpart.grid = expand.grid(.cp = seq(0.01, 0.5, 0.02))
-rpart.model.caret <-train(formula, data = train_data, method = "rpart", preProcess = "scale",
-                          trControl = rpart.control, tuneGrid = rpart.grid)
-
-rpart.predict.caret <- predict.train(rpart.model.caret, test_data)
-
-confusionMatrix(rpart.predict.caret, test_data$Class)
-
-```
-
-
-#model 3
 ```{r}
 library(randomForest)
 set.seed(10)
@@ -682,7 +667,7 @@ varImpPlot(rf.model)
 ```
 
 
-#model 4
+#model 3  cforest
 ```{r}
 cforest.model = cforest(Class ~ .-SectionID , data = train_data,
                         controls=cforest_unbiased(ntree=2000, mtry = 3))
@@ -692,7 +677,7 @@ confusionMatrix(test_data$Class, cforest.prediction)
 ```
 
 
-#model 5 Suppost Vector Machines
+#model 4 Suppost Vector Machines
 ```{r}
 library(e1071)
 svm.model <- svm(Class ~ ., data = train_data, kernel = "radial", cost = 10, gamma = 0.15)
@@ -701,7 +686,7 @@ confusionMatrix(test_data$Class, svm.predict)
 ```
 
 
-#model 6 Ensemble
+#model 5 Ensemble
 ```{r}
 library(class)
 library(caret)
