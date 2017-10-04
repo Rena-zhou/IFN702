@@ -662,22 +662,7 @@ rf.predict <- predict(rf.model, test_data)
 confusionMatrix(test_data$Class, rf.predict)
 ```
 
-```{r}
-varImpPlot(rf.model)
-```
-
-
-#model 3  cforest
-```{r}
-cforest.model = cforest(Class ~ .-SectionID , data = train_data,
-                        controls=cforest_unbiased(ntree=2000, mtry = 3))
-
-cforest.prediction = predict(cforest.model, test_data, OOB = TRUE, type = "response")
-confusionMatrix(test_data$Class, cforest.prediction)
-```
-
-
-#model 4 Suppost Vector Machines
+#model 3 Support Vector Machines
 ```{r}
 library(e1071)
 svm.model <- svm(Class ~ ., data = train_data, kernel = "radial", cost = 10, gamma = 0.15)
@@ -686,28 +671,7 @@ confusionMatrix(test_data$Class, svm.predict)
 ```
 
 
-#model 5 Ensemble
-```{r}
-library(class)
-library(caret)
-library(caTools)
-library(party)
-results <- data.frame(tree = tree.predict, rpart = rpart.predict.caret, rf = rf.predict,
-                        cforest = cforest.prediction, svm = svm.predict,
-                        actual.class = test_data$Class, final.prediction = rep("-",nrow(test_data)))
 
-results
-```
-
-```{r}
-getmode <- function(x) {
-    unique.x <- unique(x)
-    unique.x[which.max(tabulate(match(x, unique.x)))]
-}
-
-results$final.prediction <- apply(results, 1, getmode)
-confusionMatrix(results$actual.class, results$final.prediction)
-```
 
 
 
