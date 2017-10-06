@@ -372,6 +372,12 @@ ggplot(E, aes(x = raisedhands, fill = Class)) +
 ```
 
 ```{r}
+ggplot(data = E, aes(x = raisedhands, color = Class)) + geom_density()
+```
+
+
+
+```{r}
 ggplot(E, aes(x = VisITedResources, fill = Class)) +
         geom_histogram( binwidth = 5, colour = "black") +
         scale_x_continuous(name = "VisITedResources",
