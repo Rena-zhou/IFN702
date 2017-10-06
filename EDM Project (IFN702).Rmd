@@ -609,12 +609,86 @@ ggplot(data = E, aes(x = Class, y = Discussion)) + geom_boxplot()
 ```
 
 
+```{r}
+set.seed(55)
+library(caret)
+
+
+ControlParameters <- trainControl(method = "cv",
+                                  number = 10,
+                                  savePrediction = TRUE,
+                                  classProbs = TRUE)
+
+#parameterGrid <- expand.grid(mtry=c(2,3,4,5,6,7,8,9))
+
+modelRandom <- train(Class~.,
+                     data = E,
+                     method = "rpart",
+                     trControl = ControlParameters
+#                     tuneGrid = parameterGrid
+                     )
+modelRandom
+modelRandom$pred
+
+```
+
+
+```{r}
+set.seed(55)
+library(caret)
+
+
+ControlParameters <- trainControl(method = "cv",
+                                  number = 10,
+                                  savePrediction = TRUE,
+                                  classProbs = TRUE)
+
+parameterGrid <- expand.grid(mtry=c(2,3,4,5,6,7,8,9))
+
+modelRandom <- train(Class~.,
+                     data = E,
+                     method = "rf",
+                     trControl = ControlParameters,
+                     tuneGrid = parameterGrid
+                     )
+modelRandom
+```
+
+
+```{r}
+set.seed(55)
+library(caret)
+
+
+ControlParameters <- trainControl(method = "cv",
+                                  number = 10,
+                                  savePrediction = TRUE,
+                                  classProbs = TRUE)
+
+#parameterGrid <- expand.grid(mtry=c(2,3,4,5,6,7,8,9))
+
+modelRandom <- train(Class~.,
+                     data = E,
+                     method = "svmRadial",
+                     trControl = ControlParameters
+#                     tuneGrid = parameterGrid
+                     )
+modelRandom
+modelRandom$pred
+
+```
+
+
 #Task 3. Prediction of the students' academic performance. Build prediction model and evaluate the results of the model
+
+
 
 #Prediction model 1 --- Decision tree
 ```{r create training and test data 1}
 # Decision trees use probability to choose how to split, so here we "seed" a random number generator so our results are always the same.
 set.seed(55)
+library(caret)
+
 
 # Split the data into 70% training, 30% test: this means we use 70% of the dataset to build our predictive model. We then use the remaining 30% of data as the unseen data (test) in order to evaluate the predictions.
 ind <- sample(2, nrow(E), replace=TRUE, prob=c(0.75, 0.25))
@@ -676,6 +750,101 @@ svm.predict <- predict(svm.model, test_data)
 confusionMatrix(test_data$Class, svm.predict)
 ```
 
+```{r}
+# Preproces: remove the useless features
+E <- E[,-8]
+
+E
+
+set.seed(12345)
+E <- E[,-c(5,6)]
+E
+# Stratified sampling
+TrainingDataIndex <- createDataPartition(E$Class, p=0.75, list = FALSE)
+# Create Training Data 
+trainingData <- E[TrainingDataIndex,]
+testData <- E[-TrainingDataIndex,]
+TrainingParameters <- trainControl(method = "cv", number = 10)
+
+
+# train model with randomforest networks
+trModel <- train(trainingData[,-17], trainingData$Class,
+                  method = "rpart",
+                  trControl= TrainingParameters
+)
+
+trPredictions <-predict(trModel, testData)
+# Create confusion matrix
+trNN <-confusionMatrix(trPredictions, testData$Class)
+
+print(trNN)
+
+```
+
+```{r}
+# train model with randomforest networks
+rfModel <- train(trainingData[,-17], trainingData$Class,
+                  method = "rf",
+                  trControl= TrainingParameters,
+                  preProcess=c("scale","center")
+)
+
+rfPredictions <-predict(rfModel, testData)
+# Create confusion matrix
+rfNN <-confusionMatrix(rfPredictions, testData$Class)
+
+print(rfNN)
+
+```
+
+```{r}
+# train model with neural networks
+NNModel <- train(trainingData[,-17], trainingData$Class,
+                  method = "nnet",
+                  trControl= TrainingParameters,
+                  preProcess=c("scale","center"),
+                  na.action = na.omit
+)
+
+NNPredictions <-predict(NNModel, testData)
+# Create confusion matrix
+cmNN <-confusionMatrix(NNPredictions, testData$Class)
+
+print(cmNN)
+
+```
+
+
+```{r}
+# Preproces: remove the useless features
+E <- E[,-8]
+
+E
+
+set.seed(12345)
+E <- E[,-c(5,6)]
+E
+# Stratified sampling
+TrainingDataIndex <- createDataPartition(E$Class, p=0.75, list = FALSE)
+# Create Training Data 
+trainingData <- E[TrainingDataIndex,]
+testData <- E[-TrainingDataIndex,]
+TrainingParameters <- trainControl(method = "repeatedcv", number = 10, repeats=10)
+
+# train model with neural networks
+NNModel <- train(trainingData[,-17], trainingData$Class,
+                  method = "nnet",
+                  trControl= TrainingParameters,
+                  preProcess=c("scale","center"),
+                  na.action = na.omit
+)
+
+NNPredictions <-predict(NNModel, testData)
+# Create confusion matrix
+cmNN <-confusionMatrix(NNPredictions, testData$Class)
+
+print(cmNN)
+```
 
 
 
