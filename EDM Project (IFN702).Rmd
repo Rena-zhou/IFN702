@@ -261,6 +261,17 @@ ggplot(data = E, aes(x = Topic, fill = Class)) + geom_bar() +
 
 ```
 
+```{r}
+x <- rep(1:5, each = 3) 
+y <- rep(c('A','B','C'),times = 5) 
+set.seed(1234)
+z <- round(runif(min = 10, max = 20, n = 15)) 
+df <- data.frame(x= x, y = y, z = z) 
+ggplot(data = df, mapping = aes(x = Topic, y = z, fill = Class)) + geom_bar(stat= 'identity', position = 'fill')
+```
+
+
+
 
 ```{r}
 GradeID_frequence <- as.data.frame(table(ED$GradeID))
@@ -614,12 +625,26 @@ ggplot(data = E, aes(x = Class, y = Discussion)) + geom_boxplot()
 
 #Task 3. Prediction of the students' academic performance. Build prediction model and evaluate the results of the model
 
+
+```{r}
+library(corrplot)
+Edu1 <- E
+for(i in 1:ncol(Edu1)){
+  Edu1[,i]<-as.integer(Edu1[,i])
+}
+corrplot::corrplot(cor(as.matrix(Edu1)),type = "upper")
+```
+
+
+
 ```{r}
 # Preproces: remove the useless features
 E1 <- E[,-c(5,6,8)]
 E1
 
 ```
+
+
 
 
 
@@ -661,6 +686,8 @@ tree.predict <- predict(E_ctree, newdata = testData)
 confusionMatrix(tree.predict, testData$Class)
 ```
 
+
+
 # Heatmap
 ```{r}
 E_table <- table(tree.predict, testData$Class)
@@ -697,7 +724,13 @@ confusionMatrix(testData$Class, svm.predict)
 #N-folder cross validation for the prediction models above
 
 ```{r}
+set.seed(55)
 
+ind <- sample(2, nrow(E), replace=TRUE, prob=c(0.75, 0.25))
+trainingData <- E[ind==1,]
+testData <- E[ind==2,]
+
+formula <- Class ~ gender + NationalITy + PlaceofBirth + StageID +GradeID + SectionID + Topic +Semester + Relation + raisedhands + VisITedResources + AnnouncementsView + Discussion + ParentAnsweringSurvey + ParentschoolSatisfaction + StudentAbsenceDays
 
 TrainingParameters <- trainControl(method = "cv", number = 10)
 
@@ -722,6 +755,18 @@ confusionMatrix(testData$Class, trPredictions)
 
 
 ```{r}
+# estimate variable importance
+importance <- varImp(trModel, scale=FALSE)
+# summarize importance
+print(importance)
+# plot importance
+plot(importance)
+```
+
+
+
+
+```{r}
 # train model with randomforest networks
 rfModel <- train(formula,
                  data = trainingData,
@@ -734,7 +779,7 @@ rfPredictions <-predict(rfModel, testData)
 # Create confusion matrix
 confusionMatrix(rfPredictions, testData$Class)
 
-
+varImpPlot(rf.model)
 
 ```
 
