@@ -612,39 +612,12 @@ ggplot(data = E, aes(x = Class, y = Discussion)) + geom_boxplot()
 ```
 
 
-```{r}
-set.seed(55)
-library(caret)
-
-
-ControlParameters <- trainControl(method = "cv",
-                                  number = 10,
-                                  savePrediction = TRUE,
-                                  classProbs = TRUE)
-
-#parameterGrid <- expand.grid(mtry=c(2,3,4,5,6,7,8,9))
-
-modelRandom <- train(Class~.,
-                     data = E,
-                     method = "rpart",
-                     trControl = ControlParameters
-#                     tuneGrid = parameterGrid
-                     )
-modelRandom
-modelRandom$pred
-
-```
-
-
-
-
 #Task 3. Prediction of the students' academic performance. Build prediction model and evaluate the results of the model
 
 ```{r}
 # Preproces: remove the useless features
-set.seed(12345)
-E <- E[,-c(5,6,8)]
-E
+E1 <- E[,-c(5,6,8)]
+E1
 
 ```
 
@@ -657,10 +630,17 @@ set.seed(55)
 
 
 # Split the data into 70% training, 30% test: this means we use 70% of the dataset to build our predictive model. We then use the remaining 30% of data as the unseen data (test) in order to evaluate the predictions.
-ind <- sample(2, nrow(E), replace=TRUE, prob=c(0.75, 0.25))
-train_data <- E[ind==1,]
-test_data <- E[ind==2,]
-E
+
+# Stratified sampling
+
+#TrainingDataIndex <- createDataPartition(E1$Class, p=0.75, list = FALSE)
+
+# Create Training Data 
+#trainingData <- E1[TrainingDataIndex,]
+#testData <- E1[-TrainingDataIndex,]
+ind <- sample(2, nrow(E1), replace=TRUE, prob=c(0.75, 0.25))
+trainingData <- E1[ind==1,]
+testData <- E1[ind==2,]
 ```
 
 
@@ -668,7 +648,7 @@ E
 #Use the training data to train a model. Since the "sequece" column is just the accession number for the SWISS-PORT data base, it will not be included in the formula of the tree.
 formula <- Class ~ gender + NationalITy + PlaceofBirth + StageID  + Topic + Relation + raisedhands + VisITedResources + AnnouncementsView + Discussion + ParentAnsweringSurvey + ParentschoolSatisfaction + StudentAbsenceDays
 
-E_ctree <- ctree(formula, data = train_data)
+E_ctree <- ctree(formula, data = trainingData)
 ```
 
 ```{r, fig.width=20, fig.height=8}
@@ -677,13 +657,13 @@ plot(E_ctree)
 
 
 ```{r view predictions 1}
-tree.predict <- predict(E_ctree, newdata = test_data)
-confusionMatrix(tree.predict, test_data$Class)
+tree.predict <- predict(E_ctree, newdata = testData)
+confusionMatrix(tree.predict, testData$Class)
 ```
 
 # Heatmap
 ```{r}
-E_table <- table(tree.predict, test_data$Class)
+E_table <- table(tree.predict, testData$Class)
 E_melt <- melt(E_table)
 names(E_melt) <- c("Prediction", "Reference", "Value")
 E_melt$Value <- (E_melt$Value - min(E_melt$Value))/(max(E_melt$Value) - min(E_melt$Value))
@@ -697,42 +677,35 @@ ggplot(E_melt, aes(x=Reference, y=Prediction, fill=Value)) + geom_tile() + scale
 #model 2  randomforest
 
 ```{r}
-set.seed(10)
 
-rf.model <- randomForest(Class ~ . , data = train_data, importance = TRUE,
+rf.model <- randomForest(formula, data = trainingData, importance = TRUE,
                          ntree = 2000, nodesize = 20)
 
-rf.predict <- predict(rf.model, test_data)
-confusionMatrix(test_data$Class, rf.predict)
+rf.predict <- predict(rf.model, testData)
+confusionMatrix(testData$Class, rf.predict)
 ```
 
 #model 3 Support Vector Machines
 ```{r}
 
-svm.model <- svm(Class ~ ., data = train_data, kernel = "radial", cost = 10, gamma = 0.15)
-svm.predict <- predict(svm.model, test_data)
-confusionMatrix(test_data$Class, svm.predict)
+svm.model <- svm(formula, data = trainingData, kernel = "radial", cost = 10, gamma = 0.15)
+svm.predict <- predict(svm.model, testData)
+confusionMatrix(testData$Class, svm.predict)
 ```
 
 
 #N-folder cross validation for the prediction models above
 
 ```{r}
-# Stratified sampling
 
-TrainingDataIndex <- createDataPartition(E$Class, p=0.80, list = FALSE)
-
-# Create Training Data 
-trainingData <- E[TrainingDataIndex,]
-testData <- E[-TrainingDataIndex,]
 
 TrainingParameters <- trainControl(method = "cv", number = 10)
 
 
 # train model with randomforest networks
-trModel <- train(Class~.,
+trModel <- train(formula,
                  data = trainingData,
-                 method = "rpart",
+                 method = "ctree",
                  trControl= TrainingParameters,
                  preProcess=c("scale","center"),
                  na.action = na.omit
@@ -740,16 +713,17 @@ trModel <- train(Class~.,
 
 trPredictions <-predict(trModel, testData)
 # Create confusion matrix
-trNN <-confusionMatrix(trPredictions, testData$Class)
+#trNN <-confusionMatrix(trPredictions, testData$Class)
+confusionMatrix(testData$Class, trPredictions)
 
-print(trNN)
+#print(trNN)
 
 ```
 
 
 ```{r}
 # train model with randomforest networks
-rfModel <- train(Class~.,
+rfModel <- train(formula,
                  data = trainingData,
                   method = "rf",
                   trControl= TrainingParameters,
@@ -758,19 +732,19 @@ rfModel <- train(Class~.,
 
 rfPredictions <-predict(rfModel, testData)
 # Create confusion matrix
-rfNN <-confusionMatrix(rfPredictions, testData$Class)
+confusionMatrix(rfPredictions, testData$Class)
 
-print(rfNN)
+
 
 ```
 
 
 
 ```{r}
-# train model with neural networks
-SVMModel <- train(Class~.,
+# train model with SVM
+SVMModel <- train(formula,
                  data = trainingData,
-                  method = "svmRadial",
+                  method = "svmRadial", cost = 10, gamma = 0.15,
                   trControl= TrainingParameters,
                   preProcess=c("scale","center"),
                   na.action = na.omit
@@ -778,30 +752,13 @@ SVMModel <- train(Class~.,
 
 SVMPredictions <-predict(SVMModel, testData)
 # Create confusion matrix
-SVMNN <-confusionMatrix(SVMPredictions, testData$Class)
+confusionMatrix(SVMPredictions, testData$Class)
 
-print(SVMNN)
 
 ```
 
 
-```{r}
-# train model with neural networks
-NNModel <- train(Class~.,
-                 data = trainingData,
-                  method = "nnet",
-                  trControl= TrainingParameters,
-                  preProcess=c("scale","center"),
-                  na.action = na.omit
-)
 
-NNPredictions <-predict(NNModel, testData)
-# Create confusion matrix
-cmNN <-confusionMatrix(NNPredictions, testData$Class)
-
-print(cmNN)
-
-```
 
 
 
