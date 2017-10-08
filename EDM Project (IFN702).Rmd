@@ -255,13 +255,13 @@ ggplot(E, aes(x = raisedhands, fill = Class)) +
                            breaks = seq(0, 100, 5),
                            limits=c(0, 100)) + 
         scale_y_continuous(name = "Count") +
-        ggtitle("Frequency histogram of Raised Hands") + scale_fill_discrete(limits=c("H","M","L"))
+        ggtitle("Frequency histogram of Raised Hands") 
 
 
 ```
 
 ```{r}
-ggplot(data = E, aes(x = raisedhands, color = Class)) + geom_density()
+ggplot(data = E, aes(x = raisedhands, color = Class)) + geom_density(size=1)
 ```
 
 
@@ -273,7 +273,7 @@ ggplot(E, aes(x = VisITedResources, fill = Class)) +
                            breaks = seq(0, 100, 5),
                            limits=c(0, 100)) + 
         scale_y_continuous(name = "Count") +
-        ggtitle("Frequency histogram of VisITedResources")+ scale_fill_discrete(limits=c("H","M","L"))
+        ggtitle("Frequency histogram of VisITedResources")
 
 
 ```
@@ -285,7 +285,7 @@ ggplot(E, aes(x = AnnouncementsView, fill = Class)) +
                            breaks = seq(0, 100, 5),
                            limits=c(0, 100)) + 
         scale_y_continuous(name = "Count") +
-        ggtitle("Frequency histogram of AnnouncementsView") + scale_fill_discrete(limits=c("H","M","L"))
+        ggtitle("Frequency histogram of AnnouncementsView") 
 
 
 ```
@@ -297,7 +297,7 @@ ggplot(E, aes(x = Discussion, fill = Class)) +
                            breaks = seq(0, 100, 5),
                            limits=c(0, 100)) + 
         scale_y_continuous(name = "Count") +
-        ggtitle("Frequency histogram of Discussion") + scale_fill_discrete(limits=c("H","M","L"))
+        ggtitle("Frequency histogram of Discussion") 
 
 
 ```
