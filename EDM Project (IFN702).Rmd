@@ -78,7 +78,7 @@ E
 ```{r}
 str(E)
 summary(E)
-levels(E$Class) = c('H','M','L')
+#levels(E$Class) = c('H','M','L')
 E
 
 ```
@@ -255,19 +255,73 @@ ggplot(data = E, aes(x = Topic, fill = gender)) + geom_bar() +
 
 
 ```{r}
-levels(E$Class) = c('H','M','L')
+#levels(E$Class) = c('H','M','L')
 ggplot(data = E, aes(x = Topic, fill = Class)) + geom_bar() +
-    labs(x = "Topic", y = "Student Count") + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+xlab("Topic")+ylab("Counts")+theme(axis.text.x = element_text(angle=90, hjust=1))+ scale_fill_discrete(limits=c("H","M","L"))
+    labs(x = "Topic", y = "Student Count") + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+xlab("Topic")+ylab("Counts")+theme(axis.text.x = element_text(angle=90, hjust=1))
+
+#+ scale_fill_discrete(limits=c("H","M","L"))
+
+
+
+
+
 
 ```
 
 ```{r}
-x <- rep(1:5, each = 3) 
-y <- rep(c('A','B','C'),times = 5) 
-set.seed(1234)
-z <- round(runif(min = 10, max = 20, n = 15)) 
-df <- data.frame(x= x, y = y, z = z) 
-ggplot(data = df, mapping = aes(x = Topic, y = z, fill = Class)) + geom_bar(stat= 'identity', position = 'fill')
+E$Topic <- as.factor(E$Topic)
+
+library(dplyr)
+
+ESummary = E %>%
+ # Get the counts
+ group_by(Topic, Class) %>%
+ summarise(count = n()) %>%
+# Get labels and position of labels
+ group_by(Topic) %>%
+ mutate(Percent = paste0(sprintf("%.1f", count/sum(count) * 100),"%")) %>%
+ mutate(pos = cumsum(count) - 0.5 * count)
+
+ggplot(ESummary, aes(x = Topic, y = count)) + 
+ geom_bar(aes(fill = Class), stat ="identity") + 
+ geom_text(aes(y = pos, label = Percent))  + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+xlab("Topic")+ylab("Counts")+theme(axis.text.x = element_text(angle=90, hjust=1)) 
+
+
+```
+
+
+
+```{r}
+Topic_frequence <- as.data.frame(table(E$Topic))
+names(Topic_frequence)<- c("Topic","Counts")
+
+Edu <- cbind(Topic_frequence, E)
+#names(Topic_f)<- c("Topic","Counts","Class")
+#Topic_f
+Edu
+
+#Topic_f$Counts = Topic_f$Counts/Topic_frequence$Counts
+
+ggplot(Edu, mapping = aes(x = Topic, y = Counts, fill = Class)) + geom_bar(stat= 'identity') +
+    labs(x = "Topic", y = "Student Count") + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+xlab("Topic")+ylab("Counts")+theme(axis.text.x = element_text(angle=90, hjust=1))
+
+```
+
+
+```{r}
+Topic_frequence <- as.data.frame(table(E$Topic))
+names(Topic_frequence)<- c("Topic","Counts")
+
+Topic_f <- cbind(Topic_frequence, E$Class)
+names(Topic_f)<- c("Topic","Counts","Class")
+Topic_f
+
+ce <- ddply(.data = cabbage_exp, .variables = "Topic", .fun = transform, percent_weight = Weight/sum(Weight) * 
+    100)
+head(cabbage_exp)
+
+ggplot(ce, aes(x = Date, y = percent_weight, fill = Cultivar)) + geom_bar(stat = "identity")
+
 ```
 
 
