@@ -80,12 +80,11 @@ E
 ```{r}
 str(E)
 summary(E)
-#levels(E$Class) = c('H','M','L')
-E
 
 E$Class = factor(E$Class, levels=c("H","M","L"), labels=c("H","M","L")) 
 
 E$StageID = factor(E$StageID, levels=c("HighSchool","MiddleSchool","lowerlevel"), labels=c("HighSchool","MiddleSchool","Lowerlevel")) 
+E
 
 ```
 
@@ -118,9 +117,6 @@ ggplot(data = E, aes(x = gender, fill = StudentAbsenceDays)) + geom_bar() +
 ggplot(data = E, aes(x = gender, fill = Class)) + geom_bar() +
     labs(x = "Gender", y = "Student Count")  + ggtitle(label = "Gender Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
-
-
-#Spanish has worst male:female ratio whereas science, chemistry, english and french have good ratio.
 
 
 
@@ -286,7 +282,7 @@ ggplot(data = E, aes(x = Topic, fill = Semester)) + geom_bar(colour = "black") +
 ggplot(data = E, aes(x = Topic, fill = Relation)) + geom_bar(colour = "black") +
     labs(x = "Topic", y = "Student Count") + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))+ scale_y_continuous(breaks = seq(0,100,4))
 ```
-#Most french students have mom as gaurdian whereas most IT students have fathers as gaurdian.
+#Most French students have mom as guardian whereas most IT students have fathers as guardian.
 
 ```{r}
 ggplot(data = E, aes(x = ParentAnsweringSurvey, fill = ParentschoolSatisfaction)) + geom_bar(colour = "black") +
@@ -299,6 +295,27 @@ ggplot(data = E, aes(x = Class, fill = gender)) + geom_bar(colour = "black") +
     labs(x = "Class", y = "Student Count") + ggtitle(label = "Class Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+ scale_y_continuous(breaks = seq(0,500,20))
 ```
 #Very few girls in low class
+
+```{r}
+ggplot(data = E, aes(x = Class, fill = Relation)) + geom_bar(colour = "black") +
+    labs(x = "Class", y = "Student Count") + ggtitle(label = "Class Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+ scale_y_continuous(breaks = seq(0,500,20))
+```
+#The students who have moms as guardians have higher chances to get high class marks.
+
+```{r}
+ggplot(data = E, aes(x = Class, fill = ParentAnsweringSurvey)) + geom_bar(colour = "black") +
+    labs(x = "Class", y = "Student Count") + ggtitle(label = "Class Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+ scale_y_continuous(breaks = seq(0,500,20))
+```
+#Students whose parents answer the survey are the ones getting good marks.
+
+
+```{r}
+ggplot(data = E, aes(x = Class, fill = StudentAbsenceDays)) + geom_bar(colour = "black") +
+    labs(x = "Class", y = "Student Count") + ggtitle(label = "Class Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+ scale_y_continuous(breaks = seq(0,500,20))
+```
+#Student getting absent are the ones getting low marks.
+
+
 
 
 # Summary of Task 1.1:
@@ -372,40 +389,42 @@ ggplot(E, aes(x = Discussion, fill = Class)) +
 ```{r}
 ggplot(data = E, aes(x = gender, y = raisedhands)) + geom_boxplot()
 ```
+#Girls have more hand raises
 
 
 ```{r}
 ggplot(data = E, aes(x = gender, y = VisITedResources)) + geom_boxplot()
 
 ```
+#Girls visit more resources
+
+
 ```{r}
-ggplot(data = E, aes(x = gender, y = AnnouncementsView)) + geom_boxplot()
+ggplot(data = E, aes(x = NationalITy, y = raisedhands)) + geom_boxplot()+
+  theme(axis.text.x = element_text(angle=45, hjust=1))
 ```
-
-```{r}
-ggplot(data = E, aes(x = gender, y = Discussion)) + geom_boxplot()
-```
-
-```{r}
-ggplot(data = E, aes(x = NationalITy, y = raisedhands)) + geom_boxplot()
-```
+#Jordan more hand raises than KW., lybia lowest. iraq and palestine highest hand raises.
 
 
 ```{r}
-ggplot(data = E, aes(x = NationalITy, y = VisITedResources)) + geom_boxplot()
+ggplot(data = E, aes(x = NationalITy, y = VisITedResources)) + geom_boxplot()+
+  theme(axis.text.x = element_text(angle=45, hjust=1))
 
 ```
 ```{r}
-ggplot(data = E, aes(x = NationalITy, y = AnnouncementsView)) + geom_boxplot()
+ggplot(data = E, aes(x = NationalITy, y = AnnouncementsView)) + geom_boxplot()+
+  theme(axis.text.x = element_text(angle=45, hjust=1))
 ```
 
 ```{r}
-ggplot(data = E, aes(x = NationalITy, y = Discussion)) + geom_boxplot()
+ggplot(data = E, aes(x = NationalITy, y = Discussion)) + geom_boxplot()+
+  theme(axis.text.x = element_text(angle=45, hjust=1))
 ```
 
 ```{r}
 ggplot(data = E, aes(x = StageID, y = raisedhands)) + geom_boxplot()
 ```
+#More hand raises in middle schools.
 
 
 ```{r}
@@ -419,11 +438,13 @@ ggplot(data = E, aes(x = StageID, y = AnnouncementsView)) + geom_boxplot()
 ```{r}
 ggplot(data = E, aes(x = StageID, y = Discussion)) + geom_boxplot()
 ```
+#More discussions in high schools.
+
 
 ```{r}
 ggplot(data = E, aes(x = Topic, y = raisedhands)) + geom_boxplot()
 ```
-
+#IT has very few hand raises intersetingly although most students study there.
 
 ```{r}
 ggplot(data = E, aes(x = Topic, y = VisITedResources)) + geom_boxplot()
@@ -453,11 +474,13 @@ ggplot(data = E, aes(x = SectionID, y = AnnouncementsView)) + geom_boxplot()
 ```{r}
 ggplot(data = E, aes(x = SectionID, y = Discussion)) + geom_boxplot()
 ```
+#Section C with lowest discussion
+
 
 ```{r}
 ggplot(data = E, aes(x = Semester, y = raisedhands)) + geom_boxplot()
 ```
-
+#Second semester has more hand raises
 
 ```{r}
 ggplot(data = E, aes(x = Semester, y = VisITedResources)) + geom_boxplot()
@@ -474,7 +497,7 @@ ggplot(data = E, aes(x = Semester, y = Discussion)) + geom_boxplot()
 ```{r}
 ggplot(data = E, aes(x = Relation, y = raisedhands)) + geom_boxplot()
 ```
-
+#Guardians moter -> more hand raises
 
 ```{r}
 ggplot(data = E, aes(x = Relation, y = VisITedResources)) + geom_boxplot()
@@ -491,6 +514,7 @@ ggplot(data = E, aes(x = Relation, y = Discussion)) + geom_boxplot()
 ```{r}
 ggplot(data = E, aes(x = ParentAnsweringSurvey, y = raisedhands)) + geom_boxplot()
 ```
+#survey answer-yes -> more hand raises
 
 
 ```{r}
@@ -508,7 +532,7 @@ ggplot(data = E, aes(x = ParentAnsweringSurvey, y = Discussion)) + geom_boxplot(
 ```{r}
 ggplot(data = E, aes(x = ParentschoolSatisfaction, y = raisedhands)) + geom_boxplot()
 ```
-
+#satisfaction-good -> more hand raises
 
 ```{r}
 ggplot(data = E, aes(x = ParentschoolSatisfaction, y = VisITedResources)) + geom_boxplot()
@@ -525,7 +549,7 @@ ggplot(data = E, aes(x = ParentschoolSatisfaction, y = Discussion)) + geom_boxpl
 ```{r}
 ggplot(data = E, aes(x = StudentAbsenceDays, y = raisedhands)) + geom_boxplot()
 ```
-
+#more leaves less hand raises
 
 ```{r}
 ggplot(data = E, aes(x = StudentAbsenceDays, y = VisITedResources)) + geom_boxplot()
@@ -542,19 +566,24 @@ ggplot(data = E, aes(x = StudentAbsenceDays, y = Discussion)) + geom_boxplot()
 ```{r}
 ggplot(data = E, aes(x = Class, y = raisedhands)) + geom_boxplot()
 ```
-
+#high marks -> high hand raises
 
 ```{r}
 ggplot(data = E, aes(x = Class, y = VisITedResources)) + geom_boxplot()
 
 ```
+#high marks -> visited resources
+
 ```{r}
 ggplot(data = E, aes(x = Class, y = AnnouncementsView)) + geom_boxplot()
 ```
+#more marks more announcments views
+
 
 ```{r}
 ggplot(data = E, aes(x = Class, y = Discussion)) + geom_boxplot()
 ```
+#high marks more discussion
 
 
 #Task 3. Prediction of the students' academic performance. Build prediction model and evaluate the results of the model
