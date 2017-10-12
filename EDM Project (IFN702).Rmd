@@ -57,7 +57,6 @@ We will use R Studio to analyze this datasets in R programming language, and aim
 
 #Task 1. Exporation of the students' academic performance datasets
 
-#Task 1.1. Barplots of classification values distribution:
 
 
 ```{r}
@@ -71,8 +70,10 @@ library(dplyr)
 
 ```
 
+#Task 1.1. Preprocess the data set:
+
 ```{r}
-# Import Uber pickups data sets
+# Import XAPI Educational data sets
 E <- read.csv("data/xAPI-Edu-Data.csv")
 E
 ```
@@ -81,19 +82,26 @@ E
 str(E)
 summary(E)
 
+#Reorder the "Class"" column of the data set, make the sequence of "Class" to be "H","M","L" instead of "H","L","M". 
+
 E$Class = factor(E$Class, levels=c("H","M","L"), labels=c("H","M","L")) 
 
+#Reorder the "StageID" column of the data set, make the sequence of "StageID" to be "HighSchool","MiddleSchool","Lowerlevel" instead of "HighSchool","lowerlevel","MiddleSchool". 
+
 E$StageID = factor(E$StageID, levels=c("HighSchool","MiddleSchool","lowerlevel"), labels=c("HighSchool","MiddleSchool","Lowerlevel")) 
+
 E
 
 ```
 
+#Task 1.2. Barplots of classification values distribution:
 
+#Gender distribution:
 ```{r}
 ggplot(data = E, aes(x = gender, fill = Relation)) + geom_bar() +
-    labs(x = "Gender", y = "Student Count")+ ggtitle(label = "Gender Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+    labs(x = "Gender", y = "Student Count")+ ggtitle(label = "Gender Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+ scale_y_continuous(breaks = seq(0,320,20))
 ```
-#Parent responsible for student
+#There are nearly 175 girls and 305 boys in this data set. The number of girls who have mom as guardian nearly the same as having father as guardian, whereas most boys have father as guardian.
 
 
 ```{r}
@@ -102,24 +110,69 @@ ggplot(data = E, aes(x = gender, fill = ParentAnsweringSurvey)) + geom_bar() +
 ```
 
 ```{r}
+ ESummary = E %>%
+ # Get the counts
+ group_by(gender, ParentAnsweringSurvey) %>%
+ summarise(count = n()) %>%
+# Get labels and position of labels
+ group_by(gender) %>%
+ mutate(Percent = paste0(sprintf("%.1f", count/sum(count) * 100),"%"))
+
+ ggplot(ESummary, aes(x = gender, y = count)) + 
+ geom_bar(aes(fill = ParentAnsweringSurvey), stat ="identity", position = 'fill')+ labs(x = "Gender", y = "Student Count")+ ggtitle(label = "Normalized Gender Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=0, hjust=1))+ scale_y_continuous(breaks = seq(0,1,0.2))
+
+```
+# The rates of parent answering survey are nearly the same between girls and boys, which are both under 60%.
+
+
+```{r}
 ggplot(data = E, aes(x = gender, fill = ParentschoolSatisfaction)) + geom_bar() +
     labs(x = "Gender", y = "Student Count")+ ggtitle(label = "Gender Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
 ```{r}
+ ESummary = E %>%
+ # Get the counts
+ group_by(gender, ParentschoolSatisfaction) %>%
+ summarise(count = n()) %>%
+# Get labels and position of labels
+ group_by(gender) %>%
+ mutate(Percent = paste0(sprintf("%.1f", count/sum(count) * 100),"%"))
+
+ ggplot(ESummary, aes(x = gender, y = count)) + 
+ geom_bar(aes(fill = ParentschoolSatisfaction), stat ="identity", position = 'fill')+ labs(x = "Gender", y = "Student Count")+ ggtitle(label = "Normalized Gender Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+ scale_y_continuous(breaks = seq(0,1,0.1))
+
+```
+# Girls' parents has higher school satisfaction than boys. Girls have higher rate(with about 67%) of parent school satisfaction in good than boys(with about 57%).
+
+
+```{r}
 ggplot(data = E, aes(x = gender, fill = StudentAbsenceDays)) + geom_bar() +
     labs(x = "Gender", y = "Student Count")+ ggtitle(label = "Gender Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
-#Girls has higher 
+```{r}
+ ESummary = E %>%
+ # Get the counts
+ group_by(gender, StudentAbsenceDays) %>%
+ summarise(count = n()) %>%
+# Get labels and position of labels
+ group_by(gender) %>%
+ mutate(Percent = paste0(sprintf("%.1f", count/sum(count) * 100),"%"))
+
+ ggplot(ESummary, aes(x = gender, y = count)) + 
+ geom_bar(aes(fill = StudentAbsenceDays), stat ="identity", position = 'fill')+ labs(x = "Gender", y = "Student Count")+ ggtitle(label = "Normalized Gender Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+ scale_y_continuous(breaks = seq(0,1,0.1))
+
+```
+#Boys has higher rate of above 7 absence days.
+
 
 ```{r}
-
 ggplot(data = E, aes(x = gender, fill = Class)) + geom_bar() +
     labs(x = "Gender", y = "Student Count")  + ggtitle(label = "Gender Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
 
-
+#Place of Birth distribution:
 ```{r}
 
 ggplot(data = E, aes(x = PlaceofBirth, fill = Class)) + geom_bar() +
@@ -140,6 +193,9 @@ ggplot(data = E, aes(x = PlaceofBirth, fill = gender)) + geom_bar() +
 ggplot(data = E, aes(x = PlaceofBirth, fill = Relation)) + geom_bar() +
     labs(x = "PlaceofBirth", y = "Student Count")+ ggtitle(label = "PlaceofBirth Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold")) +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
+
+
+#Nationality distribution:
 ```{r}
 ggplot(data = E, aes(x = NationalITy, fill = Class)) + geom_bar() +
     labs(x = "Nationality", y = "Student Count")+ ggtitle(label = "Nationality Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))
@@ -159,7 +215,7 @@ ggplot(data = E, aes(x = NationalITy, fill = ParentschoolSatisfaction)) + geom_b
     labs(x = "NationalITy", y = "Student Count")+ ggtitle(label = "Nationality Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
-
+#Stage ID distribution:
 ```{r}
 ggplot(data = E, aes(x = StageID, fill = gender)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") + ggtitle(label = "Stage Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
@@ -204,13 +260,13 @@ ggplot(data = E, aes(x = StageID, fill = Class)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") + ggtitle(label = "Grade Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
+#Grade ID distribution:
 ```{r}
-
 ggplot(data = E, aes(x = GradeID, fill = StageID)) + geom_bar() +
     labs(x = "GradeID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))+ ggtitle(label = "Grade Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-
+#Section ID distribution:
 ```{r}
 ggplot(data = E, aes(x = SectionID, fill = StageID)) + geom_bar() +
     labs(x = "SectionID", y = "Student Count") + ggtitle(label = "Section Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
@@ -224,6 +280,7 @@ ggplot(data = E, aes(x = SectionID, fill = Topic)) + geom_bar(colour = "black") 
 #Section c has only IT and science students.
 
 
+#Topic distribution:
 ```{r}
 ggplot(data = E, aes(x = Topic, fill = gender)) + geom_bar() +
     labs(x = "Topic", y = "Student Count") + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1)) 
@@ -284,12 +341,16 @@ ggplot(data = E, aes(x = Topic, fill = Relation)) + geom_bar(colour = "black") +
 ```
 #Most French students have mom as guardian whereas most IT students have fathers as guardian.
 
+
+#Parent Answering Survey distribution:
 ```{r}
 ggplot(data = E, aes(x = ParentAnsweringSurvey, fill = ParentschoolSatisfaction)) + geom_bar(colour = "black") +
     labs(x = "ParentAnsweringSurvey", y = "Student Count") + ggtitle(label = "ParentAnsweringSurvey Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+ scale_y_continuous(breaks = seq(0,500,20))
 ```
 #Most of the parents who aren't satisfied with the school do not answer the survey.
 
+
+#Class distribution:
 ```{r}
 ggplot(data = E, aes(x = Class, fill = gender)) + geom_bar(colour = "black") +
     labs(x = "Class", y = "Student Count") + ggtitle(label = "Class Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+ scale_y_continuous(breaks = seq(0,500,20))
