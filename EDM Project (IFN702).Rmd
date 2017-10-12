@@ -644,6 +644,7 @@ rf.model <- randomForest(formula, data = trainingData, importance = TRUE,
 
 rf.predict <- predict(rf.model, testData)
 confusionMatrix(testData$Class, rf.predict)
+varImpPlot(rf.model)
 ```
 
 #model 3 Support Vector Machines
@@ -712,8 +713,6 @@ rfModel <- train(formula,
 rfPredictions <-predict(rfModel, testData)
 # Create confusion matrix
 confusionMatrix(rfPredictions, testData$Class)
-
-varImpPlot(rf.model)
 
 ```
 
