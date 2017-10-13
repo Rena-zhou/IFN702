@@ -193,7 +193,22 @@ ggplot(data = E, aes(x = gender, fill = Class)) + geom_bar() +
 ggplot(data = E, aes(x = PlaceofBirth, fill = Class)) + geom_bar() +
     labs(x = "PlaceofBirth", y = "Student Count") + ggtitle(label = "PlaceofBirth Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))+ scale_y_continuous(breaks = seq(0,200,10))
 ```
-#Most of the students were born in Jordan and Kuwait. Venzuela has only one student. Jordan has higher rate of student with high class, whereas Kuwait has higher rate of students with low class.
+```{r}
+ ESummary = E %>%
+ # Get the counts
+ group_by(PlaceofBirth, Class) %>%
+ summarise(count = n()) %>%
+# Get labels and position of labels
+ group_by(PlaceofBirth) %>%
+ mutate(Percent = paste0(sprintf("%.1f", count/sum(count) * 100),"%"))
+
+ ggplot(ESummary, aes(x = PlaceofBirth, y = count)) + 
+ geom_bar(aes(fill = Class), stat ="identity", position = 'fill')+ labs(x = "Topic", y = "Student Count")+ ggtitle(label = "Normalized PlaceofBirth Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))
+
+```
+
+#Most of the students were born in Jordan and Kuwait. Venzuela has only one student.
+#Iraq, Lebanon, Saudiarabia, Palestine, USA and Venzuela have higher rate of student with high class, whereas Kuwait and Lybia have higher rate of students with low class.
 
 
 ```{r}
@@ -215,7 +230,7 @@ ggplot(data = E, aes(x = PlaceofBirth, fill = gender)) + geom_bar() +
 ggplot(data = E, aes(x = PlaceofBirth, fill = Relation)) + geom_bar() +
     labs(x = "PlaceofBirth", y = "Student Count")+ ggtitle(label = "PlaceofBirth Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold")) +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
-#Most fathers are responsible for students in some countries like: Kuwait, Iraq, Saudiarabia. Most mothers are responsible for students' study in these areas like: Egypt, Iran, Jordan, Lebanon, LYbia, Morocco, Palestine and Venzuela.
+#Based on the place of birth, most fathers are responsible for students in some countries like: Kuwait, Iraq, Saudiarabia. Most mothers are responsible for students' study in these areas like: Egypt, Iran, Jordan, Lebanon, LYbia, Morocco, Palestine and Venzuela.
 
 
 #Nationality distribution:
@@ -239,14 +254,14 @@ ggplot(data = E, aes(x = NationalITy, fill = Class)) + geom_bar() +
  geom_bar(aes(fill = Class), stat ="identity", position = 'fill')+ labs(x = "Topic", y = "Student Count")+ ggtitle(label = "Normalized NationalITy Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))
 
 ```
-#Iraq, Lebanon, Saudiarabia, USA and Venzuela have higer rate of student with high class, whereas Kuwait and Lybia have higher rate of students with low class.
+#Iraq, Lebanon, Saudiarabia, Palestine, USA and Venzuela have higher rate of student with high class, whereas Kuwait and Lybia have higher rate of students with low class.
 
 
 ```{r}
 ggplot(data = E, aes(x = NationalITy, fill = Relation)) + geom_bar() +
     labs(x = "PlaceofBirth", y = "Student Count")+ ggtitle(label = "Nationality Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold")) +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
-#Most fathers are responsible for students in some countries like: Kuwait, Iraq, Saudiarabia. Most mothers are responsible for students' study in these areas like: Egypt, Iran, Jordan, Lebanon, LYbia, Morocco, Palestine and Venzuela.
+#Based on the nationality,most fathers are responsible for students in some countries like: Kuwait, Iraq, Saudiarabia. Most mothers are responsible for students' study in these areas like: Egypt, Iran, Jordan, Lebanon, LYbia, Morocco, Palestine and Venzuela.
 
 
 ```{r}
@@ -282,7 +297,7 @@ ggplot(data = E, aes(x = StageID, fill = Topic)) + geom_bar(colour = "black") +
 ggplot(data = E, aes(x = StageID, fill = Semester)) + geom_bar() +
     labs(x = "StageID", y = "Student Count")+ ggtitle(label = "Stage Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
-#The two semesters almost cover the same rate in differenct level of schools.
+#The two semesters almost cover the same rate in different level of schools.
 
 
 ```{r}
@@ -406,7 +421,7 @@ ggplot(data = E, aes(x = SectionID, fill = Topic)) + geom_bar(colour = "black") 
 ggplot(data = E, aes(x = Topic, fill = gender)) + geom_bar() +
     labs(x = "Topic", y = "Student Count") + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1)) 
 ```
-#Spanish has fewest girls, whereas science, chemistry, english and french have higher ratio of girls.
+#Spanish has fewest girls, whereas Science, Chemistry, English and French have higher ratio of girls.
 
 
 ```{r}
@@ -436,21 +451,21 @@ ggplot(data = E, aes(x = Topic, fill = Class)) + geom_bar() +
 ggplot(data = E, aes(x = Topic, fill = NationalITy)) + geom_bar(colour = "black") +
     labs(x = "Topic", y = "Student Count") + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
-#IT has most people from KW,Chemistry has least diversity. French has most diversity.
+#IT has most people from Kuwait. Chemistry has least diversity. French has most diversity.
 
 
 ```{r}
 ggplot(data = E, aes(x = Topic, fill = StageID)) + geom_bar(colour = "black") +
     labs(x = "Topic", y = "Student Count") + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))+ scale_y_continuous(breaks = seq(0,100,4))
 ```
-#Geology, biology and chemistry are only in middle school. Fench has the lowest rate of highschool student.
+#Geology, biology and chemistry are only in middle school. French has the lowest rate of highschool student.
 
 
 ```{r}
 ggplot(data = E, aes(x = Topic, fill = SectionID)) + geom_bar(colour = "black") +
     labs(x = "Topic", y = "Student Count") + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))+ scale_y_continuous(breaks = seq(0,100,4))
 ```
-#Section C only has spanish and IT students.
+#Section C only has Spanish and IT students.
 
 
 ```{r}
@@ -503,12 +518,23 @@ ggplot(data = E, aes(x = Class, fill = StudentAbsenceDays)) + geom_bar(colour = 
 
 
 
-# Summary of Task 1.1:
+# Summary of Task 1.1: Based on the exploration work above, We conclude the following main findings which will be much useful for analysis and prediction of the academic performance in the next steps:
 
+1. Girls have higher rate in high class but lower rate in low class, boys are the opposite. Girls' parents have higher school satisfaction than boys. Boys has higher rate of above 7 absence days. Very few girls in low class.
+
+2. The differences of class performance between place of birth and nationality are very tiny.The findings between pace of birth and nationality are very similar. It's enough for us to just use nationality instead of both for the next steps.
+
+3. Middle school has the most students. Lower-level has higher rate of above 7 days of student absence. Lower-level has the highest rate of low class students. Highschool has the highest rate of high class students. Middle school has the highest rate of medium class students.
+
+4. Biology has the highest ratio of high class students. It has the highest ratio of low class students. Geology has the highest ratio of medium class students.
+
+5. The students who have moms as guardians have higher chances to get high class marks. Students whose parents answer the survey are the ones getting good marks. Student getting absent are the ones getting low marks.
+
+
+ 
 
 
 # Task 1.2. Histogram of numerical values distribution:
-
 
 ```{r}
 ggplot(E, aes(x = raisedhands, fill = Class)) +
@@ -517,15 +543,17 @@ ggplot(E, aes(x = raisedhands, fill = Class)) +
                            breaks = seq(0, 100, 5),
                            limits=c(0, 100)) + 
         scale_y_continuous(name = "Count") +
-        ggtitle("Frequency histogram of Raised Hands") 
+        ggtitle("Frequency of Raised Hands") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 
 
 ```
+#Students have the higher class the more raised hands.
+
 
 ```{r}
-ggplot(data = E, aes(x = raisedhands, color = Class)) + geom_density(size=1)
+ggplot(data = E, aes(x = raisedhands, color = Class)) + geom_density(size=1) + ggtitle("Frequency of Raised Hands") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
-
+#Most of the high class students raised hands many times, most of the low class students raised hands very few times.
 
 
 ```{r}
@@ -535,10 +563,18 @@ ggplot(E, aes(x = VisITedResources, fill = Class)) +
                            breaks = seq(0, 100, 5),
                            limits=c(0, 100)) + 
         scale_y_continuous(name = "Count") +
-        ggtitle("Frequency histogram of VisITedResources")
+        ggtitle("Frequency histogram of VisITedResources")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 
 
 ```
+#Students who have the higher class visited the resources more times.
+
+```{r}
+ggplot(data = E, aes(x = VisITedResources, color = Class)) + geom_density(size=1) + ggtitle("Frequency of VisITedResources") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+#Most of the students with high class visited the resources many times, most of the students with low class visited the resources very few times.
+
+
 
 ```{r}
 ggplot(E, aes(x = AnnouncementsView, fill = Class)) +
@@ -551,6 +587,14 @@ ggplot(E, aes(x = AnnouncementsView, fill = Class)) +
 
 
 ```
+#Students who have the higher class viewed the announcements more times.
+
+
+```{r}
+ggplot(data = E, aes(x = AnnouncementsView, color = Class)) + geom_density(size=1) + ggtitle("Frequency of AnnouncementsView") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+#Most of the students with high class viewed the announcements many times, most of the students with low class viewed the announcements very few times. But the differences between students with high class and medium class is not very obvious
+
 
 ```{r}
 ggplot(E, aes(x = Discussion, fill = Class)) +
@@ -563,213 +607,331 @@ ggplot(E, aes(x = Discussion, fill = Class)) +
 
 
 ```
+#Students who have the higher class discussed more times.
 
-# Summary of Task 1.2:
+
+
+```{r}
+ggplot(data = E, aes(x = Discussion, color = Class)) + geom_density(size=1) + ggtitle("Frequency of Discussion") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+#Most of the students with high class discussed many times, most of the students with low class discussed very few times. 
+
+
+# Summary of Task 1.2: From the exploration of the numerical feature values, we have the following findings:
+1 .Students who have the higher class raised hands, visited resource, viewd announcements and discussed more times.
+
+2. Most of the students with high class raised hands, visited resource, viewd announcements and discussed many times, most of the students with low class raised hands, visited resource, viewd announcements and discussed few times. 
+
+3. There are some little differences in the density curve, especially in the announcement view and disussion.
 
 
 
 #Task 2. Exporation of the relationships between different features of the students' academic performance datasets
 
-#Task 2.1. Boxplot
+#Class and the numerial features
+```{r}
+ggplot(data = E, aes(x = Class, y = raisedhands)) + geom_boxplot()+ ggtitle("Relationship of Class") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+#The higher class the higher times of raising hands
 
 ```{r}
-ggplot(data = E, aes(x = gender, y = raisedhands)) + geom_boxplot()
+ggplot(data = E, aes(x = Class, y = VisITedResources)) + geom_boxplot()+ ggtitle("Relationship of Class") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+
+```
+#The higher class the higher times of visiting resources
+
+```{r}
+ggplot(data = E, aes(x = Class, y = AnnouncementsView)) + geom_boxplot()+ ggtitle("Relationship of Class") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+#The higher class the higher times of viewing announcements
+
+
+```{r}
+ggplot(data = E, aes(x = Class, y = Discussion)) + geom_boxplot()+ ggtitle("Relationship of Class") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+#The higher class the higher times of discussion
+
+
+
+#Gender and the numerial features
+```{r}
+ggplot(data = E, aes(x = gender, y = raisedhands)) + geom_boxplot()+ ggtitle("Relationship of Gender") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 #Girls have more hand raises
 
 
 ```{r}
-ggplot(data = E, aes(x = gender, y = VisITedResources)) + geom_boxplot()
+ggplot(data = E, aes(x = gender, y = VisITedResources)) + geom_boxplot()+ ggtitle("Relationship of Gender") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 
 ```
 #Girls visit more resources
 
 
 ```{r}
-ggplot(data = E, aes(x = NationalITy, y = raisedhands)) + geom_boxplot()+
-  theme(axis.text.x = element_text(angle=45, hjust=1))
+ggplot(data = E, aes(x = gender, y = AnnouncementsView)) + geom_boxplot()+ ggtitle("Relationship of Gender") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
-#Jordan more hand raises than KW., lybia lowest. iraq and palestine highest hand raises.
+#Girls view more announcements, but the differences are not very obvious.
+
+
+```{r}
+ggplot(data = E, aes(x = gender, y = Discussion)) + geom_boxplot()+ ggtitle("Relationship of Gender") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+#Girls have more discussion, but the differences are not very obvious.
+
+
+
+#Nationality and the numerial features
+```{r}
+ggplot(data = E, aes(x = NationalITy, y = raisedhands)) + geom_boxplot()+
+  theme(axis.text.x = element_text(angle=45, hjust=1))+ ggtitle("Relationship of Nationality") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+#Jordan has more hand raises than Kuwait, Lybia has lowest. Iraq and Palestine have highest hand raises.
 
 
 ```{r}
 ggplot(data = E, aes(x = NationalITy, y = VisITedResources)) + geom_boxplot()+
-  theme(axis.text.x = element_text(angle=45, hjust=1))
+  theme(axis.text.x = element_text(angle=45, hjust=1))+ ggtitle("Relationship of Nationality") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 
 ```
+#Jordan has more visiting resouces than Kuwait, Lybia has lowest. Iraq and Palestine have highest visiting resources.
+
+
 ```{r}
 ggplot(data = E, aes(x = NationalITy, y = AnnouncementsView)) + geom_boxplot()+
-  theme(axis.text.x = element_text(angle=45, hjust=1))
+  theme(axis.text.x = element_text(angle=45, hjust=1))+ ggtitle("Relationship of Nationality") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
+#Jordan has more announcement view than Kuwait, Lybia has lowest. Iraq and Palestine have highest announcement view.
 
 ```{r}
 ggplot(data = E, aes(x = NationalITy, y = Discussion)) + geom_boxplot()+
-  theme(axis.text.x = element_text(angle=45, hjust=1))
+  theme(axis.text.x = element_text(angle=45, hjust=1))+ ggtitle("Relationship of Nationality") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
+#The differences between Jordan and Kuwait are not obvious, Lybia has lowest. Iraq and Palestine have highest announcement view.
 
+
+#Stage ID and the numerial features
 ```{r}
-ggplot(data = E, aes(x = StageID, y = raisedhands)) + geom_boxplot()
+ggplot(data = E, aes(x = StageID, y = raisedhands)) + geom_boxplot()+ ggtitle("Relationship of Stage ID") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 #More hand raises in middle schools.
 
 
 ```{r}
-ggplot(data = E, aes(x = StageID, y = VisITedResources)) + geom_boxplot()
+ggplot(data = E, aes(x = StageID, y = VisITedResources)) + geom_boxplot()+ ggtitle("Relationship of Stage ID") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 
+#More hand raises in middle schools.
 ```
-```{r}
-ggplot(data = E, aes(x = StageID, y = AnnouncementsView)) + geom_boxplot()
-```
+#More visiting resouces in middle schools.
 
 ```{r}
-ggplot(data = E, aes(x = StageID, y = Discussion)) + geom_boxplot()
+ggplot(data = E, aes(x = StageID, y = AnnouncementsView)) + geom_boxplot()+ ggtitle("Relationship of Stage ID") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+#More announcement views in middle schools.
+
+
+
+```{r}
+ggplot(data = E, aes(x = StageID, y = Discussion)) + geom_boxplot()+ ggtitle("Relationship of Stage ID") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 #More discussions in high schools.
 
 
+#Topic and the numerial features
 ```{r}
-ggplot(data = E, aes(x = Topic, y = raisedhands)) + geom_boxplot()
+ggplot(data = E, aes(x = Topic, y = raisedhands)) + geom_boxplot()+ geom_boxplot()+ ggtitle("Relationship of Topic") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 #IT has very few hand raises intersetingly although most students study there.
 
-```{r}
-ggplot(data = E, aes(x = Topic, y = VisITedResources)) + geom_boxplot()
-
-```
-```{r}
-ggplot(data = E, aes(x = Topic, y = AnnouncementsView)) + geom_boxplot()
-```
 
 ```{r}
-ggplot(data = E, aes(x = Topic, y = Discussion)) + geom_boxplot()
-```
+ggplot(data = E, aes(x = Topic, y = VisITedResources)) + geom_boxplot()+ ggtitle("Relationship of Topic") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 
-```{r}
-ggplot(data = E, aes(x = SectionID, y = raisedhands)) + geom_boxplot()
 ```
 
 
 ```{r}
-ggplot(data = E, aes(x = SectionID, y = VisITedResources)) + geom_boxplot()
-
+ggplot(data = E, aes(x = Topic, y = AnnouncementsView)) + geom_boxplot()+ ggtitle("Relationship of Topic") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
-```{r}
-ggplot(data = E, aes(x = SectionID, y = AnnouncementsView)) + geom_boxplot()
-```
-
-```{r}
-ggplot(data = E, aes(x = SectionID, y = Discussion)) + geom_boxplot()
-```
-#Section C with lowest discussion
+#IT has very few announcement view although most students study there.
 
 
 ```{r}
-ggplot(data = E, aes(x = Semester, y = raisedhands)) + geom_boxplot()
+ggplot(data = E, aes(x = Topic, y = Discussion)) + geom_boxplot()+ ggtitle("Relationship of Topic") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+#IT has very few discussion although most students study there.
+
+
+#Section ID and the numerial features
+```{r}
+ggplot(data = E, aes(x = SectionID, y = raisedhands)) + geom_boxplot()+ ggtitle("Relationship of Section ID") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+
+
+```{r}
+ggplot(data = E, aes(x = SectionID, y = VisITedResources)) + geom_boxplot()+ ggtitle("Relationship of Section ID") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+
+```
+```{r}
+ggplot(data = E, aes(x = SectionID, y = AnnouncementsView)) + geom_boxplot()+ ggtitle("Relationship of Section ID") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+
+```{r}
+ggplot(data = E, aes(x = SectionID, y = Discussion)) + geom_boxplot()+ ggtitle("Relationship of Section ID") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+#Section A has the highest raised hands, visited resources, announcements view and discussion, whereas secion C has the lowest raised hands, visited resources, announcements view and discussion.
+
+
+#Semester and the numerial features
+```{r}
+ggplot(data = E, aes(x = Semester, y = raisedhands)) + geom_boxplot()+ ggtitle("Relationship of Semester") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 #Second semester has more hand raises
 
 ```{r}
-ggplot(data = E, aes(x = Semester, y = VisITedResources)) + geom_boxplot()
+ggplot(data = E, aes(x = Semester, y = VisITedResources)) + geom_boxplot()+ ggtitle("Relationship of Semester") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 
 ```
-```{r}
-ggplot(data = E, aes(x = Semester, y = AnnouncementsView)) + geom_boxplot()
-```
-
-```{r}
-ggplot(data = E, aes(x = Semester, y = Discussion)) + geom_boxplot()
-```
-
-```{r}
-ggplot(data = E, aes(x = Relation, y = raisedhands)) + geom_boxplot()
-```
-#Guardians moter -> more hand raises
-
-```{r}
-ggplot(data = E, aes(x = Relation, y = VisITedResources)) + geom_boxplot()
-
-```
-```{r}
-ggplot(data = E, aes(x = Relation, y = AnnouncementsView)) + geom_boxplot()
-```
-
-```{r}
-ggplot(data = E, aes(x = Relation, y = Discussion)) + geom_boxplot()
-```
-
-```{r}
-ggplot(data = E, aes(x = ParentAnsweringSurvey, y = raisedhands)) + geom_boxplot()
-```
-#survey answer-yes -> more hand raises
+#Second semester has more visited resources
 
 
 ```{r}
-ggplot(data = E, aes(x = ParentAnsweringSurvey, y = VisITedResources)) + geom_boxplot()
-
+ggplot(data = E, aes(x = Semester, y = AnnouncementsView)) + geom_boxplot()+ ggtitle("Relationship of Semester") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
-```{r}
-ggplot(data = E, aes(x = ParentAnsweringSurvey, y = AnnouncementsView)) + geom_boxplot()
-```
-
-```{r}
-ggplot(data = E, aes(x = ParentAnsweringSurvey, y = Discussion)) + geom_boxplot()
-```
-
-```{r}
-ggplot(data = E, aes(x = ParentschoolSatisfaction, y = raisedhands)) + geom_boxplot()
-```
-#satisfaction-good -> more hand raises
-
-```{r}
-ggplot(data = E, aes(x = ParentschoolSatisfaction, y = VisITedResources)) + geom_boxplot()
-
-```
-```{r}
-ggplot(data = E, aes(x = ParentschoolSatisfaction, y = AnnouncementsView)) + geom_boxplot()
-```
-
-```{r}
-ggplot(data = E, aes(x = ParentschoolSatisfaction, y = Discussion)) + geom_boxplot()
-```
-
-```{r}
-ggplot(data = E, aes(x = StudentAbsenceDays, y = raisedhands)) + geom_boxplot()
-```
-#more leaves less hand raises
-
-```{r}
-ggplot(data = E, aes(x = StudentAbsenceDays, y = VisITedResources)) + geom_boxplot()
-
-```
-```{r}
-ggplot(data = E, aes(x = StudentAbsenceDays, y = AnnouncementsView)) + geom_boxplot()
-```
-
-```{r}
-ggplot(data = E, aes(x = StudentAbsenceDays, y = Discussion)) + geom_boxplot()
-```
-
-```{r}
-ggplot(data = E, aes(x = Class, y = raisedhands)) + geom_boxplot()
-```
-#high marks -> high hand raises
-
-```{r}
-ggplot(data = E, aes(x = Class, y = VisITedResources)) + geom_boxplot()
-
-```
-#high marks -> visited resources
-
-```{r}
-ggplot(data = E, aes(x = Class, y = AnnouncementsView)) + geom_boxplot()
-```
-#more marks more announcments views
+#Second semester has more announcements view
 
 
 ```{r}
-ggplot(data = E, aes(x = Class, y = Discussion)) + geom_boxplot()
+ggplot(data = E, aes(x = Semester, y = Discussion)) + geom_boxplot()+ ggtitle("Relationship of Semester") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
-#high marks more discussion
+#Almost no differences between these two semesters in discussion.
+
+
+#Relation and the numerial features
+```{r}
+ggplot(data = E, aes(x = Relation, y = raisedhands)) + geom_boxplot()+ ggtitle("Relationship of Relation") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+#Students with Guardians mother have more hand raises.
+
+```{r}
+ggplot(data = E, aes(x = Relation, y = VisITedResources)) + geom_boxplot()+ ggtitle("Relationship of Relation") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+
+```
+#Students with Guardians mother have more visited resources.
+
+
+```{r}
+ggplot(data = E, aes(x = Relation, y = AnnouncementsView)) + geom_boxplot()+ ggtitle("Relationship of Relation") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+#Students with Guardians mother have more announcements view.
+
+
+```{r}
+ggplot(data = E, aes(x = Relation, y = Discussion)) + geom_boxplot()+ ggtitle("Relationship of Relation") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+#No obvious differences between students with differen guardians in discussion.
+
+
+#Parent Answering Survey and the numerial features
+```{r}
+ggplot(data = E, aes(x = ParentAnsweringSurvey, y = raisedhands)) + geom_boxplot()+ ggtitle("Relationship of Parent Answering Survey") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+#Students whose parent answering survey have more hand raises
+
+
+```{r}
+ggplot(data = E, aes(x = ParentAnsweringSurvey, y = VisITedResources)) + geom_boxplot()+ ggtitle("Relationship of Parent Answering Survey") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+
+```
+#Students whose parent answering survey have more visited resources.
+
+
+```{r}
+ggplot(data = E, aes(x = ParentAnsweringSurvey, y = AnnouncementsView)) + geom_boxplot()+ ggtitle("Relationship of Parent Answering Survey") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+#Students whose parent answering survey have more announcements view.
+
+
+
+```{r}
+ggplot(data = E, aes(x = ParentAnsweringSurvey, y = Discussion)) + geom_boxplot()+ ggtitle("Relationship of Parent Answering Survey") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+#Students whose parent answering survey have more discussion
+
+
+#Parent school Satisfaction and the numerial features
+```{r}
+ggplot(data = E, aes(x = ParentschoolSatisfaction, y = raisedhands)) + geom_boxplot()+ ggtitle("Relationship of Parent Satisfacion") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+#Students whose parents with good satisfaction have more hand raises.
+
+
+```{r}
+ggplot(data = E, aes(x = ParentschoolSatisfaction, y = VisITedResources)) + geom_boxplot()+ ggtitle("Relationship of Parent Satisfacion") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+
+```
+#Students whose parents with good satisfaction have more visited resources.
+
+
+```{r}
+ggplot(data = E, aes(x = ParentschoolSatisfaction, y = AnnouncementsView)) + geom_boxplot()+ ggtitle("Relationship of Parent Satisfacion") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+#Students whose parents with good satisfaction have more announcement view.
+
+
+```{r}
+ggplot(data = E, aes(x = ParentschoolSatisfaction, y = Discussion)) + geom_boxplot()+ ggtitle("Relationship of Parent Satisfacion") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+#No obvious differences in discution between students whose parents with different satisfaction .
+
+
+#Student Absence Days and the numerial features
+```{r}
+ggplot(data = E, aes(x = StudentAbsenceDays, y = raisedhands)) + geom_boxplot() + ggtitle("Relationship of Student Absence Days") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+#Students have the more leaves the less hand raises.
+
+```{r}
+ggplot(data = E, aes(x = StudentAbsenceDays, y = VisITedResources)) + geom_boxplot()+ ggtitle("Relationship of Student Absence Days") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+
+```
+#Students have the more leaves the less visited resources.
+
+
+```{r}
+ggplot(data = E, aes(x = StudentAbsenceDays, y = AnnouncementsView)) + geom_boxplot()+ ggtitle("Relationship of Student Absence Days") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+#Students have the more leaves the less announcements view.
+
+
+
+```{r}
+ggplot(data = E, aes(x = StudentAbsenceDays, y = Discussion)) + geom_boxplot()+ ggtitle("Relationship of Student Absence Days") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
+```
+#Students have the more leaves the less discussion.
+
+
+
+# Summary of Task 2: From the exploration relationship between features, we have the following findings:
+1 . From the relationship between class and other features, it further confirmed our findings in the previous step: Students who have the higher class raised hands, visited resource, viewd announcements and discussed more times.
+
+2. Girls have more hand raises and visit more resources. 
+
+3. The results on raised hands, visited resources and announcements view are pretty similar.The differences of discussions between Jordan and Kuwait are not obvious.
+
+4. More raised hands, visited resources and announcements view in middle schools. More discussions in high schools.
+
+5. IT has very few hand raises intersetingly although most students study there.
+
+6. Students with Guardians mother have more hand raises, visited resources and announcements view.
+
+7. Students whose parent answering survey have more hand raises,  visited resources, announcements view and discussion.
+
+8. Students whose parents with good satisfaction have more raised hands, visited resources and announcements.
+
+9. Students have the more leaves the less raised hands, visited resources, announcements and discussion.
+
+
+
 
 
 #Task 3. Prediction of the students' academic performance. Build prediction model and evaluate the results of the model
