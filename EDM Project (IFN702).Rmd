@@ -101,7 +101,7 @@ E
 ggplot(data = E, aes(x = gender, fill = Relation)) + geom_bar() +
     labs(x = "Gender", y = "Student Count")+ ggtitle(label = "Gender Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+ scale_y_continuous(breaks = seq(0,320,20))
 ```
-#There are nearly 175 girls and 305 boys in this data set. The number of girls who have mom as guardian nearly the same as having father as guardian, whereas most boys have father as guardian.
+#There are nearly 175 girls and 305 boys in this data set. The number of girls who have mom as guardian nearly the same as having father as guardian, whereas most boys have father as guardians.
 
 
 ```{r}
@@ -171,100 +171,220 @@ ggplot(data = E, aes(x = gender, fill = Class)) + geom_bar() +
     labs(x = "Gender", y = "Student Count")  + ggtitle(label = "Gender Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
+```{r}
+ ESummary = E %>%
+ # Get the counts
+ group_by(gender, Class) %>%
+ summarise(count = n()) %>%
+# Get labels and position of labels
+ group_by(gender) %>%
+ mutate(Percent = paste0(sprintf("%.1f", count/sum(count) * 100),"%"))
+
+ ggplot(ESummary, aes(x = gender, y = count)) + 
+ geom_bar(aes(fill = Class), stat ="identity", position = 'fill')+ labs(x = "Gender", y = "Student Count")+ ggtitle(label = "Normalized Gender Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+ scale_y_continuous(breaks = seq(0,1,0.1))
+
+```
+#Girls have higher rate (over 40%) of people with high academic performance, whereas a small rate of boys (about 20%) have high performance. The rate of median class is almost the same both for girls and boys, which are both about 40%. About 35% rate of boys have low performance, whereas the rate of low class is very low among girls. 
+
 
 #Place of Birth distribution:
 ```{r}
 
 ggplot(data = E, aes(x = PlaceofBirth, fill = Class)) + geom_bar() +
-    labs(x = "PlaceofBirth", y = "Student Count") + ggtitle(label = "PlaceofBirth Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))
+    labs(x = "PlaceofBirth", y = "Student Count") + ggtitle(label = "PlaceofBirth Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))+ scale_y_continuous(breaks = seq(0,200,10))
 ```
+#Most of the students were born in Jordan and Kuwait. Venzuela has only one student. Jordan has higher rate of student with high class, whereas Kuwait has higher rate of students with low class.
+
 
 ```{r}
-ggplot(data = E, aes(x = PlaceofBirth, fill = NationalITy)) + geom_bar() +
+ggplot(data = E, aes(x = PlaceofBirth, fill = NationalITy)) + geom_bar(colour= "Black") +
     labs(x = "PlaceofBirth", y = "Student Count")+ ggtitle(label = "PlaceofBirth Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold")) +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
+#Most of the students who were born in these countries of Egypt, Iran, Iraq, Kuwait, Lebanon, Lybia, Morocco, Syria, Tunis and Venzuela have the same nationality as the place of birth. some of the students who were born in Jordan have the nationality of Palestine. The students who were born in USA have diversity of nationality. Half of the students who were born in Saudiarabia have the nationality of Jordan. 
+
 
 ```{r}
 ggplot(data = E, aes(x = PlaceofBirth, fill = gender)) + geom_bar() +
     labs(x = "PlaceofBirth", y = "Student Count")+ ggtitle(label = "PlaceofBirth Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold")) +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
+#Lebanon has most rate of girls, half of the USA students are girls. Girls are less than boys in the other areas. 
+
+
 ```{r}
 
 ggplot(data = E, aes(x = PlaceofBirth, fill = Relation)) + geom_bar() +
     labs(x = "PlaceofBirth", y = "Student Count")+ ggtitle(label = "PlaceofBirth Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold")) +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
+#Most fathers are responsible for students in some countries like: Kuwait, Iraq, Saudiarabia. Most mothers are responsible for students' study in these areas like: Egypt, Iran, Jordan, Lebanon, LYbia, Morocco, Palestine and Venzuela.
 
 
 #Nationality distribution:
 ```{r}
 ggplot(data = E, aes(x = NationalITy, fill = Class)) + geom_bar() +
-    labs(x = "Nationality", y = "Student Count")+ ggtitle(label = "Nationality Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))
+    labs(x = "Nationality", y = "Student Count")+ ggtitle(label = "Nationality Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))+ scale_y_continuous(breaks = seq(0,200,10))
 ```
-#Jordan and KW(KuwaIT) has highest number of students
+#Jordan and KW(KuwaIT) has highest number of students. Venzuela has only one student.
+
+
+```{r}
+ ESummary = E %>%
+ # Get the counts
+ group_by(NationalITy, Class) %>%
+ summarise(count = n()) %>%
+# Get labels and position of labels
+ group_by(NationalITy) %>%
+ mutate(Percent = paste0(sprintf("%.1f", count/sum(count) * 100),"%"))
+
+ ggplot(ESummary, aes(x = NationalITy, y = count)) + 
+ geom_bar(aes(fill = Class), stat ="identity", position = 'fill')+ labs(x = "Topic", y = "Student Count")+ ggtitle(label = "Normalized NationalITy Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))
+
+```
+#Iraq, Lebanon, Saudiarabia, USA and Venzuela have higer rate of student with high class, whereas Kuwait and Lybia have higher rate of students with low class.
+
 
 ```{r}
 ggplot(data = E, aes(x = NationalITy, fill = Relation)) + geom_bar() +
     labs(x = "PlaceofBirth", y = "Student Count")+ ggtitle(label = "Nationality Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold")) +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
+#Most fathers are responsible for students in some countries like: Kuwait, Iraq, Saudiarabia. Most mothers are responsible for students' study in these areas like: Egypt, Iran, Jordan, Lebanon, LYbia, Morocco, Palestine and Venzuela.
+
+
 ```{r}
 ggplot(data = E, aes(x = NationalITy, fill = ParentAnsweringSurvey)) + geom_bar() +
     labs(x = "NationalITy", y = "Student Count") + ggtitle(label = "Nationality Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
+#Most of the areas have higher rate of parent answering survey, except Lybia.
+
+
 ```{r}
 ggplot(data = E, aes(x = NationalITy, fill = ParentschoolSatisfaction)) + geom_bar() +
     labs(x = "NationalITy", y = "Student Count")+ ggtitle(label = "Nationality Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
+#Most of the areas have higher rate of good parent school satisfaction, except Suadiarabia.
+
 
 #Stage ID distribution:
 ```{r}
 ggplot(data = E, aes(x = StageID, fill = gender)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") + ggtitle(label = "Stage Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
-
+#Middle school has the highest number of students. High school has very few students. Girls are less than boys in every level of school.
 
 
 ```{r}
 ggplot(data = E, aes(x = StageID, fill = Topic)) + geom_bar(colour = "black") +
     labs(x = "StageID", y = "Student Count") + ggtitle(label = "Stage Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
+#Lowerlevel has less kinds of topics. Middle school almost covers all kinds of topics.
+
 
 ```{r}
 ggplot(data = E, aes(x = StageID, fill = Semester)) + geom_bar() +
     labs(x = "StageID", y = "Student Count")+ ggtitle(label = "Stage Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
+#The two semesters almost cover the same rate in differenct level of schools.
+
 
 ```{r}
 ggplot(data = E, aes(x = StageID, fill = Relation)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") + ggtitle(label = "Stage Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
+#More fatheres are responsible for students' study in different level of schools.
+
 
 ```{r}
 ggplot(data = E, aes(x = StageID, fill = ParentAnsweringSurvey)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") + ggtitle(label = "Stage Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
+```{r}
+ ESummary = E %>%
+ # Get the counts
+ group_by(StageID, ParentAnsweringSurvey) %>%
+ summarise(count = n()) %>%
+# Get labels and position of labels
+ group_by(StageID) %>%
+ mutate(Percent = paste0(sprintf("%.1f", count/sum(count) * 100),"%"))
+
+ ggplot(ESummary, aes(x = StageID, y = count)) + 
+ geom_bar(aes(fill = ParentAnsweringSurvey), stat ="identity", position = 'fill')+ labs(x = "Topic", y = "Student Count")+ ggtitle(label = "Normalized StageID Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+ scale_y_continuous(breaks = seq(0,1,0.2))
+
+```
+#Both highschool and middleschool have more than 60% parent answering survey. Lowerlevel has less than 50% rate of parent answering survey.
 
 
 ```{r}
 ggplot(data = E, aes(x = StageID, fill = ParentschoolSatisfaction)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") + ggtitle(label = "Stage Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
+```{r}
+ ESummary = E %>%
+ # Get the counts
+ group_by(StageID, ParentschoolSatisfaction) %>%
+ summarise(count = n()) %>%
+# Get labels and position of labels
+ group_by(StageID) %>%
+ mutate(Percent = paste0(sprintf("%.1f", count/sum(count) * 100),"%"))
+
+ ggplot(ESummary, aes(x = StageID, y = count)) + 
+ geom_bar(aes(fill = ParentschoolSatisfaction), stat ="identity", position = 'fill')+ labs(x = "Topic", y = "Student Count")+ ggtitle(label = "Normalized StageID Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+ scale_y_continuous(breaks = seq(0,1,0.2))
+
+```
+#Highschool has the lowest rate(under 60%) of good parent school satisfaction. Both middleschool and lowerlevel have more than 60% rate of good parent school satisfaction.
+
 
 ```{r}
 ggplot(data = E, aes(x = StageID, fill = StudentAbsenceDays)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") + ggtitle(label = "Stage Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
+```{r}
+ ESummary = E %>%
+ # Get the counts
+ group_by(StageID, StudentAbsenceDays) %>%
+ summarise(count = n()) %>%
+# Get labels and position of labels
+ group_by(StageID) %>%
+ mutate(Percent = paste0(sprintf("%.1f", count/sum(count) * 100),"%"))
+
+ ggplot(ESummary, aes(x = StageID, y = count)) + 
+ geom_bar(aes(fill = StudentAbsenceDays), stat ="identity", position = 'fill')+ labs(x = "Topic", y = "Student Count")+ ggtitle(label = "Normalized StageID Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+ scale_y_continuous(breaks = seq(0,1,0.2))
+
+```
+#Lowerlevel has higher rate of above 7 days of student absence. 
+
 
 ```{r}
-
 ggplot(data = E, aes(x = StageID, fill = Class)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") + ggtitle(label = "Grade Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
+
+
+
+
+```{r}
+ ESummary = E %>%
+ # Get the counts
+ group_by(StageID, Class) %>%
+ summarise(count = n()) %>%
+# Get labels and position of labels
+ group_by(StageID) %>%
+ mutate(Percent = paste0(sprintf("%.1f", count/sum(count) * 100),"%"))
+
+ ggplot(ESummary, aes(x = StageID, y = count)) + 
+ geom_bar(aes(fill = Class), stat ="identity", position = 'fill')+ labs(x = "Topic", y = "Student Count")+ ggtitle(label = "Normalized StageID Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+ scale_y_continuous(breaks = seq(0,1,0.2))
+
+```
+#Lower level has the highest rate of low class students.Highschool has the highest rate of high class students. Middle school has the highest rate of medium class students.
+
+
 
 #Grade ID distribution:
 ```{r}
 ggplot(data = E, aes(x = GradeID, fill = StageID)) + geom_bar() +
     labs(x = "GradeID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))+ ggtitle(label = "Grade Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
+#Grade 2, 3, 4 and 5 belong to Lowerlevel, grade 6,7 and 8 belong to Middle school, grade 9,10,11 and 12 belong to High school.
+
+
 
 #Section ID distribution:
 ```{r}
@@ -272,6 +392,7 @@ ggplot(data = E, aes(x = SectionID, fill = StageID)) + geom_bar() +
     labs(x = "SectionID", y = "Student Count") + ggtitle(label = "Section Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 #Section c has only Middle school and Lowerlevel students
+
 
 ```{r}
 ggplot(data = E, aes(x = SectionID, fill = Topic)) + geom_bar(colour = "black") +
@@ -285,7 +406,8 @@ ggplot(data = E, aes(x = SectionID, fill = Topic)) + geom_bar(colour = "black") 
 ggplot(data = E, aes(x = Topic, fill = gender)) + geom_bar() +
     labs(x = "Topic", y = "Student Count") + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1)) 
 ```
-#Spanish has fewest male. Female ratio whereas science, chemistry, english and french have high ratio.
+#Spanish has fewest girls, whereas science, chemistry, english and french have higher ratio of girls.
+
 
 ```{r}
 ggplot(data = E, aes(x = Topic, fill = Class)) + geom_bar() +
@@ -307,13 +429,15 @@ ggplot(data = E, aes(x = Topic, fill = Class)) + geom_bar() +
  geom_bar(aes(fill = Class), stat ="identity", position = 'fill')+ labs(x = "Topic", y = "Student Count")+ ggtitle(label = "Normalized Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))
 
 ```
-#
+#Biology has the highest ratio of high class students. It has the highest ratio of low class students. Geology has the highest ratio of medium class students.
+
 
 ```{r}
 ggplot(data = E, aes(x = Topic, fill = NationalITy)) + geom_bar(colour = "black") +
     labs(x = "Topic", y = "Student Count") + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 #IT has most people from KW,Chemistry has least diversity. French has most diversity.
+
 
 ```{r}
 ggplot(data = E, aes(x = Topic, fill = StageID)) + geom_bar(colour = "black") +
@@ -333,7 +457,8 @@ ggplot(data = E, aes(x = Topic, fill = SectionID)) + geom_bar(colour = "black") 
 ggplot(data = E, aes(x = Topic, fill = Semester)) + geom_bar(colour = "black") +
     labs(x = "Topic", y = "Student Count") + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))+ scale_y_continuous(breaks = seq(0,100,4))
 ```
-#IT mostly has students who are in first semester
+#IT mostly has students who are in first semester.
+
 
 ```{r}
 ggplot(data = E, aes(x = Topic, fill = Relation)) + geom_bar(colour = "black") +
@@ -378,8 +503,8 @@ ggplot(data = E, aes(x = Class, fill = StudentAbsenceDays)) + geom_bar(colour = 
 
 
 
-
 # Summary of Task 1.1:
+
 
 
 # Task 1.2. Histogram of numerical values distribution:
