@@ -1093,8 +1093,6 @@ trPredictions <-predict(trModel, testData)
 confusionMatrix(testData$Class, trPredictions)
 
 ```
-
-
 ```{r}
 # estimate variable importance
 importance <- varImp(trModel, scale=FALSE)
@@ -1103,6 +1101,16 @@ print(importance)
 # plot importance
 plot(importance)
 ```
+#Summary of model 1: we can get some findings from the tree mode above:
+1. From the plot of variable importance, the most important variables are StudentAbsenceDays, VisITedResources, raisedhands and AnnouncementsView, the less important variables are ParentAnsweringSurvey, relation, ParentschoolSatisfaction, Discussion and gender, and the unimportant variables are Nationality, StageID, PlaceofBirth and Topic for every class. This conclusion further confirmed our findings in the previous steps.
+
+2. From the confusion matrix, there is a prediction error between class L and H, one H class is predicted as L class. There are some improvements: The numder of TP of H class with 30 is much better than the model 1 without cross validation, it's also the highest till now. And the FP are much samller than the model 1 without cross validation. However, there are 12 m class predicted as L class, whichi is much high than the model 1 without cross validation.
+
+3. The accuracy of this model is 0.75, which is higher than the accuracy of model1 without cross validation(0.7083).
+
+4. In this model, precision is: H(0.9383), M(0.8125), L(0.8632), and the mean precision is 0.8713, which is higher than that of model 1 without cross validation (0.8411).
+
+Overall, this model is better than the model 1 without cross validation both in accuracy and precision, and similiar to the perfomance of model 2 without cross validation
 
 
 
@@ -1127,9 +1135,20 @@ confusionMatrix(rfPredictions, testData$Class)
 importance <- varImp(rfModel, scale=FALSE)
 # summarize importance
 print(importance)
-# plot importance
-plot(importance)
+
 ```
+#Summary of model 2: we can get some findings from the tree mode above:
+1. From the plot of variable importance, the most important variables are VisITedResources, raisedhands, StudentAbsenceDays, AnnouncementsView and Discussion , the less important variables are RelationMum, ParentAnsweringSurvey, genderM and ParentschoolSatisfaction, and the unimportant variables are Topic, StageID,Nationality and PlaceofBirth for every class. This figures that represent the level of importance is much clear, which also further confirmed our findings in the previous steps.
+
+2. From the confusion matrix, there is no prediction error between class L and H in this random forest model. There are some improvements: The number of correct prediciton has been increased a lot in M and L class (43 and 28) than the model 1. And there are only 4 m class predicted as L class, whichi has been improved a lot than model 1.
+
+3. The accuracy of this model is 0.8083, which is the highest accuracy among all the models.
+
+4. In this model, precision is: H(0.9529), M(0.7826), L(0.9535), and the mean precision is 0.8963, which is highest precision among all the models till now.
+
+Overall, this model is much better than the model 1 with cross validation both in accuracy and precision.
+
+
 
 #Using N-folder cross validation on prediction model 3 -- Support Vector Machines
 ```{r}
@@ -1158,7 +1177,26 @@ print(importance)
 # plot importance
 plot(importance)
 ```
+#Summary of model 3: we can get some findings from the tree mode above:
+1. From the plot of variable importance, the most important variables are VisITedResources, StudentAbsenceDays, raisedhands and AnnouncementsView, the less important variables are ParentAnsweringSurvey, Relation, ParentschoolSatisfaction, Discussion and gender, and the unimportant variables are Topic, StageID, Nationality and PlaceofBirth for every class. The figures that represent the level of importance is much clear, which also further confirmed our findings in the previous steps.
 
+2. From the confusion matrix, there is no prediction error between class L and H in this random forest model. There are some improvements than model 1 but not than model 2: The number of correct prediciton has been increased a lot in M and L class (43 and 25) than the model 1. And there are only 4 m class predicted as L class, whichi has been improved a lot than model 1. However, the number of TP of H class is the lowest among those 3 models, even worse thant the model 3 without cross validation.
+
+3. The accuracy of this model is 0.75, which is the same as model 1 but less than the model 3 without cross validation.
+
+4. In this model, precision is: H(0.9529), M(0.6812), L(0.9535), and the mean precision is 0.8625.
+
+Overall, this model worse than the model 3 without cross validation both in accuracy and precision.
+
+
+
+# Final Conclusion:
+
+1. Model 1 and 2 performed much better by training on the N-folder cross validation dataset, but model 3 performed even worse.
+
+2. Model 2 (Random forest) outperformed all the models by training on the N-folder cross validation dataset. It got the highest rate of accuracy and precison.
+
+3. The most important activities that related to students' academic performance are VisITedResources, raisedhands, StudentAbsenceDays, AnnouncementsView and Discussion. Then the Relation, ParentAnsweringSurvey, gender and ParentschoolSatisfaction also has some connection with the academic performance. Students' academic performance has little connection with topic, StageID, Nationality, PlaceofBirth, Grade ID, Section ID and semester.
 
 
 
