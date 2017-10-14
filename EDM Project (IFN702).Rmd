@@ -63,10 +63,12 @@ We will use R Studio to analyze this datasets in R programming language, and aim
 # install libraries
 library(ggplot2)
 library(reshape2)
+library(partykit)
 library(caret)
 library(e1071)
 library(randomForest)
 library(dplyr)
+
 
 ```
 
@@ -931,49 +933,49 @@ ggplot(data = E, aes(x = StudentAbsenceDays, y = Discussion)) + geom_boxplot()+ 
 9. Students have the more leaves the less raised hands, visited resources, announcements and discussion.
 
 
+# Conclusion of Task 1 and Task2: From the exploration and analysis in the previous steps, we found some features have very crucial connection with the students' academic class, and some other features are less related with the students' academic class. From task2, we found that the features like "raisedhands", "VisITedResources","AnnouncementsView", "Discussion" and "StudentsAbsenceDays"have direct connection with students' academic class. There are also some features have less connection with students' academic class, like "StageID", "Section ID","Semester". We will do some experiments in the following Task 3 to confirm our findings.
 
 
 
 #Task 3. Prediction of the students' academic performance. Build prediction model and evaluate the results of the model
 
 
+#Preprocess: Select the important features which are important to Class, and remove some unimportant features.
 ```{r}
+#create data with some correlation structure
 library(corrplot)
 Edu1 <- E
 for(i in 1:ncol(Edu1)){
   Edu1[,i]<-as.integer(Edu1[,i])
 }
-corrplot::corrplot(cor(as.matrix(Edu1)),type = "upper")
-```
+corrplot::corrplot(cor(as.matrix(Edu1)),type = "upper", method="circle", tl.pos="lt", 
+tl.col="black", tl.cex=0.6, tl.srt=45, 
+         addCoef.col="black", addCoefasPercent = TRUE,
+          sig.level=0.50, insig = "blank")  
 
+```
+#From the correlation plot above, we can find that features like raisedhands, visitedresources,announcementsview,studentabsencedays and discussion have very close correlation with class. On the other hand, some features like sectionID, gradeID, stageID,placeofbirth and nationality have very less correlation with class. So we decide to remove useless features before building our prediction models.
 
 
 ```{r}
-# Preproces: remove the useless features
+# Remove some useless features , such as: GradeID, SectionID and Semester.
 E1 <- E[,-c(5,6,8)]
 E1
 
 ```
+#We have 14 features left after removing 3 useless features.
 
 
 
 
-
-#Prediction model 1 --- Decision tree
-```{r create training and test data 1}
+#Prediction model 1 -- Decision tree
+```{r create training and test data }
 # Decision trees use probability to choose how to split, so here we "seed" a random number generator so our results are always the same.
 set.seed(55)
 
 
-# Split the data into 70% training, 30% test: this means we use 70% of the dataset to build our predictive model. We then use the remaining 30% of data as the unseen data (test) in order to evaluate the predictions.
+# Split the data into 75% training, 25% test: this means we use 75% of the dataset to build our predictive model. We then use the remaining 25% of data as the unseen data (test) in order to evaluate the predictions.
 
-# Stratified sampling
-
-#TrainingDataIndex <- createDataPartition(E1$Class, p=0.75, list = FALSE)
-
-# Create Training Data 
-#trainingData <- E1[TrainingDataIndex,]
-#testData <- E1[-TrainingDataIndex,]
 ind <- sample(2, nrow(E1), replace=TRUE, prob=c(0.75, 0.25))
 trainingData <- E1[ind==1,]
 testData <- E1[ind==2,]
@@ -981,7 +983,7 @@ testData <- E1[ind==2,]
 
 
 ```{r}
-#Use the training data to train a model. Since the "sequece" column is just the accession number for the SWISS-PORT data base, it will not be included in the formula of the tree.
+#Use the training data to train a model. 
 formula <- Class ~ gender + NationalITy + PlaceofBirth + StageID  + Topic + Relation + raisedhands + VisITedResources + AnnouncementsView + Discussion + ParentAnsweringSurvey + ParentschoolSatisfaction + StudentAbsenceDays
 
 E_ctree <- ctree(formula, data = trainingData)
@@ -997,8 +999,6 @@ tree.predict <- predict(E_ctree, newdata = testData)
 confusionMatrix(tree.predict, testData$Class)
 ```
 
-
-
 # Heatmap
 ```{r}
 E_table <- table(tree.predict, testData$Class)
@@ -1010,9 +1010,21 @@ E_melt
 ggplot(E_melt, aes(x=Reference, y=Prediction, fill=Value)) + geom_tile() + scale_fill_gradient(low = "white",high = "red") + scale_x_discrete(position = "top") + scale_y_discrete(limits = rev(levels(E_melt$Prediction)))
 ```
 
+#Summary of model 1: we can get some findings from the tree mode above:
+1. From the plot of the tree, some variables ( VisITedResources, StudentAbsenceDays, Relation, gender, ParentAnsweringSurvey and raisedhands) are selected as split condtions, which means these featureas are crucial in spliting the tree. so they are very important features in this tree model.
+
+2. From the confusion matrix and heatmap, there is no prediction error between class L and H. However, the performance is not so good between class M and H, M and L. It means that this model have some problem in predicting the adjacent classes but not the distant classes.
+
+3. The accuracy of this model is 0.7038 from the statistics result. The accuracy is a description of systematic errors, a measure of statistical bias.It relects percetage of the true positive cases out of all the cases. In this case, we can see that 24 of H class have been predicted correctly which means the numbers of the true possitive of H class, and 7 of M classes have been predicted as H classes but acctually not H, which indicates numbers of the false possitive of H class. To calculate accuracy, the true positive cases are accumulated as 84 (24+40+21) including all the H,M and L classes, and the total cases are 120 (24+7+11+40+13+4+21) including all the TP, TN, FP and FN cases. The formula of accuracy is TP/TP+TN+FP+FT,so the accuracy is 84/120 = 0.7038 in this model.The accuracy reflects how the model performe in predicting the correct classes out of all the cases.
+
+4. Precision is a better method for us to judge the performance of a model. Precision is a description of random errors, a measure of statistical variability. The formula of precision is TP/TP+FP, which can reflect the rate of true positive cases out of all the positve cases including false positive cases. In this case, there are 13 L classes that predicted as M classes, these 13 cases is the FP cases in predicting M classes, and there are also 7 M classes predicted as H classes, these 7 cases is the FP cases in predicting H classes. We can get a better insight of the model by refering to the precision of each class.
+
+5. Since the precision is related to the true possitive and false posive, we can evaluate the performance of the predictive model by calculating the precision of each class. In this confusion matrix, the specifity is equal to precision, we can use the specifity of the results of confusion matrix to observe the performance of the model.
+
+In this tree model, specifity is: H(0.9176), M(0.6522), L(0.9535), and the mean specifity is 0.8411.
 
 
-#model 2  randomforest
+#Prediction model 2 -- Randomforest
 
 ```{r}
 
@@ -1021,29 +1033,49 @@ rf.model <- randomForest(formula, data = trainingData, importance = TRUE,
 
 rf.predict <- predict(rf.model, testData)
 confusionMatrix(testData$Class, rf.predict)
-varImpPlot(rf.model)
 ```
 
-#model 3 Support Vector Machines
+```{r}
+varImpPlot(rf.model)
+
+```
+
+#Summary of model 2: we can get some findings from the tree mode above:
+1. From the plot of variable importance, some variables ( StudentAbsenceDays, VisITedResources, raisedhands, AnnouncementsView, ParentAnsweringSurvey and Relation) are more important, and the other variables are less important in this model such as StageID, PlaceofBirth and Topic.
+
+2. From the confusion matrix, there is also no prediction error between class L and H in this random forest model. There are some improvements: all the number of correct prediciton has been increased in all the classes (26, 42 and 26) than the previous model. And the FP of M classes have been reduced a lot. However the FP cases of H and L classes have been slightly increased.
+
+3. The accuracy of this model 2 is 0.7583, which is a little higher than model 1.
+
+4. In this random forest model, precision is: H(0.8602), M(0.8448), L(0.9213), and the mean precision is 0.8754.
+
+Overall, this model is better than the tree model both in accuracy and precision.
+
+
+#Prediction model 3 -- Support Vector Machines
 ```{r}
 
 svm.model <- svm(formula, data = trainingData, kernel = "radial", cost = 10, gamma = 0.15)
 svm.predict <- predict(svm.model, testData)
 confusionMatrix(testData$Class, svm.predict)
 ```
+#Summary of model 3: we can get some findings from the tree mode above:
+1. From the confusion matrix, differenct from the previous two models, there is a prediction error between class L and H, one H class is predicted as L class. There are some improvements: all the number of correct prediciton has been increased in all the classes (29, 41 and 25), much better than the model 1, but similar to model 2. And the FP of H and M classes have been reduced, which is the best among these 3 models. 
+
+3. The accuracy of this model 3 is 0.7917, which is a little higher than model 1 and model 2.
+
+4. In this random forest model, precision is: H(0.9277), M(0.8462), L(0.9022), and the mean precision is 0.8920.
+
+Overall, this model is best among these 3 models both in accuracy and precision.
 
 
-#N-folder cross validation for the prediction models above
 
+#Task 4. Improvement of these prediction models using N-folder cross validation for the prediction models above
+
+#Using N-folder cross validation on prediction model 1 -- Decision tree
 ```{r}
-set.seed(55)
 
-ind <- sample(2, nrow(E), replace=TRUE, prob=c(0.75, 0.25))
-trainingData <- E[ind==1,]
-testData <- E[ind==2,]
-
-formula <- Class ~ gender + NationalITy + PlaceofBirth + StageID +GradeID + SectionID + Topic +Semester + Relation + raisedhands + VisITedResources + AnnouncementsView + Discussion + ParentAnsweringSurvey + ParentschoolSatisfaction + StudentAbsenceDays
-
+# using 10-folder cross validation to train this model
 TrainingParameters <- trainControl(method = "cv", number = 10)
 
 
@@ -1058,10 +1090,7 @@ trModel <- train(formula,
 
 trPredictions <-predict(trModel, testData)
 # Create confusion matrix
-#trNN <-confusionMatrix(trPredictions, testData$Class)
 confusionMatrix(testData$Class, trPredictions)
-
-#print(trNN)
 
 ```
 
@@ -1077,14 +1106,15 @@ plot(importance)
 
 
 
-
+#Using N-folder cross validation on prediction model 2 -- Random Forest
 ```{r}
 # train model with randomforest networks
 rfModel <- train(formula,
                  data = trainingData,
                   method = "rf",
                   trControl= TrainingParameters,
-                  preProcess=c("scale","center")
+                  preProcess=c("scale","center"),
+                 na.action = na.omit
 )
 
 rfPredictions <-predict(rfModel, testData)
@@ -1092,9 +1122,16 @@ rfPredictions <-predict(rfModel, testData)
 confusionMatrix(rfPredictions, testData$Class)
 
 ```
+```{r}
+# estimate variable importance
+importance <- varImp(rfModel, scale=FALSE)
+# summarize importance
+print(importance)
+# plot importance
+plot(importance)
+```
 
-
-
+#Using N-folder cross validation on prediction model 3 -- Support Vector Machines
 ```{r}
 # train model with SVM
 SVMModel <- train(formula,
@@ -1112,6 +1149,15 @@ confusionMatrix(SVMPredictions, testData$Class)
 
 ```
 
+
+```{r}
+# estimate variable importance
+importance <- varImp(SVMModel, scale=FALSE)
+# summarize importance
+print(importance)
+# plot importance
+plot(importance)
+```
 
 
 
