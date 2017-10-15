@@ -77,7 +77,7 @@ library(dplyr)
 ```{r}
 # Import XAPI Educational data sets
 E <- read.csv("data/xAPI-Edu-Data.csv")
-E
+
 ```
 
 ```{r}
@@ -92,7 +92,7 @@ E$Class = factor(E$Class, levels=c("H","M","L"), labels=c("H","M","L"))
 
 E$StageID = factor(E$StageID, levels=c("HighSchool","MiddleSchool","lowerlevel"), labels=c("HighSchool","MiddleSchool","Lowerlevel")) 
 
-E
+
 
 ```
 
@@ -1055,7 +1055,7 @@ tl.col="black", tl.cex=0.6, tl.srt=45,
 ```{r}
 # Remove some useless features , such as: GradeID, SectionID and Semester.
 E1 <- E[,-c(5,6,8)]
-E1
+
 
 ```
 
@@ -1106,7 +1106,7 @@ E_melt
 ggplot(E_melt, aes(x=Reference, y=Prediction, fill=Value)) + geom_tile() + scale_fill_gradient(low = "white",high = "red") + scale_x_discrete(position = "top") + scale_y_discrete(limits = rev(levels(E_melt$Prediction)))
 ```
 
-#Summary of model 1: we get some findings from the tree mode above:
+#Summary of model 1: we conclude from the tree mode above:
 #1. From the plot of the tree, some variables ( VisITedResources, StudentAbsenceDays, Relation, gender, ParentAnsweringSurvey and raisedhands) are selected as splitting rules, which means these features are crucial in splitting the tree. so they are very important features in this tree model.
 
 #2. From the confusion matrix and heatmap, there is no prediction error between class L and H. However, the performance is not so good between class M and H, M and L. It means that this model has some problem in predicting the adjacent classes but not the distant classes.
@@ -1147,7 +1147,7 @@ ggplot(E_melt, aes(x=Reference, y=Prediction, fill=Value)) + geom_tile() + scale
 ```
 
 
-#Summary of model 2: we get some findings from the tree mode above:
+#Summary of model 2: we conclude from the tree mode above:
 #1. From the plot of variable importance, some variables ( StudentAbsenceDays, VisITedResources, raisedhands, AnnouncementsView, ParentAnsweringSurvey and Relation) are more important, and the other variables are less important in this model such as StageID, PlaceofBirth and Topic.
 
 #2. From the confusion matrix, there is also no prediction error between class L and H in this random forest model. There are some improvements: all the number of correct prediction has been increased in all the classes (26, 42 and 26) than the previous model. And the FP of M classes have been reduced a lot. However, the FP cases of H and L classes have been slightly increased.
@@ -1168,7 +1168,7 @@ confusionMatrix(testData$Class, svm.predict)
 ```
 
 
-#Summary of model 3: we get some findings from the tree mode above:
+#Summary of model 3: we conclude from the tree mode above:
 #1. From the confusion matrix, different from the previous two models, there is a prediction error between class L and H, one H class is predicted as L class. There are some improvements: all the number of correct prediction has been increased in all the classes (29, 41 and 25), much better than the model 1, but similar to model 2. And the FP of H and M classes have been reduced, which is the best among these 3 models. 
 
 #2. The accuracy of this model 3 is 0.7917, which is a little higher than model 1 and model 2.
@@ -1212,7 +1212,7 @@ plot(importance)
 ```
 
 
-#Summary of model 1: we get some findings from the tree mode above:
+#Summary of model 1: we condlude from the tree mode above:
 #1. From the plot of variable importance, the most important variables are StudentAbsenceDays, VisITedResources, raisedhands and AnnouncementsView, the less important variables are ParentAnsweringSurvey, relation, ParentschoolSatisfaction, Discussion and gender, and the unimportant variables are Nationality, StageID, PlaceofBirth and Topic for every class. This conclusion further confirmed our findings in the previous steps.
 
 #2. From the confusion matrix, there is a prediction error between class L and H, one H class is predicted as L class. There are some improvements: The number of TP of H class with 30 is much better than the model 1 without cross validation, it's also the highest till now. And the FP are much smaller than the model 1 without cross validation. However, there are 12 m class predicted as L class, which is much high than the model 1 without cross validation.
@@ -1251,7 +1251,7 @@ plot(importance)
 
 ```
 
-#Summary of model 2: we conclude some findings from the tree mode above:
+#Summary of model 2: we conclude from the tree mode above:
 #1. From the plot of variable importance, the most important variables are VisITedResources, raisedhands, StudentAbsenceDays, AnnouncementsView and Discussion, the less important variables are RelationMum, ParentAnsweringSurvey, genderM and ParentschoolSatisfaction, and the unimportant variables are Topic, StageID,Nationality and PlaceofBirth for every class. This figures that represent the level of importance is much clear, which also further confirmed our findings in the previous steps.
 
 #2. From the confusion matrix, there is no prediction error between class L and H in this random forest model. There are some improvements: The number of correct prediciton has been increased a lot in M and L class (43 and 28) than the model 1. And there are only 4 m class predicted as L class, which has been improved a lot than model 1.
@@ -1292,7 +1292,7 @@ print(importance)
 plot(importance)
 ```
 
-#Summary of model 3: we conclude some findings from the tree mode above:
+#Summary of model 3: we conclude from the tree mode above:
 #1. From the plot of variable importance, the most important variables are VisITedResources, StudentAbsenceDays, raisedhands and AnnouncementsView, the less important variables are ParentAnsweringSurvey, Relation, ParentschoolSatisfaction, Discussion and gender, and the unimportant variables are Topic, StageID, Nationality and PlaceofBirth for every class. The figures that represent the level of importance is much clear, which also further confirmed our findings in the previous steps.
 
 #2. From the confusion matrix, there is no prediction error between class L and H in this random forest model. There are some improvements than model 1 but not than model 2: The number of correct prediction has been increased a lot in M and L class (43 and 25) than the model 1. And there are only 4 m class predicted as L class, which has been improved a lot than model 1. However, the number of TP of H class is the lowest among those 3 models, even worse than the model 3 without cross validation.
