@@ -670,7 +670,7 @@ ggplot(data = E, aes(x = Discussion, color = Class)) + geom_density(size=1) + gg
 # Summary of Task 1.3: From the exploration of the numerical feature values, we have the following findings:
 #1 .Students who have the higher class raised hands, visited resource, viewd announcements and discussed more times.
 
-#2. Most of the students with high class raised hands, visited resource, viewed announcements and discussed many times, most of the students with low class raised hands, visited resource, viewed announcements and discussed few times. 
+#2. Most of the students with high class have many times of raised hands, visited resource, viewed announcements and discussion, most of the students with low class raised hands, visited resource, viewed announcements and discussed few times.  
 
 #3. There are some little differences in the density curve, especially in the announcement view and discussion.
 
@@ -1095,7 +1095,7 @@ tree.predict <- predict(E_ctree, newdata = testData)
 confusionMatrix(tree.predict, testData$Class)
 ```
 
-# Heatmap
+# Heatmap 1
 ```{r}
 E_table <- table(tree.predict, testData$Class)
 E_melt <- melt(E_table)
@@ -1135,6 +1135,17 @@ confusionMatrix(testData$Class, rf.predict)
 varImpPlot(rf.model)
 
 ```
+# Heatmap 2
+```{r}
+E_table <- table(rf.predict, testData$Class)
+E_melt <- melt(E_table)
+names(E_melt) <- c("Prediction", "Reference", "Value")
+E_melt$Value <- (E_melt$Value - min(E_melt$Value))/(max(E_melt$Value) - min(E_melt$Value))
+E_melt
+
+ggplot(E_melt, aes(x=Reference, y=Prediction, fill=Value)) + geom_tile() + scale_fill_gradient(low = "white",high = "red") + scale_x_discrete(position = "top") + scale_y_discrete(limits = rev(levels(E_melt$Prediction)))
+```
+
 
 #Summary of model 2: we get some findings from the tree mode above:
 #1. From the plot of variable importance, some variables ( StudentAbsenceDays, VisITedResources, raisedhands, AnnouncementsView, ParentAnsweringSurvey and Relation) are more important, and the other variables are less important in this model such as StageID, PlaceofBirth and Topic.
@@ -1155,6 +1166,7 @@ svm.model <- svm(formula, data = trainingData, kernel = "radial", cost = 10, gam
 svm.predict <- predict(svm.model, testData)
 confusionMatrix(testData$Class, svm.predict)
 ```
+
 
 #Summary of model 3: we get some findings from the tree mode above:
 #1. From the confusion matrix, different from the previous two models, there is a prediction error between class L and H, one H class is predicted as L class. There are some improvements: all the number of correct prediction has been increased in all the classes (29, 41 and 25), much better than the model 1, but similar to model 2. And the FP of H and M classes have been reduced, which is the best among these 3 models. 
@@ -1199,6 +1211,7 @@ print(importance)
 plot(importance)
 ```
 
+
 #Summary of model 1: we get some findings from the tree mode above:
 #1. From the plot of variable importance, the most important variables are StudentAbsenceDays, VisITedResources, raisedhands and AnnouncementsView, the less important variables are ParentAnsweringSurvey, relation, ParentschoolSatisfaction, Discussion and gender, and the unimportant variables are Nationality, StageID, PlaceofBirth and Topic for every class. This conclusion further confirmed our findings in the previous steps.
 
@@ -1233,6 +1246,8 @@ confusionMatrix(rfPredictions, testData$Class)
 importance <- varImp(rfModel, scale=FALSE)
 # summarize importance
 print(importance)
+# plot importance
+plot(importance)
 
 ```
 
