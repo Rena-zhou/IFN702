@@ -92,20 +92,18 @@ E$Class = factor(E$Class, levels=c("H","M","L"), labels=c("H","M","L"))
 
 E$StageID = factor(E$StageID, levels=c("HighSchool","MiddleSchool","lowerlevel"), labels=c("HighSchool","MiddleSchool","Lowerlevel")) 
 
-
-
 ```
 
 #Task 1.2. Bar plots of classification values distribution:
 
-#Gender distribution:
+Gender distribution:
 ```{r}
 ggplot(data = E, aes(x = gender, fill = Relation)) + geom_bar() +
     labs(x = "Gender", y = "Student Count")+ ggtitle(label = "Gender Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+ scale_y_continuous(breaks = seq(0,320,20))
 ```
 
 
-#There are nearly 175 girls and 305 boys in this data set. The number of girls who have mom as guardian nearly the same as having father as guardian, whereas most boys have father as guardians.
+There are nearly 175 girls and 305 boys in this data set. The number of girls who have mom as guardian nearly the same as having father as guardian, whereas most boys have father as guardians.
 
 
 ```{r}
@@ -128,7 +126,7 @@ ggplot(data = E, aes(x = gender, fill = ParentAnsweringSurvey)) + geom_bar() +
 ```
 
 
-# The rates of parent answering survey are nearly the same between girls and boys, which are both under 60%.
+The rates of parent answering survey are nearly the same between girls and boys, which are both under 60%.
 
 
 ```{r}
@@ -151,7 +149,7 @@ ggplot(data = E, aes(x = gender, fill = ParentschoolSatisfaction)) + geom_bar() 
 ```
 
 
-# Girls' parents has higher school satisfaction than boys. Girls have higher rate(with about 67%) of parent school satisfaction in good than boys(with about 57%).
+Girls' parents has higher school satisfaction than boys. Girls have higher rate(with about 67%) of parent school satisfaction in good than boys(with about 57%).
 
 
 ```{r}
@@ -172,7 +170,7 @@ ggplot(data = E, aes(x = gender, fill = StudentAbsenceDays)) + geom_bar() +
 
 ```
 
-#Boys has higher rate of above 7 absence days.
+Boys has higher rate of above 7 absence days.
 
 
 ```{r}
@@ -194,10 +192,10 @@ ggplot(data = E, aes(x = gender, fill = Class)) + geom_bar() +
 
 ```
 
-#Girls have higher rate (over 40%) of people with high academic performance, whereas a small rate of boys (about 20%) have high performance. The rate of median class is almost the same both for girls and boys, which are both about 40%. About 35% rate of boys have low performance, whereas the rate of low class is very low among girls. 
+Girls have higher rate (over 40%) of people with high academic performance, whereas a small rate of boys (about 20%) have high performance. The rate of median class is almost the same both for girls and boys, which are both about 40%. About 35% rate of boys have low performance, whereas the rate of low class is very low among girls. 
 
 
-#Place of Birth distribution:
+Place of Birth distribution:
 ```{r}
 
 ggplot(data = E, aes(x = PlaceofBirth, fill = Class)) + geom_bar() +
@@ -217,8 +215,8 @@ ggplot(data = E, aes(x = PlaceofBirth, fill = Class)) + geom_bar() +
 
 ```
 
-#Most of the students were born in Jordan and Kuwait. Venzuela has only one student.
-#Iraq, Lebanon, Saudiarabia, Palestine, USA and Venzuela have higher rate of student with high class, whereas Kuwait and Lybia have higher rate of students with low class.
+Most of the students were born in Jordan and Kuwait. Venzuela has only one student.
+Iraq, Lebanon, Saudiarabia, Palestine, USA and Venzuela have higher rate of student with high class, whereas Kuwait and Lybia have higher rate of students with low class.
 
 
 ```{r}
@@ -226,7 +224,7 @@ ggplot(data = E, aes(x = PlaceofBirth, fill = NationalITy)) + geom_bar(colour= "
     labs(x = "PlaceofBirth", y = "Student Count")+ ggtitle(label = "PlaceofBirth Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold")) +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
-#Most of the students who were born in these countries of Egypt, Iran, Iraq, Kuwait, Lebanon, Lybia, Morocco, Syria, Tunis and Venzuela have the same nationality as the place of birth. some of the students who were born in Jordan have the nationality of Palestine. The students who were born in USA have diversity of nationality. Half of the students who were born in Saudiarabia have the nationality of Jordan. 
+Most of the students who were born in these countries of Egypt, Iran, Iraq, Kuwait, Lebanon, Lybia, Morocco, Syria, Tunis and Venzuela have the same nationality as the place of birth. some of the students who were born in Jordan have the nationality of Palestine. The students who were born in USA have diversity of nationality. Half of the students who were born in Saudiarabia have the nationality of Jordan. 
 
 
 ```{r}
@@ -234,7 +232,7 @@ ggplot(data = E, aes(x = PlaceofBirth, fill = gender)) + geom_bar() +
     labs(x = "PlaceofBirth", y = "Student Count")+ ggtitle(label = "PlaceofBirth Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold")) +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
-#Lebanon has most rate of girls, half of the USA students are girls. Girls are less than boys in the other areas. 
+Lebanon has most rate of girls, half of the USA students are girls. Girls are less than boys in the other areas. 
 
 
 ```{r}
@@ -243,16 +241,16 @@ ggplot(data = E, aes(x = PlaceofBirth, fill = Relation)) + geom_bar() +
     labs(x = "PlaceofBirth", y = "Student Count")+ ggtitle(label = "PlaceofBirth Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold")) +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
-#Based on the place of birth, most fathers are responsible for students in some countries like: Kuwait, Iraq, Saudiarabia. Most mothers are responsible for students' study in these areas like: Egypt, Iran, Jordan, Lebanon, LYbia, Morocco, Palestine and Venzuela.
+Based on the place of birth, most fathers are responsible for students in some countries like: Kuwait, Iraq, Saudiarabia. Most mothers are responsible for students' study in these areas like: Egypt, Iran, Jordan, Lebanon, LYbia, Morocco, Palestine and Venzuela.
 
 
-#Nationality distribution:
+Nationality distribution:
 ```{r}
 ggplot(data = E, aes(x = NationalITy, fill = Class)) + geom_bar() +
     labs(x = "Nationality", y = "Student Count")+ ggtitle(label = "Nationality Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))+ scale_y_continuous(breaks = seq(0,200,10))
 ```
 
-#Jordan and KW(KuwaIT) has highest number of students. Venzuela has only one student.
+Jordan and KW(KuwaIT) has highest number of students. Venzuela has only one student.
 
 
 ```{r}
@@ -269,7 +267,7 @@ ggplot(data = E, aes(x = NationalITy, fill = Class)) + geom_bar() +
 
 ```
 
-#Iraq, Lebanon, Saudiarabia, Palestine, USA and Venzuela have higher rate of student with high class, whereas Kuwait and Lybia have higher rate of students with low class.
+Iraq, Lebanon, Saudiarabia, Palestine, USA and Venzuela have higher rate of student with high class, whereas Kuwait and Lybia have higher rate of students with low class.
 
 
 ```{r}
@@ -277,7 +275,7 @@ ggplot(data = E, aes(x = NationalITy, fill = Relation)) + geom_bar() +
     labs(x = "PlaceofBirth", y = "Student Count")+ ggtitle(label = "Nationality Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold")) +theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
-#Based on the nationality,most fathers are responsible for students in some countries like: Kuwait, Iraq, Saudiarabia. Most mothers are responsible for students' study in these areas like: Egypt, Iran, Jordan, Lebanon, LYbia, Morocco, Palestine and Venzuela.
+Based on the nationality,most fathers are responsible for students in some countries like: Kuwait, Iraq, Saudiarabia. Most mothers are responsible for students' study in these areas like: Egypt, Iran, Jordan, Lebanon, LYbia, Morocco, Palestine and Venzuela.
 
 
 ```{r}
@@ -285,7 +283,7 @@ ggplot(data = E, aes(x = NationalITy, fill = ParentAnsweringSurvey)) + geom_bar(
     labs(x = "NationalITy", y = "Student Count") + ggtitle(label = "Nationality Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
-#Most of the areas have higher rate of parent answering survey, except Lybia.
+Most of the areas have higher rate of parent answering survey, except Lybia.
 
 
 ```{r}
@@ -293,16 +291,16 @@ ggplot(data = E, aes(x = NationalITy, fill = ParentschoolSatisfaction)) + geom_b
     labs(x = "NationalITy", y = "Student Count")+ ggtitle(label = "Nationality Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
-#Most of the areas have higher rate of good parent school satisfaction, except Suadiarabia.
+Most of the areas have higher rate of good parent school satisfaction, except Suadiarabia.
 
 
-#Stage ID distribution:
+Stage ID distribution:
 ```{r}
 ggplot(data = E, aes(x = StageID, fill = gender)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") + ggtitle(label = "Stage Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Middle school has the highest number of students. High school has very few students. Girls are less than boys in every level of school.
+Middle school has the highest number of students. High school has very few students. Girls are less than boys in every level of school.
 
 
 ```{r}
@@ -310,7 +308,7 @@ ggplot(data = E, aes(x = StageID, fill = Topic)) + geom_bar(colour = "black") +
     labs(x = "StageID", y = "Student Count") + ggtitle(label = "Stage Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Lowerlevel has less kinds of topics. Middle school almost covers all kinds of topics.
+Lowerlevel has less kinds of topics. Middle school almost covers all kinds of topics.
 
 
 ```{r}
@@ -318,7 +316,7 @@ ggplot(data = E, aes(x = StageID, fill = Semester)) + geom_bar() +
     labs(x = "StageID", y = "Student Count")+ ggtitle(label = "Stage Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#The two semesters almost cover the same rate in different level of schools.
+The two semesters almost cover the same rate in different level of schools.
 
 
 ```{r}
@@ -326,7 +324,7 @@ ggplot(data = E, aes(x = StageID, fill = Relation)) + geom_bar() +
     labs(x = "StageID", y = "Student Count") + ggtitle(label = "Stage Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#More fatheres are responsible for students' study in different level of schools.
+More fatheres are responsible for students' study in different level of schools.
 
 
 ```{r}
@@ -347,7 +345,7 @@ ggplot(data = E, aes(x = StageID, fill = ParentAnsweringSurvey)) + geom_bar() +
 
 ```
 
-#Both highschool and middleschool have more than 60% parent answering survey. Lowerlevel has less than 50% rate of parent answering survey.
+Both highschool and middleschool have more than 60% parent answering survey. Lowerlevel has less than 50% rate of parent answering survey.
 
 
 ```{r}
@@ -368,7 +366,7 @@ ggplot(data = E, aes(x = StageID, fill = ParentschoolSatisfaction)) + geom_bar()
 
 ```
 
-#Highschool has the lowest rate(under 60%) of good parent school satisfaction. Both middleschool and lowerlevel have more than 60% rate of good parent school satisfaction.
+Highschool has the lowest rate(under 60%) of good parent school satisfaction. Both middleschool and lowerlevel have more than 60% rate of good parent school satisfaction.
 
 
 ```{r}
@@ -389,7 +387,7 @@ ggplot(data = E, aes(x = StageID, fill = StudentAbsenceDays)) + geom_bar() +
 
 ```
 
-#Lowerlevel has higher rate of above 7 days of student absence. 
+Lowerlevel has higher rate of above 7 days of student absence. 
 
 
 ```{r}
@@ -411,27 +409,27 @@ ggplot(data = E, aes(x = StageID, fill = Class)) + geom_bar() +
 
 ```
 
-#Lower level has the highest rate of low class students.Highschool has the highest rate of high class students. Middle school has the highest rate of medium class students.
+Lower level has the highest rate of low class students.Highschool has the highest rate of high class students. Middle school has the highest rate of medium class students.
 
 
 
-#Grade ID distribution:
+Grade ID distribution:
 ```{r}
 ggplot(data = E, aes(x = GradeID, fill = StageID)) + geom_bar() +
     labs(x = "GradeID", y = "Student Count") +theme(axis.text.x = element_text(angle=90, hjust=1))+ ggtitle(label = "Grade Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Grade 2, 3, 4 and 5 belong to Lowerlevel, grade 6,7 and 8 belong to Middle school, grade 9,10,11 and 12 belong to High school.
+Grade 2, 3, 4 and 5 belong to Lowerlevel, grade 6,7 and 8 belong to Middle school, grade 9,10,11 and 12 belong to High school.
 
 
 
-#Section ID distribution:
+Section ID distribution:
 ```{r}
 ggplot(data = E, aes(x = SectionID, fill = StageID)) + geom_bar() +
     labs(x = "SectionID", y = "Student Count") + ggtitle(label = "Section Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Section C has only Middle school and Lowerlevel students
+Section C has only Middle school and Lowerlevel students
 
 
 ```{r}
@@ -439,16 +437,16 @@ ggplot(data = E, aes(x = SectionID, fill = Topic)) + geom_bar(colour = "black") 
     labs(x = "SectionID", y = "Student Count")+ ggtitle(label = "Section Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Section C has only IT and science students.
+Section C has only IT and science students.
 
 
-#Topic distribution:
+Topic distribution:
 ```{r}
 ggplot(data = E, aes(x = Topic, fill = gender)) + geom_bar() +
     labs(x = "Topic", y = "Student Count") + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1)) 
 ```
 
-#Spanish has fewest girls, whereas Science, Chemistry, English and French have higher ratio of girls.
+Spanish has fewest girls, whereas Science, Chemistry, English and French have higher ratio of girls.
 
 
 ```{r}
@@ -456,7 +454,7 @@ ggplot(data = E, aes(x = Topic, fill = Class)) + geom_bar() +
     labs(x = "Topic", y = "Student Count") + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
-#Geology has no low class students
+Geology has no low class students
 
 
 ```{r}
@@ -473,7 +471,7 @@ ggplot(data = E, aes(x = Topic, fill = Class)) + geom_bar() +
 
 ```
 
-#Biology has the highest ratio of high class students. It has the highest ratio of low class students. Geology has the highest ratio of medium class students.
+Biology has the highest ratio of high class students. It has the highest ratio of low class students. Geology has the highest ratio of medium class students.
 
 
 ```{r}
@@ -481,7 +479,7 @@ ggplot(data = E, aes(x = Topic, fill = NationalITy)) + geom_bar(colour = "black"
     labs(x = "Topic", y = "Student Count") + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
-#IT has most people from Kuwait. Chemistry has least diversity. French has most diversity.
+IT has most people from Kuwait. Chemistry has least diversity. French has most diversity.
 
 
 ```{r}
@@ -489,7 +487,7 @@ ggplot(data = E, aes(x = Topic, fill = StageID)) + geom_bar(colour = "black") +
     labs(x = "Topic", y = "Student Count") + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))+ scale_y_continuous(breaks = seq(0,100,4))
 ```
 
-#Geology, biology and chemistry are only in middle school. French has the lowest rate of highschool student.
+Geology, biology and chemistry are only in middle school. French has the lowest rate of highschool student.
 
 
 ```{r}
@@ -497,7 +495,7 @@ ggplot(data = E, aes(x = Topic, fill = SectionID)) + geom_bar(colour = "black") 
     labs(x = "Topic", y = "Student Count") + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))+ scale_y_continuous(breaks = seq(0,100,4))
 ```
 
-#Section C only has Spanish and IT students.
+Section C only has Spanish and IT students.
 
 
 ```{r}
@@ -505,7 +503,7 @@ ggplot(data = E, aes(x = Topic, fill = Semester)) + geom_bar(colour = "black") +
     labs(x = "Topic", y = "Student Count") + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))+ scale_y_continuous(breaks = seq(0,100,4))
 ```
 
-#IT mostly has students who are in first semester.
+IT mostly has students who are in first semester.
 
 
 ```{r}
@@ -513,25 +511,25 @@ ggplot(data = E, aes(x = Topic, fill = Relation)) + geom_bar(colour = "black") +
     labs(x = "Topic", y = "Student Count") + ggtitle(label = "Topic Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+theme(axis.text.x = element_text(angle=90, hjust=1))+ scale_y_continuous(breaks = seq(0,100,4))
 ```
 
-#Most French students have mom as guardian whereas most IT students have fathers as guardian.
+Most French students have mom as guardian whereas most IT students have fathers as guardian.
 
 
-#Parent Answering Survey distribution:
+Parent Answering Survey distribution:
 ```{r}
 ggplot(data = E, aes(x = ParentAnsweringSurvey, fill = ParentschoolSatisfaction)) + geom_bar(colour = "black") +
     labs(x = "ParentAnsweringSurvey", y = "Student Count") + ggtitle(label = "ParentAnsweringSurvey Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+ scale_y_continuous(breaks = seq(0,500,20))
 ```
 
-#Most of the parents who aren't satisfied with the school do not answer the survey.
+Most of the parents who aren't satisfied with the school do not answer the survey.
 
 
-#Class distribution:
+Class distribution:
 ```{r}
 ggplot(data = E, aes(x = Class, fill = gender)) + geom_bar(colour = "black") +
     labs(x = "Class", y = "Student Count") + ggtitle(label = "Class Distribution")+theme_grey()+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+ scale_y_continuous(breaks = seq(0,500,20))
 ```
 
-#Very few girls in low class
+Very few girls in low class
 
 
 ```{r}
@@ -539,7 +537,7 @@ ggplot(data = E, aes(x = Class, fill = Relation)) + geom_bar(colour = "black") +
     labs(x = "Class", y = "Student Count") + ggtitle(label = "Class Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+ scale_y_continuous(breaks = seq(0,500,20))
 ```
 
-#The students who have moms as guardians have higher chances to get high class marks.
+The students who have moms as guardians have higher chances to get high class marks.
 
 
 ```{r}
@@ -547,7 +545,7 @@ ggplot(data = E, aes(x = Class, fill = ParentAnsweringSurvey)) + geom_bar(colour
     labs(x = "Class", y = "Student Count") + ggtitle(label = "Class Distribution")+theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))+ scale_y_continuous(breaks = seq(0,500,20))
 ```
 
-#Students whose parents answer the survey are the ones getting good marks.
+Students whose parents answer the survey are the ones getting good marks.
 
 
 ```{r}
@@ -556,21 +554,21 @@ ggplot(data = E, aes(x = Class, fill = StudentAbsenceDays)) + geom_bar(colour = 
 ```
 
 
-#Student getting absent are the ones getting low marks.
+Student getting absent are the ones getting low marks.
 
 
 
-# Summary of Task 1.2: Based on the exploration work above, We conclude the following main findings which will be much useful for analysis and prediction of the academic performance in the next steps:
+#Summary of Task 1.2: Based on the exploration work above, We conclude the following main findings which will be much useful for analysis and prediction of the academic performance in the next steps:
 
-#1. Girls have higher rate in high class but lower rate in low class, boys are the opposite. Girls' parents have higher school satisfaction than boys. Boys has higher rate of above 7 absence days. Very few girls in low class.
+1. There are more girls in the high achiever's class (high class) than in the low class; boys are the opposite. Girls' parents have higher school satisfaction than boys. Boys are more frequently absent for more than 7 days.
 
-#2. The differences of class performance between place of birth and nationality are very tiny.The findings between pace of birth and nationality are very similar. It's enough for us to just use nationality instead of both for the next steps.
+2. There are very small differences in class performance with respect to place of birth and nationality. The findings between place of birth and nationality are very similar. This justify using only nationality in place of both for the next steps.
 
-#3. Middle school has the most students. Lower-level has higher rate of above 7 days of student absence. Lower-level has the highest rate of low class students. Highschool has the highest rate of high class students. Middle school has the highest rate of medium class students.
+3. Middle school has the most students. Lower-level has higher rate of above 7 days of student absence. Lower-level has the highest rate of low class students (low achievers). Highschool has the highest rate of high class students (high achievers). Middle school has the highest rate of medium class students.
 
-#4. Biology has the highest ratio of high class students. It has the highest ratio of low class students. Geology has the highest ratio of medium class students.
+4. Biology has the highest ratio of high class students, but also the highest ratio of low class students. Geology has the highest ratio of medium class students.
 
-#5. The students who have moms as guardians have higher chances to get high class marks. Students whose parents answer the survey are the ones getting good marks. Student getting absent are the ones getting low marks.
+5. The students who have moms as guardians have higher chances to get high class marks. Students whose parents answer the survey are the ones getting good marks. Student that have more absences are those getting low marks.
 
 
  
@@ -590,14 +588,14 @@ ggplot(E, aes(x = raisedhands, fill = Class)) +
 
 ```
 
-#Students have the higher class the more raised hands.
+Students have the higher class the more raised hands.
 
 
 ```{r}
 ggplot(data = E, aes(x = raisedhands, color = Class)) + geom_density(size=1) + ggtitle("Frequency of Raised Hands") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Most of the high class students raised hands many times, most of the low class students raised hands very few times.
+Most of the high class students raised hands many times, most of the low class students raised hands very few times.
 
 
 ```{r}
@@ -612,13 +610,13 @@ ggplot(E, aes(x = VisITedResources, fill = Class)) +
 
 ```
 
-#Students who have the higher class visited the resources more times.
+Students who have the higher class visited the resources more times.
 
 ```{r}
 ggplot(data = E, aes(x = VisITedResources, color = Class)) + geom_density(size=1) + ggtitle("Frequency of VisITedResources") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Most of the students with high class visited the resources many times, most of the students with low class visited the resources very few times.
+Most of the students with high class visited the resources many times, most of the students with low class visited the resources very few times.
 
 
 
@@ -634,14 +632,14 @@ ggplot(E, aes(x = AnnouncementsView, fill = Class)) +
 
 ```
 
-#Students who have the higher class viewed the announcements more times.
+Students who have the higher class viewed the announcements more times.
 
 
 ```{r}
 ggplot(data = E, aes(x = AnnouncementsView, color = Class)) + geom_density(size=1) + ggtitle("Frequency of AnnouncementsView") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Most of the students with high class viewed the announcements many times, most of the students with low class viewed the announcements very few times. But the differences between students with high class and medium class is not very obvious
+Most of the students with high class viewed the announcements many times, most of the students with low class viewed the announcements very few times. But the differences between students with high class and medium class is not very obvious
 
 
 ```{r}
@@ -656,7 +654,7 @@ ggplot(E, aes(x = Discussion, fill = Class)) +
 
 ```
 
-#Students who have the higher class discussed more times.
+Students who have the higher class discussed more times.
 
 
 
@@ -664,26 +662,25 @@ ggplot(E, aes(x = Discussion, fill = Class)) +
 ggplot(data = E, aes(x = Discussion, color = Class)) + geom_density(size=1) + ggtitle("Frequency of Discussion") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Most of the students with high class discussed many times, most of the students with low class discussed very few times. 
+Most of the students with high class discussed many times, most of the students with low class discussed very few times. 
 
 
 # Summary of Task 1.3: From the exploration of the numerical feature values, we have the following findings:
-#1 .Students who have the higher class raised hands, visited resource, viewd announcements and discussed more times.
 
-#2. Most of the students with high class have many times of raised hands, visited resource, viewed announcements and discussion, most of the students with low class raised hands, visited resource, viewed announcements and discussed few times.  
+1. High achiever students are more likely to raise hands, visit resources, view announcements and participate in discussions. Low achiever students raised hands, visited resource, viewed announcements and participated in discussions few times. 
 
-#3. There are some little differences in the density curve, especially in the announcement view and discussion.
+2. There are some little differences in the density curve, especially in the announcement view and discussion.
 
 
 
 #Task 2. Exploration of the relationships between different features of the students' academic performance datasets
 
-#Class and the numerial features
+Class and the numerial features
 ```{r}
 ggplot(data = E, aes(x = Class, y = raisedhands)) + geom_boxplot()+ ggtitle("Relationship of Class") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#The higher class the higher times of raising hands
+The higher class the higher times of raising hands
 
 
 ```{r}
@@ -691,29 +688,29 @@ ggplot(data = E, aes(x = Class, y = VisITedResources)) + geom_boxplot()+ ggtitle
 
 ```
 
-#The higher class the higher times of visiting resources
+The higher class the higher times of visiting resources
 
 
 ```{r}
 ggplot(data = E, aes(x = Class, y = AnnouncementsView)) + geom_boxplot()+ ggtitle("Relationship of Class") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#The higher class the higher times of viewing announcements
+The higher class the higher times of viewing announcements
 
 
 ```{r}
 ggplot(data = E, aes(x = Class, y = Discussion)) + geom_boxplot()+ ggtitle("Relationship of Class") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#The higher class the higher times of discussion
+The higher class the higher times of discussion
 
 
-#Gender and the numerial features
+Gender and the numerial features
 ```{r}
 ggplot(data = E, aes(x = gender, y = raisedhands)) + geom_boxplot()+ ggtitle("Relationship of Gender") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Girls have more hand raises
+Girls have more hand raises
 
 
 ```{r}
@@ -721,31 +718,31 @@ ggplot(data = E, aes(x = gender, y = VisITedResources)) + geom_boxplot()+ ggtitl
 
 ```
 
-#Girls visit more resources
+Girls visit more resources
 
 
 ```{r}
 ggplot(data = E, aes(x = gender, y = AnnouncementsView)) + geom_boxplot()+ ggtitle("Relationship of Gender") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Girls view more announcements, but the differences are not very obvious.
+Girls view more announcements, but the differences are not very obvious.
 
 
 ```{r}
 ggplot(data = E, aes(x = gender, y = Discussion)) + geom_boxplot()+ ggtitle("Relationship of Gender") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Girls have more discussion, but the differences are not very obvious.
+Girls have more discussion, but the differences are not very obvious.
 
 
 
-#Nationality and the numerial features
+Nationality and the numerial features
 ```{r}
 ggplot(data = E, aes(x = NationalITy, y = raisedhands)) + geom_boxplot()+
   theme(axis.text.x = element_text(angle=45, hjust=1))+ ggtitle("Relationship of Nationality") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Jordan has more hand raises than Kuwait, Lybia has lowest. Iraq and Palestine have highest hand raises.
+Jordan has more hand raises than Kuwait, Lybia has lowest. Iraq and Palestine have highest hand raises.
 
 
 ```{r}
@@ -754,7 +751,7 @@ ggplot(data = E, aes(x = NationalITy, y = VisITedResources)) + geom_boxplot()+
 
 ```
 
-#Jordan has more visiting resouces than Kuwait, Lybia has lowest. Iraq and Palestine have highest visiting resources.
+Jordan has more visiting resouces than Kuwait, Lybia has lowest. Iraq and Palestine have highest visiting resources.
 
 
 ```{r}
@@ -762,7 +759,7 @@ ggplot(data = E, aes(x = NationalITy, y = AnnouncementsView)) + geom_boxplot()+
   theme(axis.text.x = element_text(angle=45, hjust=1))+ ggtitle("Relationship of Nationality") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Jordan has more announcement view than Kuwait, Lybia has lowest. Iraq and Palestine have highest announcement view.
+Jordan has more announcement view than Kuwait, Lybia has lowest. Iraq and Palestine have highest announcement view.
 
 
 ```{r}
@@ -770,15 +767,15 @@ ggplot(data = E, aes(x = NationalITy, y = Discussion)) + geom_boxplot()+
   theme(axis.text.x = element_text(angle=45, hjust=1))+ ggtitle("Relationship of Nationality") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#The differences between Jordan and Kuwait are not obvious, Lybia has lowest. Iraq and Palestine have highest announcement view.
+The differences between Jordan and Kuwait are not obvious, Lybia has lowest. Iraq and Palestine have highest announcement view.
 
 
-#Stage ID and the numerial features
+Stage ID and the numerial features
 ```{r}
 ggplot(data = E, aes(x = StageID, y = raisedhands)) + geom_boxplot()+ ggtitle("Relationship of Stage ID") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#More hand raises in middle schools.
+More hand raises in middle schools.
 
 
 ```{r}
@@ -787,14 +784,14 @@ ggplot(data = E, aes(x = StageID, y = VisITedResources)) + geom_boxplot()+ ggtit
 #More hand raises in middle schools.
 ```
 
-#More visiting resouces in middle schools.
+More visiting resouces in middle schools.
 
 
 ```{r}
 ggplot(data = E, aes(x = StageID, y = AnnouncementsView)) + geom_boxplot()+ ggtitle("Relationship of Stage ID") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#More announcement views in middle schools.
+More announcement views in middle schools.
 
 
 
@@ -802,15 +799,15 @@ ggplot(data = E, aes(x = StageID, y = AnnouncementsView)) + geom_boxplot()+ ggti
 ggplot(data = E, aes(x = StageID, y = Discussion)) + geom_boxplot()+ ggtitle("Relationship of Stage ID") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#More discussions in high schools.
+More discussions in high schools.
 
 
-#Topic and the numerial features
+Topic and the numerial features
 ```{r}
 ggplot(data = E, aes(x = Topic, y = raisedhands)) + geom_boxplot()+ geom_boxplot()+ ggtitle("Relationship of Topic") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#IT has very few hand raises intersetingly although most students study there.
+IT has very few hand raises intersetingly although most students study there.
 
 
 ```{r}
@@ -823,17 +820,17 @@ ggplot(data = E, aes(x = Topic, y = VisITedResources)) + geom_boxplot()+ ggtitle
 ggplot(data = E, aes(x = Topic, y = AnnouncementsView)) + geom_boxplot()+ ggtitle("Relationship of Topic") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#IT has very few announcement view although most students study there.
+IT has very few announcement view although most students study there.
 
 
 ```{r}
 ggplot(data = E, aes(x = Topic, y = Discussion)) + geom_boxplot()+ ggtitle("Relationship of Topic") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#IT has very few discussion although most students study there.
+IT has very few discussion although most students study there.
 
 
-#Section ID and the numerial features
+Section ID and the numerial features
 ```{r}
 ggplot(data = E, aes(x = SectionID, y = raisedhands)) + geom_boxplot()+ ggtitle("Relationship of Section ID") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
@@ -851,15 +848,15 @@ ggplot(data = E, aes(x = SectionID, y = AnnouncementsView)) + geom_boxplot()+ gg
 ggplot(data = E, aes(x = SectionID, y = Discussion)) + geom_boxplot()+ ggtitle("Relationship of Section ID") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Section A has the highest raised hands, visited resources, announcements view and discussion, whereas secion C has the lowest raised hands, visited resources, announcements view and discussion.
+Section A has the highest raised hands, visited resources, announcements view and discussion, whereas secion C has the lowest raised hands, visited resources, announcements view and discussion.
 
 
-#Semester and the numerial features
+Semester and the numerial features
 ```{r}
 ggplot(data = E, aes(x = Semester, y = raisedhands)) + geom_boxplot()+ ggtitle("Relationship of Semester") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Second semester has more hand raises
+Second semester has more hand raises
 
 
 ```{r}
@@ -867,29 +864,29 @@ ggplot(data = E, aes(x = Semester, y = VisITedResources)) + geom_boxplot()+ ggti
 
 ```
 
-#Second semester has more visited resources
+Second semester has more visited resources
 
 
 ```{r}
 ggplot(data = E, aes(x = Semester, y = AnnouncementsView)) + geom_boxplot()+ ggtitle("Relationship of Semester") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Second semester has more announcements view
+Second semester has more announcements view
 
 
 ```{r}
 ggplot(data = E, aes(x = Semester, y = Discussion)) + geom_boxplot()+ ggtitle("Relationship of Semester") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Almost no differences between these two semesters in discussion.
+Almost no differences between these two semesters in discussion.
 
 
-#Relation and the numerial features
+Relation and the numerial features
 ```{r}
 ggplot(data = E, aes(x = Relation, y = raisedhands)) + geom_boxplot()+ ggtitle("Relationship of Relation") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Students with Guardians mother have more hand raises.
+Students with Guardians mother have more hand raises.
 
 
 ```{r}
@@ -897,29 +894,29 @@ ggplot(data = E, aes(x = Relation, y = VisITedResources)) + geom_boxplot()+ ggti
 
 ```
 
-#Students with Guardians mother have more visited resources.
+Students with Guardians mother have more visited resources.
 
 
 ```{r}
 ggplot(data = E, aes(x = Relation, y = AnnouncementsView)) + geom_boxplot()+ ggtitle("Relationship of Relation") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Students with Guardians mother have more announcements view.
+Students with Guardians mother have more announcements view.
 
 
 ```{r}
 ggplot(data = E, aes(x = Relation, y = Discussion)) + geom_boxplot()+ ggtitle("Relationship of Relation") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#No obvious differences between students with differen guardians in discussion.
+No obvious differences between students with differen guardians in discussion.
 
 
-#Parent Answering Survey and the numerial features
+Parent Answering Survey and the numerial features
 ```{r}
 ggplot(data = E, aes(x = ParentAnsweringSurvey, y = raisedhands)) + geom_boxplot()+ ggtitle("Relationship of Parent Answering Survey") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Students whose parent answering survey have more hand raises
+Students whose parent answering survey have more hand raises
 
 
 ```{r}
@@ -927,14 +924,14 @@ ggplot(data = E, aes(x = ParentAnsweringSurvey, y = VisITedResources)) + geom_bo
 
 ```
 
-#Students whose parent answering survey have more visited resources.
+Students whose parent answering survey have more visited resources.
 
 
 ```{r}
 ggplot(data = E, aes(x = ParentAnsweringSurvey, y = AnnouncementsView)) + geom_boxplot()+ ggtitle("Relationship of Parent Answering Survey") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Students whose parent answering survey have more announcements view.
+Students whose parent answering survey have more announcements view.
 
 
 
@@ -942,15 +939,15 @@ ggplot(data = E, aes(x = ParentAnsweringSurvey, y = AnnouncementsView)) + geom_b
 ggplot(data = E, aes(x = ParentAnsweringSurvey, y = Discussion)) + geom_boxplot()+ ggtitle("Relationship of Parent Answering Survey") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Students whose parent answering survey have more discussion
+Students whose parent answering survey have more discussion
 
 
-#Parent school Satisfaction and the numerial features
+Parent school Satisfaction and the numerial features
 ```{r}
 ggplot(data = E, aes(x = ParentschoolSatisfaction, y = raisedhands)) + geom_boxplot()+ ggtitle("Relationship of Parent Satisfacion") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Students whose parents with good satisfaction have more hand raises.
+Students whose parents with good satisfaction have more hand raises.
 
 
 ```{r}
@@ -958,29 +955,29 @@ ggplot(data = E, aes(x = ParentschoolSatisfaction, y = VisITedResources)) + geom
 
 ```
 
-#Students whose parents with good satisfaction have more visited resources.
+Students whose parents with good satisfaction have more visited resources.
 
 
 ```{r}
 ggplot(data = E, aes(x = ParentschoolSatisfaction, y = AnnouncementsView)) + geom_boxplot()+ ggtitle("Relationship of Parent Satisfacion") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Students whose parents with good satisfaction have more announcement view.
+Students whose parents with good satisfaction have more announcement view.
 
 
 ```{r}
 ggplot(data = E, aes(x = ParentschoolSatisfaction, y = Discussion)) + geom_boxplot()+ ggtitle("Relationship of Parent Satisfacion") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#No obvious differences in discution between students whose parents with different satisfaction .
+No obvious differences in discution between students whose parents with different satisfaction .
 
 
-#Student Absence Days and the numerial features
+Student Absence Days and the numerial features
 ```{r}
 ggplot(data = E, aes(x = StudentAbsenceDays, y = raisedhands)) + geom_boxplot() + ggtitle("Relationship of Student Absence Days") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Students have the more leaves the less hand raises.
+Students have the more leaves the less hand raises.
 
 
 ```{r}
@@ -988,14 +985,14 @@ ggplot(data = E, aes(x = StudentAbsenceDays, y = VisITedResources)) + geom_boxpl
 
 ```
 
-#Students have the more leaves the less visited resources.
+Students have the more leaves the less visited resources.
 
 
 ```{r}
 ggplot(data = E, aes(x = StudentAbsenceDays, y = AnnouncementsView)) + geom_boxplot()+ ggtitle("Relationship of Student Absence Days") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Students have the more leaves the less announcements view.
+Students have the more leaves the less announcements view.
 
 
 
@@ -1003,28 +1000,27 @@ ggplot(data = E, aes(x = StudentAbsenceDays, y = AnnouncementsView)) + geom_boxp
 ggplot(data = E, aes(x = StudentAbsenceDays, y = Discussion)) + geom_boxplot()+ ggtitle("Relationship of Student Absence Days") +theme(plot.title = element_text(hjust = 0.5, lineheight = 0.8, face = "bold"))
 ```
 
-#Students have the more leaves the less discussion.
+Students have the more leaves the less discussion.
 
 
 
 # Summary of Task 2: From the exploration relationship between features, we have the following findings:
-#1. From the relationship between class and other features, it further confirmed our findings in the previous step: Students who have the higher class raised hands, visited resource, viewed announcements and discussed more times.
 
-#2. Girls have more hand raises and visit more resources. 
+1. The analysis further confirmed our findings in the previous step: High achiever students raised hands, visited resource, viewed announcements and discussed more times. 
 
-#3. The results on raised hands, visited resources and announcements view are very similar. The difference of discussions between Jordan and Kuwait is not obvious.
+2. Girls have more hand raises and visit more resources. 
 
-#4. More raised hands, visited resources and announcements view in middle schools. More discussions in high schools.
+3. The results on raised hands, visited resources and announcements view are very similar. The difference of discussions between Jordan and Kuwait is not obvious.
 
-#5. IT has very few hand raises interestingly although most students study there.
+4. There are more raised hands, visited resources and announcements view in middle schools. More discussions in high schools.
 
-#6. Students with Guardians mother have more hand raises, visited resources and announcements view.
+5. Interestingly, IT subjects have very few hand raises although most students study there.
 
-#7. Students whose parent answering survey have more hand raises, visited resources, announcements view and discussion.
+6. Students with guardians mother have more hand raises, visited resources and announcements view.
 
-#8. Students whose parents with good satisfaction have more raised hands, visited resources and announcements.
+7. Students whose parents answered survey and had good satisfaction, have more hand raised, visited resources, announcements view and discussion.
 
-#9. Students have the more leaves the less raised hands, visited resources, announcements and discussion.
+8. Students with more absences have the least raised hands, visited resources, announcements and discussion.
 
 
 # Conclusion of Task 1 and Task2: From the exploration and analysis in the previous steps, we found some features have very crucial connection with the students' academic class, and some other features are less related with the students' academic class. From task2, we found that the features like "raisedhands", "VisITedResources","AnnouncementsView", "Discussion" and "StudentsAbsenceDays"have direct connection with students' academic class. There are also some features have less connection with students' academic class, like "StageID", "Section ID", "Semester". We will do some experiments in the following Task 3 to confirm our findings.
@@ -1034,7 +1030,7 @@ ggplot(data = E, aes(x = StudentAbsenceDays, y = Discussion)) + geom_boxplot()+ 
 #Task 3. Prediction of the students' academic performance. Build prediction model and evaluate the results of the model
 
 
-#Preprocess: Select the important features which are important to Class, and remove some unimportant features.
+Preprocess: Select the important features which are important to Class, and remove some unimportant features.
 ```{r}
 #create data with some correlation structure
 library(corrplot)
@@ -1049,7 +1045,7 @@ tl.col="black", tl.cex=0.6, tl.srt=45,
 
 ```
 
-#From the correlation plot above, we can find that features like raisedhands, visitedresources,announcementsview,studentabsencedays and discussion have very close correlation with class. On the other hand, some features like sectionID, gradeID, stageID,placeofbirth and nationality have very less correlation with class. So we decide to remove useless features before building our prediction models.
+From the correlation plot above, we can find that features like raisedhands, visitedresources,announcementsview,studentabsencedays and discussion have very close correlation with class. On the other hand, some features like sectionID, gradeID, stageID,placeofbirth and nationality have very less correlation with class. So we decide to remove useless features before building our prediction models.
 
 
 ```{r}
@@ -1059,7 +1055,7 @@ E1 <- E[,-c(5,6,8)]
 
 ```
 
-#We have 14 features left after removing 3 useless features.
+We have 14 features left after removing 3 useless features.
 
 
 
@@ -1107,17 +1103,18 @@ ggplot(E_melt, aes(x=Reference, y=Prediction, fill=Value)) + geom_tile() + scale
 ```
 
 #Summary of model 1: we conclude from the tree mode above:
-#1. From the plot of the tree, some variables ( VisITedResources, StudentAbsenceDays, Relation, gender, ParentAnsweringSurvey and raisedhands) are selected as splitting rules, which means these features are crucial in splitting the tree. so they are very important features in this tree model.
 
-#2. From the confusion matrix and heatmap, there is no prediction error between class L and H. However, the performance is not so good between class M and H, M and L. It means that this model has some problem in predicting the adjacent classes but not the distant classes.
+1. From the plot of the tree, some variables ( VisITedResources, StudentAbsenceDays, Relation, gender, ParentAnsweringSurvey and raisedhands) are selected as splitting rules, which means these features are crucial in splitting the tree. so they are very important features in this tree model.
 
-#3. The accuracy of this model is 0.7038 from the statistics result. The accuracy is a description of systematic errors, a measure of statistical bias. It reflects the percentage of the true positive cases out of all the cases. In this case, we can see that 24 of H class have been predicted correctly which means the numbers of the true positive of H class, and 7 of M classes have been predicted as H classes but actually not H, which indicates numbers of the false positive of H class. To calculate accuracy, the true positive cases are accumulated as 84 (24+40+21) including all the H, M and L classes, and the total cases are 120 (24+7+11+40+13+4+21) including all the TP, TN, FP and FN cases. The formula of accuracy is TP/TP+TN+FP+FT, so the accuracy is 84/120 = 0.7038 in this model.The accuracy reflects how the model performs in predicting the correct classes out of all the cases.
+2. From the confusion matrix and heatmap, there is no prediction error between class L and H. However, the performance is not so good between class M and H, M and L. It means that this model has some problem in predicting the adjacent classes but not the distant classes.
 
-#4. Precision is a better method for us to judge the performance of a model. Precision is a description of random errors, a measure of statistical variability. The formula of precision is TP/TP+FP, which can reflect the rate of true positive cases out of all the positive cases including false positive cases. In this case, there are 13 L classes that predicted as M classes, these 13 cases are the FP cases in predicting M classes, and there are also 7 M classes predicted as H classes, these 7 cases is the FP cases in predicting H classes. We can get a better insight of the model by referring to the precision of each class.
+3. The accuracy of this model is 0.7038 from the statistics result. The accuracy is a description of systematic errors, a measure of statistical bias. It reflects the percentage of the true positive cases out of all the cases. In this case, we can see that 24 of H class have been predicted correctly which means the numbers of the true positive of H class, and 7 of M classes have been predicted as H classes but actually not H, which indicates numbers of the false positive of H class. To calculate accuracy, the true positive cases are accumulated as 84 (24+40+21) including all the H, M and L classes, and the total cases are 120 (24+7+11+40+13+4+21) including all the TP, TN, FP and FN cases. The formula of accuracy is TP/TP+TN+FP+FT, so the accuracy is 84/120 = 0.7038 in this model.The accuracy reflects how the model performs in predicting the correct classes out of all the cases.
 
-#5. Since the precision is related to the true positive and false positive, we can evaluate the performance of the predictive model by calculating the precision of each class. In this confusion matrix, the specificity is equal to precision, we can use the specificity of the results of confusion matrix to observe the performance of the model.
+4. Precision is a better method for us to judge the performance of a model. Precision is a description of random errors, a measure of statistical variability. The formula of precision is TP/TP+FP, which can reflect the rate of true positive cases out of all the positive cases including false positive cases. In this case, there are 13 L classes that predicted as M classes, these 13 cases are the FP cases in predicting M classes, and there are also 7 M classes predicted as H classes, these 7 cases is the FP cases in predicting H classes. We can get a better insight of the model by referring to the precision of each class.
 
-#In this tree model, precision is: H(0.9176), M(0.6522), L(0.9535), and the mean precision is 0.8411.
+5. Since the precision is related to the true positive and false positive, we can evaluate the performance of the predictive model by calculating the precision of each class. In this confusion matrix, the specificity is equal to precision, we can use the specificity of the results of confusion matrix to observe the performance of the model.
+
+In this tree model, precision is: H(0.9176), M(0.6522), L(0.9535), and the mean precision is 0.8411.
 
 
 #Prediction model 2 -- Random Forest
@@ -1148,15 +1145,16 @@ ggplot(E_melt, aes(x=Reference, y=Prediction, fill=Value)) + geom_tile() + scale
 
 
 #Summary of model 2: we conclude from the tree mode above:
-#1. From the plot of variable importance, some variables ( StudentAbsenceDays, VisITedResources, raisedhands, AnnouncementsView, ParentAnsweringSurvey and Relation) are more important, and the other variables are less important in this model such as StageID, PlaceofBirth and Topic.
 
-#2. From the confusion matrix, there is also no prediction error between class L and H in this random forest model. There are some improvements: all the number of correct prediction has been increased in all the classes (26, 42 and 26) than the previous model. And the FP of M classes have been reduced a lot. However, the FP cases of H and L classes have been slightly increased.
+1. From the plot of variable importance, some variables ( StudentAbsenceDays, VisITedResources, raisedhands, AnnouncementsView, ParentAnsweringSurvey and Relation) are more important, and the other variables are less important in this model such as StageID, PlaceofBirth and Topic.
 
-#3. The accuracy of this model 2 is 0.7583, which is a little higher than model 1.
+2. From the confusion matrix, there is also no prediction error between class L and H in this random forest model. There are some improvements: all the number of correct prediction has been increased in all the classes (26, 42 and 26) than the previous model. And the FP of M classes have been reduced a lot. However, the FP cases of H and L classes have been slightly increased.
 
-#4. In this random forest model, precision is: H(0.8681), M(0.8333), L(0.9213), and the mean precision is 0.8742.
+3. The accuracy of this model 2 is 0.7583, which is a little higher than model 1.
 
-#Overall, this model is better than the tree model both in accuracy and precision.
+4. In this random forest model, precision is: H(0.8681), M(0.8333), L(0.9213), and the mean precision is 0.8742.
+
+Overall, this model is better than the tree model both in accuracy and precision.
 
 
 #Prediction model 3 -- Support Vector Machines
@@ -1169,25 +1167,28 @@ confusionMatrix(testData$Class, svm.predict)
 
 
 #Summary of model 3: we conclude from the tree mode above:
-#1. From the confusion matrix, different from the previous two models, there is a prediction error between class L and H, one H class is predicted as L class. There are some improvements: all the number of correct prediction has been increased in all the classes (29, 41 and 25), much better than the model 1, but similar to model 2. And the FP of H and M classes have been reduced, which is the best among these 3 models. 
 
-#2. The accuracy of this model 3 is 0.7917, which is a little higher than model 1 and model 2.
+1. From the confusion matrix, different from the previous two models, there is a prediction error between class L and H, one H class is predicted as L class. There are some improvements: all the number of correct prediction has been increased in all the classes (29, 41 and 25), much better than the model 1, but similar to model 2. And the FP of H and M classes have been reduced, which is the best among these 3 models. 
 
-#3. In this random forest model, precision is: H(0.9277), M(0.8462), L(0.9022), and the mean precision is 0.8920.
+2. The accuracy of this model 3 is 0.7917, which is a little higher than model 1 and model 2.
 
-#Overall, this model is best among these 3 models both in accuracy and precision.
+3. In this random forest model, precision is: H(0.9277), M(0.8462), L(0.9022), and the mean precision is 0.8920.
+
+Overall, this model is best among these 3 models both in accuracy and precision.
 
 
 
 #Task 4. Improvement of these prediction models using N-folder cross validation for the prediction models above
 
-#Using N-folder cross validation on prediction model 1 -- Decision tree
+#Preprocess:Using N-folder cross validation on the training data.
 ```{r}
-
 # using 10-folder cross validation to train this model
 TrainingParameters <- trainControl(method = "cv", number = 10)
+```
 
 
+#Using N-folder cross validation on prediction model 1 -- Decision tree
+```{r}
 # train model with randomforest networks
 trModel <- train(formula,
                  data = trainingData,
@@ -1213,15 +1214,16 @@ plot(importance)
 
 
 #Summary of model 1: we condlude from the tree mode above:
-#1. From the plot of variable importance, the most important variables are StudentAbsenceDays, VisITedResources, raisedhands and AnnouncementsView, the less important variables are ParentAnsweringSurvey, relation, ParentschoolSatisfaction, Discussion and gender, and the unimportant variables are Nationality, StageID, PlaceofBirth and Topic for every class. This conclusion further confirmed our findings in the previous steps.
 
-#2. From the confusion matrix, there is a prediction error between class L and H, one H class is predicted as L class. There are some improvements: The number of TP of H class with 30 is much better than the model 1 without cross validation, it's also the highest till now. And the FP are much smaller than the model 1 without cross validation. However, there are 12 m class predicted as L class, which is much high than the model 1 without cross validation.
+1. From the plot of variable importance, the most important variables are StudentAbsenceDays, VisITedResources, raisedhands and AnnouncementsView, the less important variables are ParentAnsweringSurvey, relation, ParentschoolSatisfaction, Discussion and gender, and the unimportant variables are Nationality, StageID, PlaceofBirth and Topic for every class. This conclusion further confirmed our findings in the previous steps.
 
-#3. The accuracy of this model is 0.75, which is higher than the accuracy of model1 without cross validation(0.7083).
+2. From the confusion matrix, there is a prediction error between class L and H, one H class is predicted as L class. There are some improvements: The number of TP of H class with 30 is much better, it's also the highest till now. 
 
-#4. In this model, precision is: H(0.9383), M(0.8125), L(0.8632), and the mean precision is 0.8713, which is higher than that of model 1 without cross validation (0.8411).
+3. The accuracy of this model is 0.75, which is higher than the accuracy of model1 without cross validation(0.7083).
 
-#Overall, this model is better than the model 1 without cross validation both in accuracy and precision, and similar to the performance of model 2 without cross validation
+4. In this model, precision is: H(0.9383), M(0.8125), L(0.8632), and the mean precision is 0.8713, which is higher than that of model 1 without cross validation (0.8411).
+
+Overall, this model is better than the model 1 without cross validation both in accuracy and precision, and similar to the performance of model 2 without cross validation
 
 
 
@@ -1252,15 +1254,16 @@ plot(importance)
 ```
 
 #Summary of model 2: we conclude from the tree mode above:
-#1. From the plot of variable importance, the most important variables are VisITedResources, raisedhands, StudentAbsenceDays, AnnouncementsView and Discussion, the less important variables are RelationMum, ParentAnsweringSurvey, genderM and ParentschoolSatisfaction, and the unimportant variables are Topic, StageID,Nationality and PlaceofBirth for every class. This figures that represent the level of importance is much clear, which also further confirmed our findings in the previous steps.
 
-#2. From the confusion matrix, there is no prediction error between class L and H in this random forest model. There are some improvements: The number of correct prediciton has been increased a lot in M and L class (43 and 28) than the model 1. And there are only 4 m class predicted as L class, which has been improved a lot than model 1.
+1. From the plot of variable importance, the most important variables are VisITedResources, raisedhands, StudentAbsenceDays, AnnouncementsView and Discussion, the less important variables are RelationMum, ParentAnsweringSurvey, genderM and ParentschoolSatisfaction, and the unimportant variables are Topic, StageID,Nationality and PlaceofBirth for every class. This figures that represent the level of importance is much clear, which also further confirmed our findings in the previous steps.
 
-#3. The accuracy of this model is 0.8083, which is the highest accuracy among all the models.
+2. From the confusion matrix, there is no prediction error between class L and H in this random forest model. There are some improvements: The number of correct prediciton has been increased a lot in M and L class (43 and 28) than the model 1. And there are only 4 m class predicted as L class, which has been improved a lot than model 1.
 
-#4. In this model, precision is: H(0.9529), M(0.7826), L(0.9535), and the mean precision is 0.8963, which is highest precision among all the models till now.
+3. The accuracy of this model is 0.8083, which is the highest accuracy among all the models.
 
-#Overall, this model is much better than the model 1 with cross validation both in accuracy and precision.
+4. In this model, precision is: H(0.9529), M(0.7826), L(0.9535), and the mean precision is 0.8963, which is highest precision among all the models till now.
+
+Overall, this model is much better than the model 1 with cross validation both in accuracy and precision.
 
 
 
@@ -1293,25 +1296,25 @@ plot(importance)
 ```
 
 #Summary of model 3: we conclude from the tree mode above:
-#1. From the plot of variable importance, the most important variables are VisITedResources, StudentAbsenceDays, raisedhands and AnnouncementsView, the less important variables are ParentAnsweringSurvey, Relation, ParentschoolSatisfaction, Discussion and gender, and the unimportant variables are Topic, StageID, Nationality and PlaceofBirth for every class. The figures that represent the level of importance is much clear, which also further confirmed our findings in the previous steps.
 
-#2. From the confusion matrix, there is no prediction error between class L and H in this random forest model. There are some improvements than model 1 but not than model 2: The number of correct prediction has been increased a lot in M and L class (43 and 25) than the model 1. And there are only 4 m class predicted as L class, which has been improved a lot than model 1. However, the number of TP of H class is the lowest among those 3 models, even worse than the model 3 without cross validation.
+1. From the plot of variable importance, the most important variables are VisITedResources, StudentAbsenceDays, raisedhands and AnnouncementsView, the less important variables are ParentAnsweringSurvey, Relation, ParentschoolSatisfaction, Discussion and gender, and the unimportant variables are Topic, StageID, Nationality and PlaceofBirth for every class. The figures that represent the level of importance is much clear, which also further confirmed our findings in the previous steps.
 
-#3. The accuracy of this model is 0.75, which is the same as model 1 but less than the model 3 without cross validation.
+2. From the confusion matrix, there is no prediction error between class L and H in this random forest model. There are some improvements than model 1 but not than model 2: The number of correct prediction has been increased a lot in M and L class (43 and 25) than the model 1. And there are only 4 m class predicted as L class, which has been improved a lot than model 1. However, the number of TP of H class is the lowest among those 3 models.
 
-#4. In this model, precision is: H(0.9529), M(0.6812), L(0.9535), and the mean precision is 0.8625.
+3. The accuracy of this model is 0.75, which is the same as model 1 but less than the model 3 without cross validation.
 
-#Overall, this model worse than the model 3 without cross validation both in accuracy and precision.
+4. In this model, precision is: H(0.9529), M(0.6812), L(0.9535), and the mean precision is 0.8625.
+
+Overall, this model worse than the model 3 without cross validation both in accuracy and precision.
 
 
 
 # Final Conclusion:
 
-#1. Model 1 and 2 performed much better by training on the N-folder cross validation dataset, but model 3 performed even worse than none cross validation. 
+1. Random forests model outperformed all the models by training N-fold cross validation data set in this specific educational datasets. It got the highest rate of accuracy and precision. As a result, the random forest prediction model is recommended for this educational data mining project.
 
-#2. Model 2 (Random forest) outperformed all the models by training on the N-folder cross validation dataset. It got the highest rate of accuracy and precision. As a result, the random forest prediction model training on N-folder cross validation dataset is recommended for this educational data mining project.
+2. The most important activities that related to students' academic performance are VisITedResources, raisedhands, StudentAbsenceDays, AnnouncementsView and Discussion. Then the Relation, ParentAnsweringSurvey, gender and ParentschoolSatisfaction also has some connection with the academic performance. Students' academic performance has little connection with topic, StageID, Nationality, PlaceofBirth, Grade ID, Section ID and semester based on this educational datasets.
 
-#3. The most important activities that related to students' academic performance are VisITedResources, raisedhands, StudentAbsenceDays, AnnouncementsView and Discussion. Then the Relation, ParentAnsweringSurvey, gender and ParentschoolSatisfaction also has some connection with the academic performance. Students' academic performance has little connection with topic, StageID, Nationality, PlaceofBirth, Grade ID, Section ID and semester.
 
 
 
