@@ -7,7 +7,7 @@ output:
   word_document: default
 ---
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
 ```
 ###### version 1.0 --- Zhiying Zhou: 9835580
 
@@ -24,8 +24,9 @@ The datasets consist of 480 student records and 16 features. The features are cl
 
 Attributes
 1 Gender - student's gender (nominal: 'Male' or 'Female') 
-2 Nationality- student's nationality (nominal:' Kuwait',' Lebanon',' Egypt',' SaudiArabia',' USA',' Jordan',' Venezuela',' Iran',' Tunis',' Morocco',' Syria',' Palestine',' Iraq',' Lybia')
-3 Place of birth- student's Place of birth (nominal:' Kuwait',' Lebanon',' Egypt',' SaudiArabia',' USA',' Jordan',' Venezuela',' Iran',' Tunis',' Morocco',' Syria',' Palestine',' Iraq',' Lybia')
+2 Nationality- student's nationality (nominal:'Kuwait', 'Lebanon', 'Egypt', 'SaudiArabia', 
+'USA', 'Jordan', 'Venezuela', 'Iran', 'Tunis', 'Morocco', 'Syria', 'Palestine', 'Iraq', 'Lybia')
+3 Place of birth- student's Place of birth (nominal:'Kuwait', 'Lebanon', 'Egypt', 'SaudiArabia', 'USA', 'Jordan', 'Venezuela', 'Iran', 'Tunis', 'Morocco', 'Syria', 'Palestine', 'Iraq', 'Lybia')
 4 Educational Stages- educational level student belongs (nominal: 'lowerlevel','MiddleSchool','HighSchool') 
 5 Grade Levels- grade student belongs (nominal: 'G-01', 'G-02', 'G-03', 'G-04', 'G-05', 'G-06', 'G-07', 'G-08', 'G-09', 'G-10', 'G-11', 'G-12 ') 
 6 Section ID- classroom student belongs (nominal:'A','B','C')
@@ -558,7 +559,8 @@ Student getting absent are the ones getting low marks.
 
 
 
-#Summary of Task 1.2: Based on the exploration work above, We conclude the following main findings which will be much useful for analysis and prediction of the academic performance in the next steps:
+#Summary of Task 1.2: 
+Based on the exploration work above, We conclude the following main findings which will be much useful for analysis and prediction of the academic performance in the next steps:
 
 1. There are more girls in the high achiever's class (high class) than in the low class; boys are the opposite. Girls' parents have higher school satisfaction than boys. Boys are more frequently absent for more than 7 days.
 
@@ -665,7 +667,8 @@ ggplot(data = E, aes(x = Discussion, color = Class)) + geom_density(size=1) + gg
 Most of the students with high class discussed many times, most of the students with low class discussed very few times. 
 
 
-# Summary of Task 1.3: From the exploration of the numerical feature values, we have the following findings:
+# Summary of Task 1.3: 
+From the exploration of the numerical feature values, we have the following findings:
 
 1. High achiever students are more likely to raise hands, visit resources, view announcements and participate in discussions. Low achiever students raised hands, visited resource, viewed announcements and participated in discussions few times. 
 
@@ -1004,7 +1007,8 @@ Students have the more leaves the less discussion.
 
 
 
-# Summary of Task 2: From the exploration relationship between features, we have the following findings:
+# Summary of Task 2: 
+From the exploration relationship between features, we have the following findings:
 
 1. The analysis further confirmed our findings in the previous step: High achiever students raised hands, visited resource, viewed announcements and discussed more times. 
 
@@ -1023,7 +1027,8 @@ Students have the more leaves the less discussion.
 8. Students with more absences have the least raised hands, visited resources, announcements and discussion.
 
 
-# Conclusion of Task 1 and Task2: From the exploration and analysis in the previous steps, we found some features have very crucial connection with the students' academic class, and some other features are less related with the students' academic class. From task2, we found that the features like "raisedhands", "VisITedResources","AnnouncementsView", "Discussion" and "StudentsAbsenceDays"have direct connection with students' academic class. There are also some features have less connection with students' academic class, like "StageID", "Section ID", "Semester". We will do some experiments in the following Task 3 to confirm our findings.
+# Conclusion of Task 1 and Task 2: 
+From the exploration and analysis in the previous steps, we found some features have very crucial connection with the students' academic class, and some other features are less related with the students' academic class. From task2, we found that the features like "raisedhands", "VisITedResources","AnnouncementsView", "Discussion" and "StudentsAbsenceDays"have direct connection with students' academic class. There are also some features have less connection with students' academic class, like "StageID", "Section ID", "Semester". We will do some experiments in the following Task 3 to confirm our findings.
 
 
 
@@ -1102,7 +1107,8 @@ E_melt
 ggplot(E_melt, aes(x=Reference, y=Prediction, fill=Value)) + geom_tile() + scale_fill_gradient(low = "white",high = "red") + scale_x_discrete(position = "top") + scale_y_discrete(limits = rev(levels(E_melt$Prediction)))
 ```
 
-#Summary of model 1: we conclude from the tree mode above:
+#Summary of model 1: 
+we conclude from the tree mode above:
 
 1. From the plot of the tree, some variables ( VisITedResources, StudentAbsenceDays, Relation, gender, ParentAnsweringSurvey and raisedhands) are selected as splitting rules, which means these features are crucial in splitting the tree. so they are very important features in this tree model.
 
@@ -1144,7 +1150,8 @@ ggplot(E_melt, aes(x=Reference, y=Prediction, fill=Value)) + geom_tile() + scale
 ```
 
 
-#Summary of model 2: we conclude from the tree mode above:
+#Summary of model 2: 
+we conclude from the tree mode above:
 
 1. From the plot of variable importance, some variables ( StudentAbsenceDays, VisITedResources, raisedhands, AnnouncementsView, ParentAnsweringSurvey and Relation) are more important, and the other variables are less important in this model such as StageID, PlaceofBirth and Topic.
 
@@ -1166,7 +1173,8 @@ confusionMatrix(testData$Class, svm.predict)
 ```
 
 
-#Summary of model 3: we conclude from the tree mode above:
+#Summary of model 3: 
+we conclude from the tree mode above:
 
 1. From the confusion matrix, different from the previous two models, there is a prediction error between class L and H, one H class is predicted as L class. There are some improvements: all the number of correct prediction has been increased in all the classes (29, 41 and 25), much better than the model 1, but similar to model 2. And the FP of H and M classes have been reduced, which is the best among these 3 models. 
 
@@ -1213,7 +1221,8 @@ plot(importance)
 ```
 
 
-#Summary of model 1: we condlude from the tree mode above:
+#Summary of model 1: 
+we condlude from the tree mode above:
 
 1. From the plot of variable importance, the most important variables are StudentAbsenceDays, VisITedResources, raisedhands and AnnouncementsView, the less important variables are ParentAnsweringSurvey, relation, ParentschoolSatisfaction, Discussion and gender, and the unimportant variables are Nationality, StageID, PlaceofBirth and Topic for every class. This conclusion further confirmed our findings in the previous steps.
 
@@ -1253,7 +1262,8 @@ plot(importance)
 
 ```
 
-#Summary of model 2: we conclude from the tree mode above:
+#Summary of model 2: 
+we conclude from the tree mode above:
 
 1. From the plot of variable importance, the most important variables are VisITedResources, raisedhands, StudentAbsenceDays, AnnouncementsView and Discussion, the less important variables are RelationMum, ParentAnsweringSurvey, genderM and ParentschoolSatisfaction, and the unimportant variables are Topic, StageID,Nationality and PlaceofBirth for every class. This figures that represent the level of importance is much clear, which also further confirmed our findings in the previous steps.
 
@@ -1295,7 +1305,8 @@ print(importance)
 plot(importance)
 ```
 
-#Summary of model 3: we conclude from the tree mode above:
+#Summary of model 3: 
+we conclude from the tree mode above:
 
 1. From the plot of variable importance, the most important variables are VisITedResources, StudentAbsenceDays, raisedhands and AnnouncementsView, the less important variables are ParentAnsweringSurvey, Relation, ParentschoolSatisfaction, Discussion and gender, and the unimportant variables are Topic, StageID, Nationality and PlaceofBirth for every class. The figures that represent the level of importance is much clear, which also further confirmed our findings in the previous steps.
 
